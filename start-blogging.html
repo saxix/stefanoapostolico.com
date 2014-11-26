@@ -17,10 +17,11 @@
 
   <link href="http://stefanoapostolico.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Stefano Apostolico's Blog Atom" />
 
+<meta name="keywords" content="pelican, python">
 
   <title>
     Stefano Apostolico's Blog
-  </title>
+&ndash; Start blogging  </title>
 
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -67,16 +68,40 @@
     <h3><a href="http://stefanoapostolico.com/start-blogging.html">Start blogging</a></h3>
   </div>
   <div class="article_text">
-    <p class="first last">build a pelican based blog in one hour</p>
+    <p>I spent one day trying to put this blog on Heroku.
+Googling on the web many authors explain how to create a static site on Heroku,
+and Pelican web site offer a ready to use
+<a class="reference external" href="http://blog.getpelican.com/using-pelican-with-heroku.html">buildpack</a>.</p>
+<p>Anyway I did not like any of these solutions as all of them
+seem recompile and install the full stack (nginx, pelican, python....)</p>
+<p>I moved to a more pratical and easy to implement solution:
+<a class="reference external" href="https://pages.github.com/">GitHub pages</a> and <a class="reference external" href="http://docs.getpelican.com/en/3.5.0/">Pelican</a>.</p>
+<p>I started from a very well done page
+<a class="reference external" href="http://docs.getpelican.com/en/3.5.0/tips.html">here</a> and added some customisation.</p>
+<p>After creating the blog skeleton I selected a theme and customized it a bit.</p>
 
   </div>
+  <div class="article_meta">
+    <p>Posted on: Sat 22 November 2014</p>
+    <p>Category: <a href="http://stefanoapostolico.com/category/article.html">article</a>
+ &ndash; Tags:
+      <a href="http://stefanoapostolico.com/tag/pelican.html">pelican</a>,      <a href="http://stefanoapostolico.com/tag/python.html">python</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "start-blogging.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
 </article>
 
-<footer>
-<div id="paginator">
-
-</div>
-</footer>
 
     <div id="ending_message">
       <p>&copy; Stefano Apostolico. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>. Theme by Giulio Fidente on <a href="https://github.com/gfidente/pelican-svbhack" target="_blank">github</a>. Member of the <a href="http://internetdefenseleague.org">Internet Defense League</a>.</p>

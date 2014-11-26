@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/article.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2014-11-22T10:20:00+01:00</updated><entry><title>Start blogging</title><link href="http://stefanoapostolico.com/start-blogging.html" rel="alternate"></link><updated>2014-11-22T10:20:00+01:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2014-11-22:start-blogging.html</id><summary type="html">&lt;p&gt;I spent one day trying to put this blog on Heroku.
+Googling on the web many authors explain how to create a static site on Heroku,
+and Pelican web site offer a ready to use
+&lt;a class="reference external" href="http://blog.getpelican.com/using-pelican-with-heroku.html"&gt;buildpack&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Anyway I did not like any of these solutions as all of them
+seem recompile and install the full stack (nginx, pelican, python....)&lt;/p&gt;
+&lt;p&gt;I moved to a more pratical and easy to implement solution:
+&lt;a class="reference external" href="https://pages.github.com/"&gt;GitHub pages&lt;/a&gt; and &lt;a class="reference external" href="http://docs.getpelican.com/en/3.5.0/"&gt;Pelican&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I started from a very well done page
+&lt;a class="reference external" href="http://docs.getpelican.com/en/3.5.0/tips.html"&gt;here&lt;/a&gt; and added some customisation.&lt;/p&gt;
+&lt;p&gt;After creating the blog skeleton I selected a theme and customized it a bit.&lt;/p&gt;
+</summary><category term="pelican"></category><category term="python"></category></entry></feed>
