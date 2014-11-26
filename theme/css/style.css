@@ -24,7 +24,7 @@ aside div#user_meta {
   aside div#user_meta p {
     margin: 0 0 15px 0;
     font-size: 14px; }
-  aside div#user_meta .picture {
+  aside div#user_meta a .picture {
     width: 150px;
     height: 150px;
     border-radius: 150px;
