@@ -5,5 +5,7 @@ OLD/
 .idea
 atlassian-ide-plugin.xml
 /*.pid
+/cache
+/pelican-plugins
 
 
