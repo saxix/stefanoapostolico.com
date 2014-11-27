@@ -56,7 +56,7 @@ main header {
     text-transform: uppercase; }
 main article {
   max-width: 640px;
-  padding: 40px; }
+  padding: 1px 20px 80px; }
   main article div.article_text {
     line-height: 1.375em; }
     main article div.article_text a {
@@ -84,6 +84,10 @@ main article {
       padding-left: 40px;
       color: #999999;
       font-style: italic; }
+  main article .simple-footnotes {
+    margin-top: 80px;
+    font-size: medium;
+    font-style: italic; }
 
 main article div.gist {
   line-height: .875em; }

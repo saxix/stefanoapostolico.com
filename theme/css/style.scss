@@ -72,7 +72,7 @@ main {
     }
     article {
         max-width: 640px;
-        padding: 40px;
+        padding: 1px 20px 80px;
         div.article_text {
             line-height: 1.375em;
             a {
@@ -104,6 +104,11 @@ main {
                 color: #999999;
                 font-style: italic;
             }
+        }
+        .simple-footnotes{
+            margin-top: 80px;
+            font-size: medium;
+            font-style: italic;
         }
     }
 

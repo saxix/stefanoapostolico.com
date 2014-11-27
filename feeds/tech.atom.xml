@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/all.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2014-11-27T00:00:00+01:00</updated><entry><title>Playing with Pelican</title><link href="http://stefanoapostolico.com/2014/11/27/playing-with-pelican.html" rel="alternate"></link><updated>2014-11-27T00:00:00+01:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2014-11-27:2014/11/27/playing-with-pelican.html</id><summary type="html">&lt;p&gt;I spent one day trying to put this blog on Heroku.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/tech.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2014-11-27T00:00:00+01:00</updated><entry><title>Playing with Pelican</title><link href="http://stefanoapostolico.com/2014/11/27/playing-with-pelican.html" rel="alternate"></link><updated>2014-11-27T00:00:00+01:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2014-11-27:2014/11/27/playing-with-pelican.html</id><summary type="html">&lt;p&gt;I spent one day trying to put this blog on Heroku.
 Googling on the web many authors explain how to create a static site on Heroku,
 and Pelican web site offer a ready to use
 &lt;a href="http://blog.getpelican.com/using-pelican-with-heroku.html"&gt;buildpack&lt;/a&gt;.&lt;/p&gt;
@@ -68,13 +68,4 @@ and &lt;a href="https://help.github.com/articles/my-custom-domain-isn-t-working/
     &lt;span class="n"&gt;ARTICLE_SAVE_AS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt;}/{slug}.html'&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;You must set both the setting.&lt;/p&gt;
-&lt;p&gt;you can see the result &lt;a href="https://github.com/saxix/stefanoapostolico.com"&gt;here&lt;/a&gt;&lt;/p&gt;</summary><category term="pelican"></category><category term="python"></category><category term="github pages"></category></entry><entry><title>Start blogging</title><link href="http://stefanoapostolico.com/2014/11/22/start-blogging.html" rel="alternate"></link><updated>2014-11-22T00:00:00+01:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2014-11-22:2014/11/22/start-blogging.html</id><summary type="html">&lt;p&gt;After years spent to coding and getting benefits from someone else blog,
-I decided to have my own one.&lt;/p&gt;
-
-&lt;p&gt;Probably because I'm not comfortable to write in english, 
-or only laziness I spent most of my time sharing my experience by voice with friends, 
-colleagues and coders around the world.&lt;/p&gt;
-&lt;p&gt;Anyway as I have been able to work in four continents, 
-probably people take care more what I can say and less in my ability to 
-manage English language.&lt;/p&gt;
-&lt;p&gt;Today I have more free time and desire to share, so I started my personal blog.&lt;/p&gt;</summary><category term=""></category></entry></feed>
+&lt;p&gt;you can see the result &lt;a href="https://github.com/saxix/stefanoapostolico.com"&gt;here&lt;/a&gt;&lt;/p&gt;</summary><category term="pelican"></category><category term="python"></category><category term="github pages"></category></entry></feed>

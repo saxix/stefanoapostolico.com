@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/pygments.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans|PT+Serif|PT+Mono">
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Stefano Apostolico">
+    <meta name="description" content="Posts and writings by Stefano Apostolico">
+
+    <link href="http://stefanoapostolico.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+          title="Stefano Apostolico's Blog Atom"/>
+
+<meta name="keywords" content="pelican, python, github pages">
+
+    <title>
+        Stefano Apostolico's Blog
+&ndash; Playing with Pelican    </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11207015-9']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+<aside>
+    <div id="user_meta">
+        <a href="http://stefanoapostolico.com">
+            <img src="https://lh5.googleusercontent.com/-YO1CvuO6k20/TzUKNrpNXAI/AAAAAAAAHnw/y7MENWP79eg/w280-h278-p/profile2.JPG" alt="logo" class="picture">
+        </a>
+        <!--<h2><a href="http://stefanoapostolico.com">Stefano Apostolico</a></h2>-->
+        <p></p>
+        <ul>
+            <li><a href="https://twitter.com/s_apostolico" target="_blank">twitter</a></li>
+            <li><a href="https://www.linkedin.com/pub/stefano-apostolico/1/683/814" target="_blank">linkedin</a></li>
+            <li><a href="https://github.com/saxix" target="_blank">github</a></li>
+        </ul>
+        <!--<ul class="tag-cloud">-->
+            <!---->
+            <!--<li class="tag-4"><a href="/tag/.html"></a></li>-->
+            <!---->
+        <!--</ul>-->
+    </div>
+</aside>
+
+<main>
+    <header>
+        <p>
+            <a href="http://stefanoapostolico.com">Index</a> &brvbar; <a href="http://stefanoapostolico.com/archives.html">Archives</a>
+            &brvbar; <a href="http://stefanoapostolico.com/feeds/all.atom.xml">Atom</a>
+        </p>
+    </header>
+
+<article>
+  <div class="article_title">
+    <h3><a href="http://stefanoapostolico.com/2014/11/27/playing-with-pelican.html">Playing with Pelican</a></h3>
+  </div>
+  <div class="article_meta">
+        <p>Posted on: Thu 27 November 2014</p>
+    </div>
+  <div class="article_text">
+    <p>I spent one day trying to put this blog on Heroku.
+Googling on the web many authors explain how to create a static site on Heroku,
+and Pelican web site offer a ready to use
+<a href="http://blog.getpelican.com/using-pelican-with-heroku.html">buildpack</a>.</p>
+<p>Anyway I did not like any of these solutions as all of them
+seem recompile and install the full stack (nginx, pelican, python....)</p>
+<p>I moved to a more pratical and easy to implement solution:
+<a href="https://pages.github.com/">GitHub pages</a> and <a href="http://docs.getpelican.com/en/3.5.0">Pelican</a>.</p>
+<h3>Install Pelican</h3>
+<p>To install Pelican and other Python package dependencies in a virtual environment, 
+I followed the instructions in the official 
+<a href="http://pelican.readthedocs.org/en/3.5.0/quickstart.html">Pelican documentation</a>.</p>
+<div class="highlight"><pre>    pip install pelican Markdown typogrify
+    pelican-quickstart
+</pre></div>
+<p>I enabled article pagination so that I didn't end up with all the posts on a single 
+page. The <code>Makefile</code> is incredibly useful, so I enabled that. 
+It allows you to compile the website with <code>make html</code> and check it live with <code>make serve</code>. </p>
+<p>Because I want to use Github pages I answered NO to all the questions about
+<code>Dropbox</code>, <code>S3</code>, <code>FTP</code> and <code>SSH</code> anyway the related code is still 
+in the <code>Makefile</code> so I removed it manually.</p>
+<h3>Configure plugins</h3>
+<p>To configure plugins simply clone pelican-plugins as git submodule with</p>
+<div class="highlight"><pre>git add submodule https://github.com/getpelican/pelican-plugins
+</pre></div>
+<p>and enable what you like in <code>pelicanconf.py</code></p>
+<div class="highlight"><pre>    <span class="n">PLUGIN_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">'pelican-plugins'</span><span class="p">]</span>
+    <span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s">'interlinks'</span><span class="p">,</span>
+               <span class="s">'pelican_fontawesome'</span><span class="p">,</span>
+               <span class="s">'related_posts'</span><span class="p">,</span>
+               <span class="s">'summary'</span><span class="p">,</span>
+               <span class="s">'sitemap'</span><span class="p">,</span>
+               <span class="s">'simple_footnotes'</span><span class="p">]</span>
+</pre></div>
+<h3>Configure Github</h3>
+<p>For Github you need to put the domain of your site inside a CNAME (must be uppercase)
+file at the root of your site. </p>
+<p>More details how to configure your domain can be found 
+<a href="http://docs.getpelican.com/en/3.5.0/tips.html#extra-tips">here</a> (Tip #2),
+<a href="https://help.github.com/articles/about-custom-domains-for-github-pages-sites/">here</a>
+and <a href="https://help.github.com/articles/my-custom-domain-isn-t-working/">here</a></p>
+<p>For my configuration I used </p>
+<p><code>content/extras/CNAME</code></p>
+<div class="highlight"><pre>stefanoapostolico.com
+</pre></div>
+<p><code>pelicanconf.py</code></p>
+<div class="highlight"><pre>    <span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">'images'</span><span class="p">,</span> <span class="s">'extras/README.rst'</span><span class="p">,</span> <span class="s">'extras/CNAME'</span><span class="p">,</span> 
+    <span class="s">'extras/robots.txt'</span><span class="p">]</span>
+
+    <span class="n">EXTRA_PATH_METADATA</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'extras/README.rst'</span><span class="p">:</span> <span class="p">{</span><span class="s">'path'</span><span class="p">:</span> <span class="s">'README.rst'</span><span class="p">},</span>
+        <span class="s">'extras/CNAME'</span><span class="p">:</span> <span class="p">{</span><span class="s">'path'</span><span class="p">:</span> <span class="s">'CNAME'</span><span class="p">},</span>
+        <span class="s">'extras/robots.txt'</span><span class="p">:</span> <span class="p">{</span><span class="s">'path'</span><span class="p">:</span> <span class="s">'robots.txt'</span><span class="p">},</span>
+    <span class="p">}</span>
+</pre></div>
+<h3>Minor improvements</h3>
+<h4>Get metadata from path</h4>
+<p>To store articles in a structure like 
+<code>category/YEAR/MONTH/DAY-slug</code> so I updated my <code>pelicanconf.py</code> as </p>
+<div class="highlight"><pre>   <span class="n">s</span> 
+   <span class="n">PATH_METADATA</span> <span class="o">=</span> <span class="s">'\A(?P&lt;category&gt;[^/]+)/(?P&lt;date&gt;\d{4}/\d{2}/\d{2})-(?P&lt;slug&gt;.*)(.md|.rst)'</span>
+</pre></div>
+<p>You can always override date, slug and category in your post.</p>
+<h4>Serve file with different path</h4>
+<p>To serve your articles with url like <code>/YEAR/MONTH/DAY/slug.html</code></p>
+<div class="highlight"><pre>    <span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s">'{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s">}/{slug}.html'</span>
+    <span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s">'{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s">}/{slug}.html'</span>
+</pre></div>
+<p>You must set both the setting.</p>
+<p>you can see the result <a href="https://github.com/saxix/stefanoapostolico.com">here</a></p>
+  </div>
+  <div class="article_meta">
+    <!--<p>Posted on: Thu 27 November 2014</p>-->
+    <p>Category: <a href="http://stefanoapostolico.com/category/tech.html">tech</a>
+ &ndash; Tags:
+      <a href="http://stefanoapostolico.com/tag/pelican.html">pelican</a>,      <a href="http://stefanoapostolico.com/tag/python.html">python</a>,      <a href="http://stefanoapostolico.com/tag/github-pages.html">github pages</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "2014/11/27/playing-with-pelican.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+        <p>&copy; 2014 Stefano Apostolico. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>.
+Member of the <a href="http://internetdefenseleague.org">Internet Defense
+                League</a>.</p>
+    </div>
+</main>
+<script type="text/javascript">
+  window._idl = {};
+  _idl.variant = "banner";
+  (function() {
+    var idl = document.createElement('script');
+    idl.type = 'text/javascript';
+    idl.async = true;
+    idl.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'members.internetdefenseleague.org/include/?url=' + (_idl.url || '') + '&campaign=' + (_idl.campaign || '') + '&variant=' + (_idl.variant || 'banner');
+    document.getElementsByTagName('body')[0].appendChild(idl);
+  })();
+</script>
+</body>
+</html>
