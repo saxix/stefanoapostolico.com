@@ -1,0 +1,6 @@
+html5lib
+pelican
+beautifulsoup4
+markdown
+ghp-import
+pelican-fontawesome

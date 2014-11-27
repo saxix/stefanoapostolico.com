@@ -1,0 +1,9 @@
+venv
+*.pyc
+staticfiles
+OLD/
+.idea
+atlassian-ide-plugin.xml
+/*.pid
+
+
