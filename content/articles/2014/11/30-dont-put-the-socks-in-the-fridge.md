@@ -1,48 +1,30 @@
 Title: Don't put the socks in the fridge
-status: draft
-category: tech
+status: published
+category: it
 
-Once a CTO asked:
-*"Why 2Gb ear with more than 400 war inside is a problem? The system is working."*
-my thought was *"Ok the problem is the CTO"*
+In response to a set of recommendations I was presenting about an Enterprise 
+Java solution architecture, a CTO once asked me: 
+*"Yeah, we've got this 2 GB EAR with 400+ WAR deployments inside. 
+So what's the problem? The system still is completely functional!"*. 
+My instant feeling was 
+*"Ok, this CTO himself is a much bigger problem than this EAR!"*
 
- 
 <!-- PELICAN_END_SUMMARY -->
 
+A few years ago, I was in India to train developers of a local IT company. 
+It was a great experience - I met a lot of wonderful people there, few of whom 
+I'm still in touch with. Many of them were good developers, working hard with a hunger 
+to learn their subjects deeply at work. Much of the focus in my sessions was on practices 
+of designing large scale object-oriented systems. In a conversation about core design 
+principles, during a rapid fire response, I submitted to them this idea - 
+*"Yes, you can put the socks in the fridge, but choose NOT to put it there!"*. 
 
+My intent was to explain that when you design there is a place for everything, and sometimes a written rule or law is not needed to feel that something is wrongly placed (beyond principles of High Cohesion and Least Surprise, there is common sense, fundamental cleanliness to respect). The metaphor resonated with them instantly - they immediately understood the principle without any further debate. 
 
-A few years ago, I was in India to train developers of a local IT company.
-It was a great experience and I found al lot of wonderful person there, 
-I'm still in touch with some of them.
-They were good developers, hard workers with a hunger to learn more and 
-deepen any topic.
-One day, to explain some design principles, I told them 
-"Don't put the socks in the fridge", my intent was to explain that when you 
-design there is a place for everything, and sometimes it's not needed a written 
-rule or law to feel that something is wrong. 
-(High Cohesion, Least Surprise, Common Sense, Cleanness)
+At that time I had no idea how many times I would have to use it again and again!
 
-The sentence came up in my mind during the conversation and they immediately 
-understood the principle without any needs to further examples.
+In further years, I found it very frustrating when people claiming to be technical leads and architects taking the stand of "it isn't wrong if there's no rule that says so", like "no rule says you can't mix SQL with HTML markup" or "no rule says you can't use spaces for the dictionary keys for a REST API". Much effort to make them see beyond the need of defining rules for everything - with long explanations about the innumerable risks in such design - were mostly futile. They'd rather stick to approved rules than take a lead or leap of faith in common sense.
 
-At that time I could not imagine how many times I would have to use this example 
+When you find yourself submitting an idea or approach widely shared by the community as a convention (with profound logic behind it that you know and understand), only to be countered by your audience saying "Show me the rule defining so" - take a hint and end the discussion as soon as possible. I've come to understand that such resistance doesn't come from the unfamiliarity of the topic - but from the gap between the interlocutors from a technical standpoint and more seriously, the values standpoint. 
 
-Over the years I found it very frustrating meet people who claimed to be technical 
-or even architects who argue that "is not 'wrong to use SQL mixed to HTML" 
-or "there is no problem to use spaces in the dictionary keys for a REST API "
-
-Try to explain why there is no need to have a rule for everything, 
-and there are a lot of risks in doing so, produced only endless discussions 
-without any results.
-
-If you fall in this kind of discussion, you must stop as soon as you can, because 
-the problem is not the matter of the discussion, but in the technical gap between 
-the interlocutors.
-
-If you find yourself to explain something widely shared between the community 
-and/or the technicians (and you relly know that and the reason of that)
-to someone that only reply "Why ?", "Where is the rule ?"
-leave the discussion as soon as possible, there is no way to get out of it
-
-
-[youtube](BKorP55Aqvg)
+It's not about fighting, but it's about choosing your fights!

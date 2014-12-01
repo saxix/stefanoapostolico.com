@@ -1,5 +1,4 @@
 Title: Start blogging
-tags: 
 
 After years spent to coding and getting benefits from someone else blog,
 I decided to have my own one.

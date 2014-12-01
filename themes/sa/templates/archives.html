@@ -4,12 +4,12 @@
 {% block content %}
 <article>
   <div class="article_text">
-    <dl>
+    <ul>
       {% for article in dates %}
-      <dt>{{ article.locale_date }}</dt>
-      <dd><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></dd>
+      <li><span>{{ article.locale_date }}</span> -
+      <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></li>
       {% endfor %}
-    </dl>
+    </ul>
   </div>
 </article>
 {% endblock %}

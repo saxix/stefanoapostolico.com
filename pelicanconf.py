@@ -12,7 +12,7 @@ PLUGINS = ['interlinks',
            'related_posts',
            'summary',
            'pelican_youtube',
-           'sitemap',
+           # 'sitemap',
            'simple_footnotes']
 
 ARTICLE_EXCLUDES = ['extras']
@@ -38,7 +38,10 @@ AUTHOR_FEED_RSS = None
 INTERNET_DEFENSE_LEAGUE = True
 # GOOGLE_ANALYTICS = 'UA-11207015-9'
 # DISQUS_SITENAME = 'stefanoapostolico.disqus.com'
-USER_LOGO_URL = 'https://lh5.googleusercontent.com/-YO1CvuO6k20/TzUKNrpNXAI/AAAAAAAAHnw/y7MENWP79eg/w280-h278-p/profile2.JPG'
+USER_LOGO_URL = '/images/me.jpg'
+# WITH_FUTURE_DATES = False
+DEFAULT_DATE = 'fs'
+
 
 # Blogroll
 # LINKS = (('Pelican', 'http://getpelican.com/'),
@@ -62,7 +65,7 @@ SOCIAL = (('twitter', TWITTER),
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+# RELATIVE_URLS = True
 DELETE_OUTPUT_DIRECTORY = True
 
 TAG_CLOUD_STEPS = 4

@@ -21,10 +21,10 @@ To install Pelican and other Python package dependencies in a virtual environmen
 I followed the instructions in the official 
 [Pelican documentation](http://pelican.readthedocs.org/en/3.5.0/quickstart.html).
 
-```bash
+``` bash
    
-    pip install pelican Markdown typogrify
-    pelican-quickstart
+pip install pelican Markdown typogrify
+pelican-quickstart
 
 ```
 
@@ -99,7 +99,6 @@ To store articles in a structure like
 
 
 ```python
-   s 
    PATH_METADATA = '\A(?P<category>[^/]+)/(?P<date>\d{4}/\d{2}/\d{2})-(?P<slug>.*)(.md|.rst)'
 ```
 

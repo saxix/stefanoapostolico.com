@@ -2,14 +2,31 @@ body {
     margin: 0;
     padding: 0;
     background-color: #ffffff;
+    display: block;
+    position: relative;
     color: #4d4d4d;
-    font-family: 'PT Sans', sans-serif;
-    font-size: 18px;
+    //    font-family: 'PT Sans', sans-serif;
+    //        font-size: 18px;
+    font-family: 'Open Sans', sans-serif;
+//        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+//    font-famil    y: "RooneySans-Regular", "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
+    //    font-family: 'St-Marie-Pro-Black', "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
+
+    font-style: normal;
+    font-size: 14px;
+    font-weight: normal;
 }
 
 a {
     color: #000000;
     text-decoration: none;
+    &:link {
+        color: black;
+    }
+    &:visited {
+        color: black;
+    }
+
 }
 
 hr {
@@ -17,6 +34,42 @@ hr {
     background-color: #eeeeee;
     height: 1px;
     border: none;
+}
+
+img {
+    max-width: 600px;
+}
+
+@mixin heading($size) {
+    font-size: $size;
+    color: #999999;
+    -webkit-margin-after: 0em;
+    -webkit-margin-before: 0em;
+
+}
+
+h1 {
+    @include heading(24px);
+}
+
+h2 {
+    @include heading(22px);
+}
+
+h3 {
+    @include heading(20px);
+}
+
+h4 {
+    @include heading(18px);
+}
+
+h5 {
+    @include heading(16px);
+}
+
+h6 {
+    @include heading(14px);
 }
 
 aside {
@@ -47,6 +100,12 @@ aside {
             display: inline;
             line-height: 3em;
             a {
+                &:visited {
+                    color: #999999;
+                }
+                &:link {
+                    color: #999999;
+                }
                 padding: 5px 15px 5px 15px;
                 border: 3px solid #eeeeee;
                 border-radius: 15px;
@@ -68,28 +127,39 @@ main {
             font-size: 10px;
             text-transform: uppercase;
         }
+        a {
+            color: #999999;
+            &:visited, &:link {
+                color: #999999;
+            }
+        }
 
     }
     article {
         max-width: 640px;
-        padding: 1px 20px 80px;
+        padding: 1px 20px 20px;
         div.article_text {
+            li span {
+                display: inline;
+            }
             line-height: 1.375em;
             a {
                 text-decoration: underline;
-                color: #19177C;
+                color: #00147c;
             }
             code {
                 margin: 2px;
                 padding: 0;
                 color: #000000;
-                font-size: 14px;
+                font-size: 15px;
                 font-family: 'PT Mono', monospace;
                 background: #eeeeee;
             }
             pre {
-                margin: 22px 2px 22px 2px;
+                margin: 22px 5px 22px 5px;
                 padding: 2px;
+                padding-top: 10px;
+                padding-bottom: 10px;
                 color: #000000;
                 border-left: 3px solid #0e94ec;
                 font-size: 14px;
@@ -105,7 +175,7 @@ main {
                 font-style: italic;
             }
         }
-        .simple-footnotes{
+        .simple-footnotes {
             margin-top: 80px;
             font-size: medium;
             font-style: italic;
@@ -119,8 +189,17 @@ main article div.gist {
 }
 
 main article div.article_meta {
-    font-size: 12px;
-    color: #999999;
+    * {
+        font-size: 11px;
+        color: #999999;
+        font-size: 16px;
+    }
+    p {
+        margin: 0px;
+        padding: 0px;
+//        font-size: 16px;
+        line-height: 1.4;
+    }
 }
 
 main footer {
