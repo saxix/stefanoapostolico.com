@@ -17490,8 +17490,8 @@ form.add_bling_form input[type=text] {
 #fontface_embed_modal .buttons input[type=button]:hover {
     border-color: #09f;
 }
-
 .foundry_dialog {
+
     background: #f9f9f9;
     border: 1px solid #ddd;
     box-shadow: 0px 2px 5px #ccc;
@@ -17524,8 +17524,8 @@ form.add_bling_form input[type=text] {
 
 .file_drag_list {
     background: #f5f5f5;
-    border: 1px solid #ddd;
     margin: 20px 0;
+    border: 1px solid #ddd;
     padding: 10px;
 }
 

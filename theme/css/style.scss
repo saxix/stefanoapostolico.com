@@ -2,13 +2,15 @@ body {
     margin: 0;
     padding: 0;
     background-color: #ffffff;
+    display: block;
+    position: relative;
     color: #4d4d4d;
-    font-family: 'PT Sans', sans-serif;
+    //    font-family: 'PT Sans', sans-serif;
     //        font-size: 18px;
-    //    font-family: "Archer SSm A", "Archer SSm B", Georgia, serif;
-    //    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-family: "RooneySans-Regular", "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
-    font-family: 'St-Marie-Pro-Black', "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
+    font-family: 'Open Sans', sans-serif;
+//        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+//    font-famil    y: "RooneySans-Regular", "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
+    //    font-family: 'St-Marie-Pro-Black', "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
 
     font-style: normal;
     font-size: 14px;
@@ -18,8 +20,11 @@ body {
 a {
     color: #000000;
     text-decoration: none;
-    :link {
-        color: red;
+    &:link {
+        color: black;
+    }
+    &:visited {
+        color: black;
     }
 
 }
@@ -38,6 +43,8 @@ img {
 @mixin heading($size) {
     font-size: $size;
     color: #999999;
+    -webkit-margin-after: 0em;
+    -webkit-margin-before: 0em;
 
 }
 
@@ -122,18 +129,17 @@ main {
         }
         a {
             color: #999999;
-            &:visited {
+            &:visited, &:link {
                 color: #999999;
-
             }
         }
 
     }
     article {
         max-width: 640px;
-        padding: 1px 20px 80px;
+        padding: 1px 20px 20px;
         div.article_text {
-            li span{
+            li span {
                 display: inline;
             }
             line-height: 1.375em;
@@ -182,9 +188,18 @@ main article div.gist {
     line-height: .875em;
 }
 
-main article div.article_meta *{
-    font-size: 11px;
-    color: #999999;
+main article div.article_meta {
+    * {
+        font-size: 11px;
+        color: #999999;
+        font-size: 16px;
+    }
+    p {
+        margin: 0px;
+        padding: 0px;
+//        font-size: 16px;
+        line-height: 1.4;
+    }
 }
 
 main footer {

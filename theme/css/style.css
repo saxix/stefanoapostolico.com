@@ -2,10 +2,10 @@ body {
   margin: 0;
   padding: 0;
   background-color: #ffffff;
+  display: block;
+  position: relative;
   color: #4d4d4d;
-  font-family: 'PT Sans', sans-serif;
-  font-family: "RooneySans-Regular", "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
-  font-family: 'St-Marie-Pro-Black', "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-size: 14px;
   font-weight: normal; }
@@ -13,8 +13,10 @@ body {
 a {
   color: #000000;
   text-decoration: none; }
-  a :link {
-    color: red; }
+  a:link {
+    color: black; }
+  a:visited {
+    color: black; }
 
 hr {
   color: #eeeeee;
@@ -27,27 +29,39 @@ img {
 
 h1 {
   font-size: 24px;
-  color: #999999; }
+  color: #999999;
+  -webkit-margin-after: 0em;
+  -webkit-margin-before: 0em; }
 
 h2 {
   font-size: 22px;
-  color: #999999; }
+  color: #999999;
+  -webkit-margin-after: 0em;
+  -webkit-margin-before: 0em; }
 
 h3 {
   font-size: 20px;
-  color: #999999; }
+  color: #999999;
+  -webkit-margin-after: 0em;
+  -webkit-margin-before: 0em; }
 
 h4 {
   font-size: 18px;
-  color: #999999; }
+  color: #999999;
+  -webkit-margin-after: 0em;
+  -webkit-margin-before: 0em; }
 
 h5 {
   font-size: 16px;
-  color: #999999; }
+  color: #999999;
+  -webkit-margin-after: 0em;
+  -webkit-margin-before: 0em; }
 
 h6 {
   font-size: 14px;
-  color: #999999; }
+  color: #999999;
+  -webkit-margin-after: 0em;
+  -webkit-margin-before: 0em; }
 
 aside div#user_meta {
   padding: 10px;
@@ -93,11 +107,11 @@ main header {
     text-transform: uppercase; }
   main header a {
     color: #999999; }
-    main header a:visited {
+    main header a:visited, main header a:link {
       color: #999999; }
 main article {
   max-width: 640px;
-  padding: 1px 20px 80px; }
+  padding: 1px 20px 20px; }
   main article div.article_text {
     line-height: 1.375em; }
     main article div.article_text li span {
@@ -139,7 +153,12 @@ main article div.gist {
 
 main article div.article_meta * {
   font-size: 11px;
-  color: #999999; }
+  color: #999999;
+  font-size: 16px; }
+main article div.article_meta p {
+  margin: 0px;
+  padding: 0px;
+  line-height: 1.4; }
 
 main footer {
   border-top: #eeeeee 1px solid;
