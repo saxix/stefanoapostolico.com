@@ -3,13 +3,19 @@ body {
     padding: 0;
     background-color: #ffffff;
     color: #4d4d4d;
-    font-family: 'PT Sans', sans-serif;
+    font-family: "Archer SSm A", "Archer SSm B", Georgia, serif;
+    font-style: normal;
     font-size: 18px;
+    font-weight: normal;
 }
 
 a {
     color: #000000;
     text-decoration: none;
+    :link{
+        color: red;
+    }
+
 }
 
 hr {
@@ -18,6 +24,23 @@ hr {
     height: 1px;
     border: none;
 }
+img {
+    max-width: 600px;
+}
+
+@mixin heading($size)  {
+    font-size: $size;
+    color: #999999;
+
+}
+
+h1 { @include heading(24px); }
+h2 { @include heading(22px); }
+h3 { @include heading(20px); }
+h4 { @include heading(18px); }
+h5 { @include heading(16px); }
+h6 { @include heading(14px); }
+
 
 aside {
     div#user_meta {
@@ -47,6 +70,9 @@ aside {
             display: inline;
             line-height: 3em;
             a {
+                :link{
+                    color: #999999;
+                }
                 padding: 5px 15px 5px 15px;
                 border: 3px solid #eeeeee;
                 border-radius: 15px;
@@ -77,19 +103,21 @@ main {
             line-height: 1.375em;
             a {
                 text-decoration: underline;
-                color: #19177C;
+                color: #00147c;
             }
             code {
                 margin: 2px;
                 padding: 0;
                 color: #000000;
-                font-size: 14px;
+                font-size: 15px;
                 font-family: 'PT Mono', monospace;
                 background: #eeeeee;
             }
             pre {
-                margin: 22px 2px 22px 2px;
+                margin: 22px 5px 22px 5px;
                 padding: 2px;
+                padding-top: 10px;
+                padding-bottom: 10px;
                 color: #000000;
                 border-left: 3px solid #0e94ec;
                 font-size: 14px;

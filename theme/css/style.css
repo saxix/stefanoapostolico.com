@@ -3,18 +3,49 @@ body {
   padding: 0;
   background-color: #ffffff;
   color: #4d4d4d;
-  font-family: 'PT Sans', sans-serif;
-  font-size: 18px; }
+  font-family: "Archer SSm A", "Archer SSm B", Georgia, serif;
+  font-style: normal;
+  font-size: 18px;
+  font-weight: normal; }
 
 a {
   color: #000000;
   text-decoration: none; }
+  a :link {
+    color: red; }
 
 hr {
   color: #eeeeee;
   background-color: #eeeeee;
   height: 1px;
   border: none; }
+
+img {
+  max-width: 600px; }
+
+h1 {
+  font-size: 24px;
+  color: #999999; }
+
+h2 {
+  font-size: 22px;
+  color: #999999; }
+
+h3 {
+  font-size: 20px;
+  color: #999999; }
+
+h4 {
+  font-size: 18px;
+  color: #999999; }
+
+h5 {
+  font-size: 16px;
+  color: #999999; }
+
+h6 {
+  font-size: 14px;
+  color: #999999; }
 
 aside div#user_meta {
   padding: 10px;
@@ -45,6 +76,8 @@ aside ul {
       -moz-border-radius: 15px;
       -webkit-border-radius: 15px;
       color: #999999; }
+      aside ul li a :link {
+        color: #999999; }
 
 main header {
   padding: 20px;
@@ -61,17 +94,19 @@ main article {
     line-height: 1.375em; }
     main article div.article_text a {
       text-decoration: underline;
-      color: #19177C; }
+      color: #00147c; }
     main article div.article_text code {
       margin: 2px;
       padding: 0;
       color: #000000;
-      font-size: 14px;
+      font-size: 15px;
       font-family: 'PT Mono', monospace;
       background: #eeeeee; }
     main article div.article_text pre {
-      margin: 22px 2px 22px 2px;
+      margin: 22px 5px 22px 5px;
       padding: 2px;
+      padding-top: 10px;
+      padding-bottom: 10px;
       color: #000000;
       border-left: 3px solid #0e94ec;
       font-size: 14px;

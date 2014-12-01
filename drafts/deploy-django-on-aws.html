@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/pygments.css">
+    <link rel="stylesheet" type="text/css" href="//cloud.typography.com/7604652/646302/css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/style.css">
+
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Stefano Apostolico">
+    <meta name="description" content="Posts and writings by Stefano Apostolico">
+
+    <link href="http://stefanoapostolico.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+          title="Stefano Apostolico's Blog Atom"/>
+
+<meta name="keywords" content="python, django, aws, ansible, ngnix, uwsgi">
+<meta name="robots" content="noindex" />
+
+    <title>
+        Stefano Apostolico's Blog
+&ndash; Deploying Django app with Ansible on Amazon AWS    </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11207015-9']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+<aside>
+    <div id="user_meta">
+        <a href="http://stefanoapostolico.com">
+            <img src="/images/me.jpg" alt="logo" class="picture">
+        </a>
+        <!--<h2><a href="http://stefanoapostolico.com">Stefano Apostolico</a></h2>-->
+        <p></p>
+        <ul>
+            <li><a href="http://stefanoapostolico.com/pages/about-me.html">About me</a></li>
+            <li><a href="https://twitter.com/s_apostolico" target="_blank">twitter</a></li>
+            <li><a href="https://www.linkedin.com/pub/stefano-apostolico/1/683/814" target="_blank">linkedin</a></li>
+            <li><a href="https://github.com/saxix" target="_blank">github</a></li>
+        </ul>
+        <!--<ul class="tag-cloud">-->
+            <!---->
+            <!--<li class="tag-4"><a href="/tag/pelican.html">pelican</a></li>-->
+            <!---->
+        <!--</ul>-->
+    </div>
+</aside>
+
+<main>
+    <header>
+        <p>
+            <a href="http://stefanoapostolico.com">Index</a> &brvbar; <a href="http://stefanoapostolico.com/archives.html">Archives</a>
+            &brvbar; <a href="http://stefanoapostolico.com/feeds/all.atom.xml">Atom</a>
+        </p>
+    </header>
+
+<article>
+  <div class="article_title">
+    <h1><a href="http://stefanoapostolico.com/drafts/deploy-django-on-aws.html">Deploying Django app with Ansible on Amazon AWS</a></h1>
+  </div>
+  <div class="article_meta">
+        <p>Posted on: Wed 10 December 2014</p>
+    </div>
+  <div class="article_text">
+    
+<h3>Prerequisites</h3>
+<ul>
+<li>Amazon EC2 instance</li>
+<li>working django app :)</li>
+</ul>
+<h3>Why Ansible?</h3>
+<p>It’s agentless.  Unlike Puppet, Chef, Salt, etc.. Ansible operates only over SSH (or optionally ZeroMQ), so there’s none of that crap PKI that you have to deal with using Puppet.</p>
+<p>It’s Python. I like Python.  I’ve been using it far longer than any other language. </p>
+<h3>Our stack</h3>
+<ul>
+<li>ubuntu-trusty-14.04-amd64-server-20140927 (ami-b83c0aa5)</li>
+<li>python 2.7.8</li>
+<li>ngnix</li>
+<li>uwsgi</li>
+<li>django 1.7.1</li>
+</ul>
+<p>All the stack will be compiled from source code in local directory to be totally decoupled from the system environment.</p>
+<p>I used to compile most of my stack from scratch, I started doing this some year ago when I was forced to use a very old RHEL and most of the required software was not available from the vendor's repository</p>
+<h3>Installing Ansible</h3>
+<div class="highlight"><pre>pip install ansible
+</pre></div>
+<h3>Enable your certificate</h3>
+<p>temporary enable it with <code>ssh-agent</code></p>
+<div class="highlight"><pre><span class="nx">ssh</span><span class="na">-agent</span> 
+<span class="nx">ssh</span><span class="na">-add</span> <span class="o">&lt;</span><span class="nx">YOUR_AWS_CETIFICATE</span><span class="o">&gt;</span>
+</pre></div>
+<p>or pass to ansible command line</p>
+<div class="highlight"><pre><span class="o">--</span><span class="k">private</span><span class="na">-key</span> <span class="o">&lt;</span><span class="nx">YOUR_AWS_CETIFICATE</span><span class="o">&gt;</span>
+</pre></div>
+<h3>Create Ansible inventory</h3>
+<p>Create <code>&lt;PROJCT_ROOT&gt;/deploy/hosts</code> and put the pubilc IP of your instance in it (example). This file is called <a href="http://docs.ansible.com/intro_inventory.html">inventory</a> in Ansible terminology.</p>
+<div class="highlight"><pre><span class="k">[webservers]</span>
+<span class="err">11.22.333.44</span>
+</pre></div>
+<p>To retrieve your connection string browse <a href="https://console.aws.amazon.com/ec2/v2/home?region=eu-central-1#Instances">https://console.aws.amazon.com/ec2/v2/home?region=eu-central-1#Instances</a> and click <code>Connect</code> button</p>
+<p><img alt="me" src="/images/deploy-django-on-aws/aws-connect.png"/></p>
+<h3>Test connection</h3>
+<div class="highlight"><pre><span class="nx">ansible</span> <span class="kc">all</span> <span class="na">-m</span> <span class="nx">ping</span> <span class="na">-u</span> <span class="o">&lt;</span><span class="nx">USER</span><span class="o">&gt;</span>
+</pre></div>
+<p>you should receive a respose like:</p>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="n">USER</span><span class="o">&gt;</span><span class="mf">@11.22.333.44</span> <span class="o">|</span> <span class="n">success</span> <span class="o">&gt;&gt;</span> <span class="p">{</span>
+   <span class="s">"changed"</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
+    <span class="s">"ping"</span><span class="o">:</span> <span class="s">"pong"</span>
+<span class="p">}</span>
+</pre></div>
+<blockquote>
+<p>We create the full stack in one single machine, change the scripts to deploy on dedicated hardware for each tier will need minor improvements to the configuration</p>
+</blockquote>
+<h3>Create provision.yml</h3>
+  </div>
+  <div class="article_meta">
+    <!--<p>Posted on: Wed 10 December 2014</p>-->
+    <p>Category: <a href="http://stefanoapostolico.com/category/articles.html">articles</a>
+ &ndash; Tags:
+      <a href="http://stefanoapostolico.com/tag/python.html">python</a>,      <a href="http://stefanoapostolico.com/tag/django.html">django</a>,      <a href="http://stefanoapostolico.com/tag/aws.html">aws</a>,      <a href="http://stefanoapostolico.com/tag/ansible.html">ansible</a>,      <a href="http://stefanoapostolico.com/tag/ngnix.html">ngnix</a>,      <a href="http://stefanoapostolico.com/tag/uwsgi.html">uwsgi</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "drafts/deploy-django-on-aws.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+        <p>&copy; 2014 Stefano Apostolico. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>.
+Member of the <a href="http://internetdefenseleague.org">Internet Defense
+                League</a>.</p>
+    </div>
+</main>
+<script type="text/javascript">
+  window._idl = {};
+  _idl.variant = "banner";
+  (function() {
+    var idl = document.createElement('script');
+    idl.type = 'text/javascript';
+    idl.async = true;
+    idl.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'members.internetdefenseleague.org/include/?url=' + (_idl.url || '') + '&campaign=' + (_idl.campaign || '') + '&variant=' + (_idl.variant || 'banner');
+    document.getElementsByTagName('body')[0].appendChild(idl);
+  })();
+</script>
+</body>
+</html>
