@@ -56,7 +56,7 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-4"><a href="/tag/github pages.html">github pages</a></li>-->
+            <!--<li class="tag-4"><a href="/tag/python.html">python</a></li>-->
             <!---->
         <!--</ul>-->
     </div>
@@ -90,8 +90,8 @@ seem recompile and install the full stack (nginx, pelican, python....)</p>
 <p>To install Pelican and other Python package dependencies in a virtual environment, 
 I followed the instructions in the official 
 <a href="http://pelican.readthedocs.org/en/3.5.0/quickstart.html">Pelican documentation</a>.</p>
-<div class="highlight"><pre>    pip install pelican Markdown typogrify
-    pelican-quickstart
+<div class="highlight"><pre>pip install pelican Markdown typogrify
+pelican-quickstart
 </pre></div>
 <p>I enabled article pagination so that I didn't end up with all the posts on a single 
 page. The <code>Makefile</code> is incredibly useful, so I enabled that. 
@@ -138,8 +138,7 @@ and <a href="https://help.github.com/articles/my-custom-domain-isn-t-working/">h
 <h4>Get metadata from path</h4>
 <p>To store articles in a structure like 
 <code>category/YEAR/MONTH/DAY-slug</code> so I updated my <code>pelicanconf.py</code> as </p>
-<div class="highlight"><pre>   <span class="n">s</span> 
-   <span class="n">PATH_METADATA</span> <span class="o">=</span> <span class="s">'\A(?P&lt;category&gt;[^/]+)/(?P&lt;date&gt;\d{4}/\d{2}/\d{2})-(?P&lt;slug&gt;.*)(.md|.rst)'</span>
+<div class="highlight"><pre>   <span class="n">PATH_METADATA</span> <span class="o">=</span> <span class="s">'\A(?P&lt;category&gt;[^/]+)/(?P&lt;date&gt;\d{4}/\d{2}/\d{2})-(?P&lt;slug&gt;.*)(.md|.rst)'</span>
 </pre></div>
 <p>You can always override date, slug and category in your post.</p>
 <h4>Serve file with different path</h4>

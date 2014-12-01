@@ -3,22 +3,22 @@ body {
     padding: 0;
     background-color: #ffffff;
     color: #4d4d4d;
-        font-family: 'PT Sans', sans-serif;
-//        font-size: 18px;
-//    font-family: "Archer SSm A", "Archer SSm B", Georgia, serif;
-//    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-//    font-family: "RooneySans-Regular", "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
+    font-family: 'PT Sans', sans-serif;
+    //        font-size: 18px;
+    //    font-family: "Archer SSm A", "Archer SSm B", Georgia, serif;
+    //    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "RooneySans-Regular", "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
+    font-family: 'St-Marie-Pro-Black', "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
 
-    font-weight: 500;
     font-style: normal;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: normal;
 }
 
 a {
     color: #000000;
     text-decoration: none;
-    :link{
+    :link {
         color: red;
     }
 
@@ -30,23 +30,40 @@ hr {
     height: 1px;
     border: none;
 }
+
 img {
     max-width: 600px;
 }
 
-@mixin heading($size)  {
+@mixin heading($size) {
     font-size: $size;
     color: #999999;
 
 }
 
-h1 { @include heading(24px); }
-h2 { @include heading(22px); }
-h3 { @include heading(20px); }
-h4 { @include heading(18px); }
-h5 { @include heading(16px); }
-h6 { @include heading(14px); }
+h1 {
+    @include heading(24px);
+}
 
+h2 {
+    @include heading(22px);
+}
+
+h3 {
+    @include heading(20px);
+}
+
+h4 {
+    @include heading(18px);
+}
+
+h5 {
+    @include heading(16px);
+}
+
+h6 {
+    @include heading(14px);
+}
 
 aside {
     div#user_meta {
@@ -76,7 +93,10 @@ aside {
             display: inline;
             line-height: 3em;
             a {
-                :link{
+                &:visited {
+                    color: #999999;
+                }
+                &:link {
                     color: #999999;
                 }
                 padding: 5px 15px 5px 15px;
@@ -100,12 +120,22 @@ main {
             font-size: 10px;
             text-transform: uppercase;
         }
+        a {
+            color: #999999;
+            &:visited {
+                color: #999999;
+
+            }
+        }
 
     }
     article {
         max-width: 640px;
         padding: 1px 20px 80px;
         div.article_text {
+            li span{
+                display: inline;
+            }
             line-height: 1.375em;
             a {
                 text-decoration: underline;
@@ -139,7 +169,7 @@ main {
                 font-style: italic;
             }
         }
-        .simple-footnotes{
+        .simple-footnotes {
             margin-top: 80px;
             font-size: medium;
             font-style: italic;
@@ -152,8 +182,8 @@ main article div.gist {
     line-height: .875em;
 }
 
-main article div.article_meta {
-    font-size: 12px;
+main article div.article_meta *{
+    font-size: 11px;
     color: #999999;
 }
 

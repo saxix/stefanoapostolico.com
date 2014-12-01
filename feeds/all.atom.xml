@@ -11,8 +11,8 @@ seem recompile and install the full stack (nginx, pelican, python....)&lt;/p&gt;
 &lt;p&gt;To install Pelican and other Python package dependencies in a virtual environment, 
 I followed the instructions in the official 
 &lt;a href="http://pelican.readthedocs.org/en/3.5.0/quickstart.html"&gt;Pelican documentation&lt;/a&gt;.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    pip install pelican Markdown typogrify
-    pelican-quickstart
+&lt;div class="highlight"&gt;&lt;pre&gt;pip install pelican Markdown typogrify
+pelican-quickstart
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;I enabled article pagination so that I didn't end up with all the posts on a single 
 page. The &lt;code&gt;Makefile&lt;/code&gt; is incredibly useful, so I enabled that. 
@@ -59,8 +59,7 @@ and &lt;a href="https://help.github.com/articles/my-custom-domain-isn-t-working/
 &lt;h4&gt;Get metadata from path&lt;/h4&gt;
 &lt;p&gt;To store articles in a structure like 
 &lt;code&gt;category/YEAR/MONTH/DAY-slug&lt;/code&gt; so I updated my &lt;code&gt;pelicanconf.py&lt;/code&gt; as &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;   &lt;span class="n"&gt;s&lt;/span&gt; 
-   &lt;span class="n"&gt;PATH_METADATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'\A(?P&amp;lt;category&amp;gt;[^/]+)/(?P&amp;lt;date&amp;gt;\d{4}/\d{2}/\d{2})-(?P&amp;lt;slug&amp;gt;.*)(.md|.rst)'&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;   &lt;span class="n"&gt;PATH_METADATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'\A(?P&amp;lt;category&amp;gt;[^/]+)/(?P&amp;lt;date&amp;gt;\d{4}/\d{2}/\d{2})-(?P&amp;lt;slug&amp;gt;.*)(.md|.rst)'&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;You can always override date, slug and category in your post.&lt;/p&gt;
 &lt;h4&gt;Serve file with different path&lt;/h4&gt;

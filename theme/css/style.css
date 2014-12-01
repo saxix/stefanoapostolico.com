@@ -4,9 +4,10 @@ body {
   background-color: #ffffff;
   color: #4d4d4d;
   font-family: 'PT Sans', sans-serif;
-  font-weight: 500;
+  font-family: "RooneySans-Regular", "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
+  font-family: 'St-Marie-Pro-Black', "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", sans-serif;
   font-style: normal;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: normal; }
 
 a {
@@ -77,7 +78,9 @@ aside ul {
       -moz-border-radius: 15px;
       -webkit-border-radius: 15px;
       color: #999999; }
-      aside ul li a :link {
+      aside ul li a:visited {
+        color: #999999; }
+      aside ul li a:link {
         color: #999999; }
 
 main header {
@@ -88,11 +91,17 @@ main header {
     font-weight: bold;
     font-size: 10px;
     text-transform: uppercase; }
+  main header a {
+    color: #999999; }
+    main header a:visited {
+      color: #999999; }
 main article {
   max-width: 640px;
   padding: 1px 20px 80px; }
   main article div.article_text {
     line-height: 1.375em; }
+    main article div.article_text li span {
+      display: inline; }
     main article div.article_text a {
       text-decoration: underline;
       color: #00147c; }
@@ -128,8 +137,8 @@ main article {
 main article div.gist {
   line-height: .875em; }
 
-main article div.article_meta {
-  font-size: 12px;
+main article div.article_meta * {
+  font-size: 11px;
   color: #999999; }
 
 main footer {
