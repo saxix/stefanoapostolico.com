@@ -16,12 +16,11 @@
     <link href="http://stefanoapostolico.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
           title="Stefano Apostolico's Blog Atom"/>
 
-<meta name="keywords" content="it">
-<meta name="robots" content="noindex" />
+<meta name="keywords" content="locust, performance, django">
 
     <title>
         Stefano Apostolico's Blog
-&ndash; About rules, best practices and experience    </title>
+&ndash; Handle CSRF token in Locust test    </title>
 
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -68,41 +67,51 @@
 
 <article>
   <div class="article_title">
-    <h1><a href="http://stefanoapostolico.com/drafts/rules-best-practices-and-experience.html">About rules, best practices and experience</a></h1>
+    <h1><a href="http://stefanoapostolico.com/2014/12/07/hande-csrf-token-in-locust-test.html">Handle CSRF token in Locust test</a></h1>
   </div>
   <div class="article_meta">
-        <p>Tue 02 December 2014</p>
+        <p>Sun 07 December 2014</p>
     </div>
   <div class="article_text">
-    <p>What does distinguishes an architect by a good architect, 
-a developer from a good developer ?</p>
+    <p>Locust and Django CSRF</p>
 
-<p>Sometimes customers ask me a list of rules or best practices and guidelines 
-to adopt in <strong>any</strong> architecture and/or application.</p>
-<p>Every time, I try to explain that this list does not exist, 
-is like create a list of ingredients valid for all the recipes</p>
-<p>If you ask any developer 5 rules to follow to have the perfect code he will 
-look at you astonished and reply that there are many "rules" but each time 
-the important one is different.</p>
-<p>But if you show a badly written code, good programmer will find the issue and will
-be able to explain you why, sometimes simply annotating them as "code smell"</p>
-<p>A good architect is not who he apply all the patterns and best practices 
-(virtually impossible), a good architect chooses which pattern can ignore and 
-which "best practices" can be violated</p>
-<p>Design has nothing related to rules and laws, is judgement, skill, 
-knowledge, experience and high capacity for abstraction</p>
+<p>Simple solution to handle Django 
+<a href="https://docs.djangoproject.com/en/dev/ref/csrf/">Cross Site Request Forgery protection</a>
+into <a href="http://locust.io/">Locust</a> load tests</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">UserBehavior</span><span class="p">(</span><span class="n">TaskSet</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/auth/login/"</span><span class="p">)</span>
+        <span class="n">csrftoken</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">cookies</span><span class="p">[</span><span class="s">'csrftoken'</span><span class="p">]</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"/auth/login/"</span><span class="p">,</span> <span class="p">{</span><span class="s">"username"</span><span class="p">:</span> <span class="s">"admin"</span><span class="p">,</span>
+                                                     <span class="s">"password"</span><span class="p">:</span> <span class="s">"password"</span><span class="p">},</span>
+                                    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">"X-CSRFToken"</span><span class="p">:</span> <span class="n">csrftoken</span><span class="p">})</span>
+        <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span>
+
+    <span class="nd">@task</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="o">....</span>
+
+<span class="k">class</span> <span class="nc">WebsiteUser</span><span class="p">(</span><span class="n">HttpLocust</span><span class="p">):</span>
+    <span class="n">host</span> <span class="o">=</span> <span class="s">'http://localhost:8000'</span>
+    <span class="n">task_set</span> <span class="o">=</span> <span class="n">UserBehavior</span>
+    <span class="n">min_wait</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">max_wait</span> <span class="o">=</span> <span class="mi">20</span>
+</pre></div>
   </div>
   <div class="article_meta">
-    <!--<p>Posted on: Tue 02 December 2014</p>-->
+    <!--<p>Posted on: Sun 07 December 2014</p>-->
     <p>Category: <a href="http://stefanoapostolico.com/category/tech.html">tech</a>
  &ndash; Tags:
-      <a href="http://stefanoapostolico.com/tag/it.html">it</a>    </p>
+      <a href="http://stefanoapostolico.com/tag/locust.html">locust</a>,      <a href="http://stefanoapostolico.com/tag/performance.html">performance</a>,      <a href="http://stefanoapostolico.com/tag/django.html">django</a>    </p>
   </div>
 
   <div id="article_comments">
     <div id="disqus_thread"></div>
     <script type="text/javascript">
-        var disqus_identifier = "drafts/rules-best-practices-and-experience.html";
+        var disqus_identifier = "2014/12/07/hande-csrf-token-in-locust-test.html";
         (function() {
              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
              dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';

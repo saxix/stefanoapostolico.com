@@ -52,7 +52,7 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-4"><a href="/tag/pelican.html">pelican</a></li>-->
+            <!--<li class="tag-4"><a href="/tag/python.html">python</a></li>-->
             <!---->
         <!--</ul>-->
     </div>
@@ -74,7 +74,8 @@
         <p>Wed 10 December 2014</p>
     </div>
   <div class="article_text">
-    
+    <p>Simple howto deploy django project based on nginx,uwsgi,postgres on Amazon Ec2, using Ansible
+</p>
 <h3>Prerequisites</h3>
 <ul>
 <li>Amazon EC2 instance</li>
@@ -86,13 +87,24 @@
 <h3>Our stack</h3>
 <ul>
 <li>ubuntu-trusty-14.04-amd64-server-20140927 (ami-b83c0aa5)</li>
-<li>python 2.7.8</li>
+<li>python</li>
 <li>ngnix</li>
 <li>uwsgi</li>
-<li>django 1.7.1</li>
+<li>django</li>
+<li>postgres</li>
 </ul>
-<p>All the stack will be compiled from source code in local directory to be totally decoupled from the system environment.</p>
-<p>I used to compile most of my stack from scratch, I started doing this some year ago when I was forced to use a very old RHEL and most of the required software was not available from the vendor's repository</p>
+<blockquote>
+<p>As example we'll deploy a django project named <code>myproject</code></p>
+</blockquote>
+<p><strong>Note</strong></p>
+<ul>
+<li>
+<p>We install our local code (no git, no pypi), it's very easy update the script to use git/pypi</p>
+</li>
+<li>
+<p>we use setuptools to define our requirements </p>
+</li>
+</ul>
 <h3>Installing Ansible</h3>
 <div class="highlight"><pre>pip install ansible
 </pre></div>
@@ -123,7 +135,81 @@
 <blockquote>
 <p>We create the full stack in one single machine, change the scripts to deploy on dedicated hardware for each tier will need minor improvements to the configuration</p>
 </blockquote>
-<h3>Create provision.yml</h3>
+<h3>Create ansible directory tree</h3>
+<p>In the root of our project (same level of <code>setup.py</code>) create this directory tree:</p>
+<div class="highlight"><pre>deploy
++-- templates
+    --- nginx.conf
+    --- settings.py
+    --- uwsgi.ini
+    --- uwsgi.conf
++-- roles
+    +-- admin
+        +-- tasks
+            --- main.yml
+        +-- templates
+            --- main.yml
+        +-- vars
+            --- main.yml
++-- vars
+    -- global.yml
+    -- provision.yml
+    -- application.yml
++-- tasks
+    --- perms.yml
+-- provision.yml
+-- hosts
+-- deploy.yml
+</pre></div>
+<h4>Directory: vars</h4>
+<p>This directory contains most of the <a href="http://docs.ansible.com/playbooks_variables.html#defaulting-undefined-variables">Variables</a> used by our deployemet</p>
+<p><strong>vars/global.yml</strong></p>
+<div class="highlight"><pre><span class="x">prefix: "/data"</span>
+<span class="x">virtualenv: "</span><span class="cp">{{</span><span class="nv">prefix</span><span class="cp">}}</span><span class="x">/myproject-venv"</span>
+<span class="x">config:</span>
+<span class="x">    group: "www-data"</span>
+</pre></div>
+<p><strong>vars/provision.yml</strong></p>
+<div class="highlight"><pre><span class="n">nginx</span><span class="o">:</span>
+  <span class="n">server_name</span><span class="o">:</span> <span class="k">default</span>
+  <span class="n">http_port</span><span class="o">:</span> <span class="mi">80</span>
+  <span class="n">loglevel</span><span class="o">:</span> <span class="n">error</span> <span class="err">#</span> <span class="n">debug</span><span class="o">,</span> <span class="n">info</span><span class="o">,</span> <span class="n">notice</span><span class="o">,</span> <span class="n">warn</span><span class="o">,</span> <span class="n">error</span><span class="o">,</span> <span class="n">crit</span><span class="o">,</span> <span class="n">alert</span><span class="o">,</span> <span class="n">emerg</span>
+  <span class="n">static_root</span><span class="o">:</span> <span class="s2">"{{prefix}}/var/static"</span>
+  <span class="n">media_root</span><span class="o">:</span> <span class="s2">"{{prefix}}/var/media"</span>
+
+<span class="n">uwsgi</span><span class="o">:</span>
+  <span class="n">socket</span><span class="o">:</span> <span class="s1">'{{prefix}}/run/uwsgi.sock'</span> <span class="err">#</span> <span class="n">WARNING</span> <span class="n">change</span> <span class="n">nginx</span><span class="o">.</span><span class="na">upstream</span>
+  <span class="n">processes</span><span class="o">:</span> <span class="mi">2</span>
+
+
+<span class="n">system_packages</span><span class="o">:</span>
+  <span class="o">-</span> <span class="n">wget</span>
+  <span class="o">-</span> <span class="n">curl</span>
+  <span class="o">-</span> <span class="n">nginx</span>
+  <span class="o">-</span> <span class="n">python</span>
+  <span class="o">-</span> <span class="n">git</span>
+  <span class="o">-</span> <span class="n">libpq</span><span class="o">-</span><span class="n">dev</span>
+  <span class="o">-</span> <span class="n">libzmq</span><span class="o">-</span><span class="n">dev</span>
+  <span class="o">-</span> <span class="n">postgresql</span>
+  <span class="o">-</span> <span class="n">postgresql</span><span class="o">-</span><span class="n">contrib</span>
+  <span class="o">-</span> <span class="n">postgresql</span><span class="o">-</span><span class="n">client</span>
+  <span class="o">-</span> <span class="n">python</span><span class="o">-</span><span class="n">dev</span>
+  <span class="o">-</span> <span class="n">python</span><span class="o">-</span><span class="n">setuptools</span>
+  <span class="o">-</span> <span class="n">python</span><span class="o">-</span><span class="n">virtualenv</span>
+</pre></div>
+<p><strong>vars/application.yml</strong></p>
+<div class="highlight"><pre><span class="kd">package</span><span class="o">:</span>
+  <span class="n">name</span><span class="o">:</span> <span class="n">myproject</span>
+  <span class="n">version</span><span class="o">:</span> <span class="mf">0.1d</span><span class="n">ev</span>
+
+<span class="n">install</span><span class="o">:</span> <span class="s2">"file://{{prefix}}/myproject-0.1.0dev.tar.gz#egg=myproject[postgres]"</span>
+
+<span class="n">django</span><span class="o">:</span>
+  <span class="n">database</span><span class="o">:</span>
+    <span class="n">name</span><span class="o">:</span> <span class="n">myproject</span>
+  <span class="n">settings</span><span class="o">:</span> <span class="s2">"settings_production"</span>
+  <span class="n">wsgi</span><span class="o">:</span> <span class="s2">"myproject.wsgi"</span>
+</pre></div>
   </div>
   <div class="article_meta">
     <!--<p>Posted on: Wed 10 December 2014</p>-->
