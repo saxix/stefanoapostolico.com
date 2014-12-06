@@ -27,14 +27,9 @@ class UserBehavior(TaskSet):
                                     headers={"X-CSRFToken": csrftoken})
         assert response.status_code == 200, response.status_code
 
-    @task(2)
-    def trigger(self):
-        ....
           
 class WebsiteUser(HttpLocust):
     host = 'http://localhost:8000'
     task_set = UserBehavior
-    min_wait = 10
-    max_wait = 20
-
+ 
 ```
