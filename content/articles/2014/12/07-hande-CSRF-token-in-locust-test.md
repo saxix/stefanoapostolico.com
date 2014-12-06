@@ -25,8 +25,7 @@ class UserBehavior(TaskSet):
                                     {"username": "admin",
                                      "password": "password"},
                                     headers={"X-CSRFToken": csrftoken})
-        assert response.status_code == 200, response.status_code
-
+ 
           
 class WebsiteUser(HttpLocust):
     host = 'http://localhost:8000'
