@@ -21,8 +21,9 @@ class UserBehavior(TaskSet):
     def login(self):
         response = self.client.get("/auth/login/")
         csrftoken = response.cookies['csrftoken']
-        response = self.client.post("/auth/login/", {"username": "admin",
-                                                     "password": "password"},
+        response = self.client.post("/auth/login/", 
+                                    {"username": "admin",
+                                     "password": "password"},
                                     headers={"X-CSRFToken": csrftoken})
         assert response.status_code == 200, response.status_code
 
