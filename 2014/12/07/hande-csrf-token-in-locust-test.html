@@ -51,7 +51,7 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-4"><a href="/tag/python.html">python</a></li>-->
+            <!--<li class="tag-4"><a href="/tag/performance.html">performance</a></li>-->
             <!---->
         <!--</ul>-->
     </div>
@@ -85,8 +85,9 @@ into <a href="http://locust.io/">Locust</a> load tests</p>
     <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/auth/login/"</span><span class="p">)</span>
         <span class="n">csrftoken</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">cookies</span><span class="p">[</span><span class="s">'csrftoken'</span><span class="p">]</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"/auth/login/"</span><span class="p">,</span> <span class="p">{</span><span class="s">"username"</span><span class="p">:</span> <span class="s">"admin"</span><span class="p">,</span>
-                                                     <span class="s">"password"</span><span class="p">:</span> <span class="s">"password"</span><span class="p">},</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"/auth/login/"</span><span class="p">,</span> 
+                                    <span class="p">{</span><span class="s">"username"</span><span class="p">:</span> <span class="s">"admin"</span><span class="p">,</span>
+                                     <span class="s">"password"</span><span class="p">:</span> <span class="s">"password"</span><span class="p">},</span>
                                     <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">"X-CSRFToken"</span><span class="p">:</span> <span class="n">csrftoken</span><span class="p">})</span>
         <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span>
 
