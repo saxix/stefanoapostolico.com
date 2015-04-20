@@ -276,6 +276,19 @@ ld: warning: ignoring file /usr/local/lib/libodbc.dylib, file was built for x86_
 </li>
 </ul>
 <p>Solved adding <code>[FreeTDS]</code> entry in <code>odbcinst.ini</code></p>
+<ul>
+<li>Unable to connect to data source<div class="highlight"><pre><span class="n">django</span><span class="p">.</span><span class="n">db</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="nl">Error</span><span class="p">:</span> <span class="p">(</span><span class="err">'</span><span class="mi">08001</span><span class="err">'</span><span class="p">,</span> <span class="err">'</span><span class="p">[</span><span class="mi">08001</span><span class="p">]</span> <span class="p">[</span><span class="n">unixODBC</span><span class="p">][</span><span class="n">FreeTDS</span><span class="p">][</span><span class="n">SQL</span> <span class="n">Server</span><span class="p">]</span><span class="n">Unable</span> <span class="n">to</span> <span class="n">connect</span> <span class="n">to</span> <span class="n">data</span> <span class="n">source</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">SQLDriverConnect</span><span class="p">)</span><span class="err">'</span><span class="p">)</span>
+</pre></div>
+</li>
+</ul>
+<p>Got these error for many reasons, usually related to the <code>settings.py</code></p>
+<p>Solved with: </p>
+<div class="highlight"><pre>    'USERNAME': ...
+    'PASSWORD':...
+    'OPTIONS': {
+        'host_is_server': True,
+    },
+</pre></div>
   </div>
   <div class="article_meta">
     <!--<p>Posted on: Mon 20 April 2015</p>-->

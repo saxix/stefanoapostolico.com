@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/tech.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2015-04-20T12:11:34+02:00</updated><entry><title>Django &amp; MSSQL on OSX (Yosemite)</title><link href="http://stefanoapostolico.com/2015/04/20/django_mssql_osx.html" rel="alternate"></link><updated>2015-04-20T12:11:34+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2015-04-20:2015/04/20/django_mssql_osx.html</id><summary type="html">&lt;p&gt;How to connect to MSSQL from Python/Django using pyodbc; The idea is to use a stack that can be easiy replicable on a Linux box (my production target).&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/tech.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2015-04-20T12:17:40+02:00</updated><entry><title>Django &amp; MSSQL on OSX (Yosemite)</title><link href="http://stefanoapostolico.com/2015/04/20/django_mssql_osx.html" rel="alternate"></link><updated>2015-04-20T12:17:40+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2015-04-20:2015/04/20/django_mssql_osx.html</id><summary type="html">&lt;p&gt;How to connect to MSSQL from Python/Django using pyodbc; The idea is to use a stack that can be easiy replicable on a Linux box (my production target).&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;I have 2 macPro, almost identical, I spent 10  minutes to configure django+mssql on the first one, and one day on the second one.&lt;/p&gt;
@@ -201,7 +201,20 @@ ld: warning: ignoring file /usr/local/lib/libodbc.dylib, file was built for x86_
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Solved adding &lt;code&gt;[FreeTDS]&lt;/code&gt; entry in &lt;code&gt;odbcinst.ini&lt;/code&gt;&lt;/p&gt;</summary><category term="django osx"></category></entry><entry><title>Handle CSRF token in Locust test</title><link href="http://stefanoapostolico.com/2014/12/07/hande-csrf-token-in-locust-test.html" rel="alternate"></link><updated>2014-12-07T00:00:00+01:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2014-12-07:2014/12/07/hande-csrf-token-in-locust-test.html</id><summary type="html">&lt;p&gt;Locust and Django CSRF&lt;/p&gt;
+&lt;p&gt;Solved adding &lt;code&gt;[FreeTDS]&lt;/code&gt; entry in &lt;code&gt;odbcinst.ini&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Unable to connect to data source&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;django&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;utils&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nl"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;'&lt;/span&gt;&lt;span class="mi"&gt;08001&lt;/span&gt;&lt;span class="err"&gt;'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;'&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;08001&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;unixODBC&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;FreeTDS&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;SQL&lt;/span&gt; &lt;span class="n"&gt;Server&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="n"&gt;Unable&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;connect&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SQLDriverConnect&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Got these error for many reasons, usually related to the &lt;code&gt;settings.py&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Solved with: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    'USERNAME': ...
+    'PASSWORD':...
+    'OPTIONS': {
+        'host_is_server': True,
+    },
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="django osx"></category></entry><entry><title>Handle CSRF token in Locust test</title><link href="http://stefanoapostolico.com/2014/12/07/hande-csrf-token-in-locust-test.html" rel="alternate"></link><updated>2014-12-07T00:00:00+01:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2014-12-07:2014/12/07/hande-csrf-token-in-locust-test.html</id><summary type="html">&lt;p&gt;Locust and Django CSRF&lt;/p&gt;
 
 &lt;p&gt;Simple solution to handle Django 
 &lt;a href="https://docs.djangoproject.com/en/dev/ref/csrf/"&gt;Cross Site Request Forgery protection&lt;/a&gt;
