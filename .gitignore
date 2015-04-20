@@ -7,5 +7,5 @@ atlassian-ide-plugin.xml
 /*.pid
 /cache
 /pelican-plugins
-
-
+.DS_Store
+md.md
