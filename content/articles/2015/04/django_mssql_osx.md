@@ -245,4 +245,30 @@ Solved with: add `--universal` when `brew install unixodbc`
 Solved adding `[FreeTDS]` entry in `odbcinst.ini`
 
 
+* Unable to connect to data source
+
+
+		django.db.utils.Error: ('08001', '[08001] [unixODBC][FreeTDS][SQL Server]Unable to connect to data source (0) (SQLDriverConnect)')
+
+
+Got these error for many reasons, usually related to the `settings.py`
+
+Solved with: 
+
+		'USERNAME': ...
+		'PASSWORD':...
+ 		'OPTIONS': {
+            'host_is_server': True,
+        },
+
+
+
+
+
+
+
+
+
+
+
 
