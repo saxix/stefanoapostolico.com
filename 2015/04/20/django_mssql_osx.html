@@ -51,7 +51,7 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-4"><a href="/tag/locust.html">locust</a></li>-->
+            <!--<li class="tag-4"><a href="/tag/python.html">python</a></li>-->
             <!---->
         <!--</ul>-->
     </div>
@@ -216,28 +216,27 @@ rm -fr TEMP
 <div class="highlight"><pre>    <span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s">'default'</span><span class="p">:</span> <span class="p">{</span>
             <span class="s">'ENGINE'</span><span class="p">:</span> <span class="s">'sql_server.pyodbc'</span><span class="p">,</span>
-            <span class="s">'NAME'</span><span class="p">:</span> <span class="s">'Epweb'</span><span class="p">,</span>
+            <span class="s">'NAME'</span><span class="p">:</span> <span class="s">'test1'</span><span class="p">,</span>
             <span class="s">'USER'</span><span class="p">:</span> <span class="s">'username1'</span><span class="p">,</span>
             <span class="s">'PASSWORD'</span><span class="p">:</span> <span class="s">'password1'</span>
             <span class="s">'OPTIONS'</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s">'host_is_server'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-                <span class="s">'dsn'</span><span class="p">:</span> <span class="s">'OPWEB'</span>
+                <span class="s">'dsn'</span><span class="p">:</span> <span class="s">'odbc1'</span>  <span class="c"># as in odbc.ini</span>
             <span class="p">},</span>
         <span class="p">}</span>
 </pre></div>
 <p>or</p>
 <div class="highlight"><pre>DATABASES = {
-    'opweb': {
-    'ENGINE': 'sql_server.pyodbc',
-    'NAME': 'Epweb',
-    'USER': wallet.databases.opweb.user,
-    'PASSWORD': wallet.databases.opweb.password,
-    'HOST': '10.11.40.3',
-    'PORT': '1433',
-    'AUTOCOMMIT': False,
-    'OPTIONS': {
-        'host_is_server': True,
-    },
+    'default': {
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'test1',
+        'USER': 'username1',
+        'PASSWORD': 'password123',
+        'HOST': '192.168.1.1',
+        'PORT': '1433',
+        'OPTIONS': {
+            'host_is_server': True,
+        },
 },
 </pre></div>
 <p>Note anyway that FreeTDS driver does not read user credentials from odbc.ini, you have to put them in your <code>settings.py</code></p>

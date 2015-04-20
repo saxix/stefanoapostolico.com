@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/all.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2015-04-20T11:48:31+02:00</updated><entry><title>Django &amp; MSSQL on OSX (Yosemite)</title><link href="http://stefanoapostolico.com/2015/04/20/django_mssql_osx.html" rel="alternate"></link><updated>2015-04-20T11:48:31+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2015-04-20:2015/04/20/django_mssql_osx.html</id><summary type="html">&lt;p&gt;How to connect to MSSQL from Python/Django using pyodbc; The idea is to use a stack that can be easiy replicable on a Linux box (my production target).&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/all.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2015-04-20T12:11:34+02:00</updated><entry><title>Django &amp; MSSQL on OSX (Yosemite)</title><link href="http://stefanoapostolico.com/2015/04/20/django_mssql_osx.html" rel="alternate"></link><updated>2015-04-20T12:11:34+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2015-04-20:2015/04/20/django_mssql_osx.html</id><summary type="html">&lt;p&gt;How to connect to MSSQL from Python/Django using pyodbc; The idea is to use a stack that can be easiy replicable on a Linux box (my production target).&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;I have 2 macPro, almost identical, I spent 10  minutes to configure django+mssql on the first one, and one day on the second one.&lt;/p&gt;
@@ -142,28 +142,27 @@ rm -fr TEMP
 &lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;DATABASES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
         &lt;span class="s"&gt;'default'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
             &lt;span class="s"&gt;'ENGINE'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'sql_server.pyodbc'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-            &lt;span class="s"&gt;'NAME'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'Epweb'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s"&gt;'NAME'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'test1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
             &lt;span class="s"&gt;'USER'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'username1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
             &lt;span class="s"&gt;'PASSWORD'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'password1'&lt;/span&gt;
             &lt;span class="s"&gt;'OPTIONS'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
                 &lt;span class="s"&gt;'host_is_server'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                &lt;span class="s"&gt;'dsn'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'OPWEB'&lt;/span&gt;
+                &lt;span class="s"&gt;'dsn'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'odbc1'&lt;/span&gt;  &lt;span class="c"&gt;# as in odbc.ini&lt;/span&gt;
             &lt;span class="p"&gt;},&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;or&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;DATABASES = {
-    'opweb': {
-    'ENGINE': 'sql_server.pyodbc',
-    'NAME': 'Epweb',
-    'USER': wallet.databases.opweb.user,
-    'PASSWORD': wallet.databases.opweb.password,
-    'HOST': '10.11.40.3',
-    'PORT': '1433',
-    'AUTOCOMMIT': False,
-    'OPTIONS': {
-        'host_is_server': True,
-    },
+    'default': {
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'test1',
+        'USER': 'username1',
+        'PASSWORD': 'password123',
+        'HOST': '192.168.1.1',
+        'PORT': '1433',
+        'OPTIONS': {
+            'host_is_server': True,
+        },
 },
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Note anyway that FreeTDS driver does not read user credentials from odbc.ini, you have to put them in your &lt;code&gt;settings.py&lt;/code&gt;&lt;/p&gt;
