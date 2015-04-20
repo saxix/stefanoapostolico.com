@@ -171,12 +171,12 @@ you have multiple options here:
 	DATABASES = {
  		'default': {
     	    'ENGINE': 'sql_server.pyodbc',
-        	'NAME': 'Epweb',
+        	'NAME': 'test1',
         	'USER': 'username1',
         	'PASSWORD': 'password1'
 	        'OPTIONS': {
     	        'host_is_server': True,
-        	    'dsn': 'OPWEB'
+        	    'dsn': 'odbc1'  # as in odbc.ini
         	},
         }
 
@@ -184,17 +184,16 @@ you have multiple options here:
 or
 
 	DATABASES = {
-	    'opweb': {
-        'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'Epweb',
-        'USER': wallet.databases.opweb.user,
-        'PASSWORD': wallet.databases.opweb.password,
-        'HOST': '10.11.40.3',
-        'PORT': '1433',
-        'AUTOCOMMIT': False,
-        'OPTIONS': {
-            'host_is_server': True,
-        },
+	    'default': {
+        	'ENGINE': 'sql_server.pyodbc',
+        	'NAME': 'test1',
+        	'USER': 'username1',
+        	'PASSWORD': 'password123',
+        	'HOST': '192.168.1.1',
+        	'PORT': '1433',
+        	'OPTIONS': {
+            	'host_is_server': True,
+        	},
     },
 
 Note anyway that FreeTDS driver does not read user credentials from odbc.ini, you have to put them in your `settings.py`
