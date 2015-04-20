@@ -1,8 +1,8 @@
-Title: Deploying Django app with Ansible on Amazon AWS 
+Title: Amazon and full Django stack with Ansible
 tags: python, django, aws, ansible, ngnix, uwsgi
 status: draft
 
-Simple howto deploy django project based on nginx,uwsgi,postgres on Amazon Ec2, using Ansible
+howto deploy django project based on nginx,uwsgi,postgres on Amazon Ec2, using Ansible
 <!-- PELICAN_END_SUMMARY -->
 
 
@@ -166,7 +166,34 @@ django:
   wsgi: "myproject.wsgi"
 
 ```	
-		
+
+## Writing our first playbook: provision.jaml
+
+with this playbook will setup the host, installing and onfiguring all the required servers:
+
+ - ngnix
+ - uwsgi
+ - postgres
+ 
+ start the playbook
+ 
+ 
+ ```
+---
+
+- hosts: webservers
+  gather_facts: no
+
+  remote_user: "{{ remote_user }}"
+
+  vars_files:
+    - vars/global.yml
+    - vars/provision.yml
+    - vars/application.yml
+
+ ``` 		
+
+
 
 
 
