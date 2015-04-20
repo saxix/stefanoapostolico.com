@@ -21,7 +21,7 @@
 
     <title>
         Stefano Apostolico's Blog
-&ndash; Deploying Django app with Ansible on Amazon AWS    </title>
+&ndash; Amazon and full Django stack with Ansible    </title>
 
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -68,13 +68,13 @@
 
 <article>
   <div class="article_title">
-    <h1><a href="http://stefanoapostolico.com/drafts/deploy-django-on-aws.html">Deploying Django app with Ansible on Amazon AWS</a></h1>
+    <h1><a href="http://stefanoapostolico.com/drafts/deploy-django-on-aws.html">Amazon and full Django stack with Ansible</a></h1>
   </div>
   <div class="article_meta">
         <p>Wed 10 December 2014</p>
     </div>
   <div class="article_text">
-    <p>Simple howto deploy django project based on nginx,uwsgi,postgres on Amazon Ec2, using Ansible
+    <p>howto deploy django project based on nginx,uwsgi,postgres on Amazon Ec2, using Ansible
 </p>
 <h3>Prerequisites</h3>
 <ul>
@@ -210,6 +210,25 @@
   <span class="n">settings</span><span class="o">:</span> <span class="s2">"settings_production"</span>
   <span class="n">wsgi</span><span class="o">:</span> <span class="s2">"myproject.wsgi"</span>
 </pre></div>
+<h2>Writing our first playbook: provision.jaml</h2>
+<p>with this playbook will setup the host, installing and onfiguring all the required servers:</p>
+<ul>
+<li>ngnix</li>
+<li>uwsgi</li>
+<li>postgres</li>
+</ul>
+<p>start the playbook</p>
+<h2>```</h2>
+<ul>
+<li>hosts: webservers
+  gather_facts: no</li>
+</ul>
+<p>remote_user: "{{ remote_user }}"</p>
+<p>vars_files:
+    - vars/global.yml
+    - vars/provision.yml
+    - vars/application.yml</p>
+<p>```        </p>
   </div>
   <div class="article_meta">
     <!--<p>Posted on: Wed 10 December 2014</p>-->

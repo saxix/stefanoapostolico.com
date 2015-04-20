@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/pygments.css">
+
+
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/style.css">
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Stefano Apostolico">
+    <meta name="description" content="Posts and writings by Stefano Apostolico">
+
+    <link href="http://stefanoapostolico.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+          title="Stefano Apostolico's Blog Atom"/>
+
+<meta name="keywords" content="django osx">
+
+    <title>
+        Stefano Apostolico's Blog
+&ndash; Django & MSSQL on OSX (Yosemite)    </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11207015-9']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+<aside>
+    <div id="user_meta">
+        <a href="http://stefanoapostolico.com">
+            <img src="/images/me.jpg" alt="logo" class="picture">
+        </a>
+        <!--<h2><a href="http://stefanoapostolico.com">Stefano Apostolico</a></h2>-->
+        <p></p>
+        <ul>
+            <li><a href="http://stefanoapostolico.com/pages/about-me.html">About me</a></li>
+            <li><a href="https://twitter.com/s_apostolico" target="_blank">twitter</a></li>
+            <li><a href="https://www.linkedin.com/pub/stefano-apostolico/1/683/814" target="_blank">linkedin</a></li>
+            <li><a href="https://github.com/saxix" target="_blank">github</a></li>
+        </ul>
+        <!--<ul class="tag-cloud">-->
+            <!---->
+            <!--<li class="tag-4"><a href="/tag/locust.html">locust</a></li>-->
+            <!---->
+        <!--</ul>-->
+    </div>
+</aside>
+
+<main>
+    <header>
+        <p>
+            <a href="http://stefanoapostolico.com">Index</a> &brvbar; <a href="http://stefanoapostolico.com/archives.html">Archives</a>
+            &brvbar; <a href="http://stefanoapostolico.com/feeds/all.atom.xml">Atom</a>
+        </p>
+    </header>
+
+<article>
+  <div class="article_title">
+    <h1><a href="http://stefanoapostolico.com/2015/04/20/django_mssql_osx.html">Django & MSSQL on OSX (Yosemite)</a></h1>
+  </div>
+  <div class="article_meta">
+        <p>Mon 20 April 2015</p>
+    </div>
+  <div class="article_text">
+    <p>How to connect to MSSQL from Python/Django using pyodbc; The idea is to use a stack that can be easiy replicable on a Linux box (my production target).</p>
+
+<blockquote>
+<p>I have 2 macPro, almost identical, I spent 10  minutes to configure django+mssql on the first one, and one day on the second one.</p>
+<p>Here’s a step-by-step intallation that should work in any situation. Maybe I can save you some pain.</p>
+</blockquote>
+<p>The environment:</p>
+<ul>
+<li>OSX (Yosemite)</li>
+<li>Django 1.7.7</li>
+<li>python 2.7</li>
+<li>pip 6.1.1</li>
+</ul>
+<p>MSSQL Server:</p>
+<ul>
+<li>IP: 192.168.1.1</li>
+<li>port: 1433</li>
+<li>hostname: DB1</li>
+<li>database: test1</li>
+<li>user: username1</li>
+<li>password: password123</li>
+</ul>
+<p>Needs:</p>
+<ul>
+<li>
+<p><a href="http://brew.sh/">homebrew</a> The missing package manager for OS X</p>
+</li>
+<li>
+<p><a href="http://www.freetds.org/">FreeTDS</a> an open source ODBC driver. A set of libraries for Unix and Linux that allows your programs to natively talk to Microsoft SQL Server and Sybase databases.</p>
+</li>
+<li>
+<p><a href="http://www.unixodbc.org/">UnixODBC</a> driver manager, a thin wrapper around the ODBC driver</p>
+</li>
+<li>
+<p><a href="https://code.google.com/p/pyodbc/">pyodbc</a> is a Python 2.x and 3.x module that allows you to use ODBC to connect to almost any database from Windows, Linux, OS/X, and more.</p>
+</li>
+<li>
+<p><a href="https://github.com/michiya/django-pyodbc-azure">django-pyodbc-azure</a>is a Django Microsoft SQL Server external DB backend that uses ODBC by employing the pyodbc library. It supports Microsoft SQL Server and Azure SQL Database.</p>
+</li>
+</ul>
+<h5>Step 1: install homebrew</h5>
+<div class="highlight"><pre>ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+</pre></div>
+<h5>Step 2: install FreeTDS and unixODBC</h5>
+<div class="highlight"><pre>brew install unixodbc  --universal
+</pre></div>
+<h5>Step 2: install FreeTDS and unixODBC</h5>
+<div class="highlight"><pre>brew install freetds --with-unixodbc
+</pre></div>
+<p>test the libraries:</p>
+<div class="highlight"><pre>tsql -H 192.168.1.1 -U username1 -P password123 -p 1433
+locale is "en_US.UTF-8"
+locale charset is "UTF-8"
+using default charset "UTF-8"
+1&gt;
+</pre></div>
+<p>edit <code>~/.freetds.conf</code></p>
+<div class="highlight"><pre><span class="k">[db1]</span>
+<span class="na">host</span> <span class="o">=</span> <span class="s">192.168.1.1</span>
+<span class="na">port</span> <span class="o">=</span> <span class="s">1433</span>
+<span class="na">tds version</span> <span class="o">=</span> <span class="s">8.0</span>
+</pre></div>
+<p>test the config</p>
+<div class="highlight"><pre>tsql -S db -U username -P password
+locale is "en_US.UTF-8"
+locale charset is "UTF-8"
+using default charset "UTF-8"
+1&gt;
+</pre></div>
+<p>edit <code>~/.odbc.ini</code></p>
+<div class="highlight"><pre><span class="k">[odbc1]</span>
+<span class="na">Driver</span> <span class="o">=</span> <span class="s">/usr/local/lib/libtdsodbc.so</span>
+<span class="na">Server</span> <span class="o">=</span> <span class="s">192.168.1.1</span>
+<span class="na">Port</span>   <span class="o">=</span> <span class="s">1433</span>
+</pre></div>
+<p>and test it</p>
+<div class="highlight"><pre>isql odbc1 username1 password123 -vvvv
++---------------------------------------+
+| Connected!                            |
+|                                       |
+| sql-statement                         |
+| help [tablename]                      |
+| quit                                  |
+|                                       |
++---------------------------------------+
+SQL&gt;
+</pre></div>
+<p>edit <code>~/.odbcinst.ini</code></p>
+<div class="highlight"><pre><span class="k">[FreeTDS]</span>
+<span class="na">Driver</span> <span class="o">=</span> <span class="s">/usr/local/lib/libtdsodbc.so</span>
+<span class="na">Setup</span> <span class="o">=</span> <span class="s">/usr/local/lib/libtdsodbc.so</span>
+<span class="na">FileUsage</span> <span class="o">=</span> <span class="s">1</span>
+</pre></div>
+<blockquote>
+<p>Now you can edit your <code>odbc.ini</code> and change</p>
+</blockquote>
+<div class="highlight"><pre>Driver = /usr/local/lib/libtdsodbc.so
+</pre></div>
+<p>to</p>
+<div class="highlight"><pre>Driver = FreeTDS
+</pre></div>
+<h5>Step 3: download, edit and install pyodbc</h5>
+<p>pyodbc usees with unixodbc on Linux, but iODBC drivers on Mac. We need to configure the pyodbc installation such that it works with unixodbc.</p>
+<p>First we activate the virtualenv, download pyodbc, edit the setup.py to use unixodbc and install it in the virtualenv</p>
+<blockquote>
+<p>Note: I use <a href="https://virtualenvwrapper.readthedocs.org/en/latest/">virtualenv-wrappper</a> to manage virtualenvs</p>
+</blockquote>
+<div class="highlight"><pre>workon [project_virtualenv] 
+mkdir TEMP
+cd TEMP
+pip install --download . pyodbc
+unzip pyodbc-3.0.7.zip
+cd pyodbc-3.0.7
+</pre></div>
+<p>edit these lines in <code>setup.py</code>:</p>
+<div class="highlight"><pre>elif sys.platform == 'darwin':
+    # OS/X now ships with iODBC.
+    settings['libraries'].append('iodbc')
+</pre></div>
+<p>to:</p>
+<div class="highlight"><pre>elif sys.platform == 'darwin':
+    # OS/X now ships with iODBC.
+    settings['libraries'].append('odbc')
+</pre></div>
+<p>build</p>
+<div class="highlight"><pre>python setup.py build_ext --include-dirs=/usr/local/include/ --library-dirs=/usr/local/lib/
+</pre></div>
+<p>and install and remove build dir</p>
+<div class="highlight"><pre>pip install .
+cdproject
+rm -fr TEMP
+</pre></div>
+<h5>Step 4: install django database driver</h5>
+<div class="highlight"><pre>pip install django-pyodbc-azure
+</pre></div>
+<h5>Step 5: Edit your django settings</h5>
+<p>you have multiple options here:</p>
+<ul>
+<li>you can rely on your <code>~/odbc.ini</code> with</li>
+</ul>
+<div class="highlight"><pre>    <span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'default'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'ENGINE'</span><span class="p">:</span> <span class="s">'sql_server.pyodbc'</span><span class="p">,</span>
+            <span class="s">'NAME'</span><span class="p">:</span> <span class="s">'Epweb'</span><span class="p">,</span>
+            <span class="s">'USER'</span><span class="p">:</span> <span class="s">'username1'</span><span class="p">,</span>
+            <span class="s">'PASSWORD'</span><span class="p">:</span> <span class="s">'password1'</span>
+            <span class="s">'OPTIONS'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">'host_is_server'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s">'dsn'</span><span class="p">:</span> <span class="s">'OPWEB'</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+</pre></div>
+<p>or</p>
+<div class="highlight"><pre>DATABASES = {
+    'opweb': {
+    'ENGINE': 'sql_server.pyodbc',
+    'NAME': 'Epweb',
+    'USER': wallet.databases.opweb.user,
+    'PASSWORD': wallet.databases.opweb.password,
+    'HOST': '10.11.40.3',
+    'PORT': '1433',
+    'AUTOCOMMIT': False,
+    'OPTIONS': {
+        'host_is_server': True,
+    },
+},
+</pre></div>
+<p>Note anyway that FreeTDS driver does not read user credentials from odbc.ini, you have to put them in your <code>settings.py</code></p>
+<h1>Some of the errors during the way.....</h1>
+<p>Not sure why I got these errors <strong>only on one of my laptop</strong>. If anyone have the answer please let me know.</p>
+<ul>
+<li>ld: library not found for -lodbc<div class="highlight"><pre>... build/temp.macosx-10.10-intel-2.7/data/PROGETTI/ONU_WorldFoodProgramme/wfp-commonapi/TEMP/pyodbc-3.0.7/src/sqlwchar.o -L/usr/local/lib/ -lodbc -o build/lib.macosx-10.10-intel-2.7/pyodbc.so
+ld: library not found for -lodbc
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+error: command 'c++' failed with exit status 1
+</pre></div>
+</li>
+</ul>
+<p>Solved with <code>--library-dirs=/usr/local/lib/</code></p>
+<ul>
+<li>fatal error: 'sql.h' file not found<div class="highlight"><pre><span class="p">...</span> <span class="n">TEMP</span><span class="o">/</span><span class="n">pyodbc</span><span class="o">-</span><span class="mf">3.0.7</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">buffer</span><span class="p">.</span><span class="n">o</span> <span class="o">-</span><span class="n">Wno</span><span class="o">-</span><span class="n">write</span><span class="o">-</span><span class="n">strings</span> <span class="o">-</span><span class="n">Wno</span><span class="o">-</span><span class="n">deprecated</span><span class="o">-</span><span class="n">declarations</span>
+<span class="n">In</span> <span class="n">file</span> <span class="n">included</span> <span class="n">from</span> <span class="n">TEMP</span><span class="o">/</span><span class="n">pyodbc</span><span class="o">-</span><span class="mf">3.0.7</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">buffer</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">12</span><span class="o">:</span>
+<span class="n">TEMP</span><span class="o">/</span><span class="n">pyodbc</span><span class="o">-</span><span class="mf">3.0.7</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">pyodbc</span><span class="p">.</span><span class="nl">h</span><span class="p">:</span><span class="mi">52</span><span class="o">:</span><span class="mi">10</span><span class="o">:</span> <span class="n">fatal</span> <span class="nl">error</span><span class="p">:</span> <span class="err">'</span><span class="n">sql</span><span class="p">.</span><span class="n">h</span><span class="err">'</span> <span class="n">file</span> <span class="n">not</span> <span class="n">found</span>
+<span class="cp">#include &lt;sql.h&gt;</span>
+ <span class="o">^</span>
+<span class="mi">1</span> <span class="n">error</span> <span class="n">generated</span><span class="p">.</span>
+<span class="nl">error</span><span class="p">:</span> <span class="n">command</span> <span class="err">'</span><span class="n">cc</span><span class="err">'</span> <span class="n">failed</span> <span class="n">with</span> <span class="n">exit</span> <span class="n">status</span> <span class="mi">1</span>
+</pre></div>
+</li>
+</ul>
+<p>Solved with <code>--include-dirs=/usr/local/include/</code></p>
+<ul>
+<li>file was built for x86_64 which is not the architecture being linked<div class="highlight"><pre>... emp.macosx-10.10-intel-2.7/TEMP/pyodbc-3.0.7/src/pyodbcmodule.o build/temp.macosx-10.10-intel-2.7/TEMP/pyodbc-3.0.7/src/row.o build/temp.macosx-10.10-intel-2.7/TEMP/pyodbc-3.0.7/src/sqlwchar.o -L/usr/local/lib/ -lodbc -o build/lib.macosx-10.10-intel-2.7/pyodbc.so     
+ld: warning: ignoring file /usr/local/lib/libodbc.dylib, file was built for x86_64 which is not the architecture being linked (i386): /usr/local/lib/libodbc.dylib
+</pre></div>
+</li>
+</ul>
+<p>Solved with: add <code>--universal</code> when <code>brew install unixodbc</code></p>
+<ul>
+<li>'FreeTDS' : file not found <div class="highlight"><pre><span class="n">django</span><span class="p">.</span><span class="n">db</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="nl">Error</span><span class="p">:</span> <span class="p">(</span><span class="err">'</span><span class="mo">01000</span><span class="err">'</span><span class="p">,</span> <span class="s">"[01000] [unixODBC][Driver Manager]Can't open lib 'FreeTDS' : file not found (0) (SQLDriverConnect)"</span><span class="p">)</span>
+</pre></div>
+</li>
+</ul>
+<p>Solved adding <code>[FreeTDS]</code> entry in <code>odbcinst.ini</code></p>
+  </div>
+  <div class="article_meta">
+    <!--<p>Posted on: Mon 20 April 2015</p>-->
+    <p>Category: <a href="http://stefanoapostolico.com/category/tech.html">tech</a>
+ &ndash; Tags:
+      <a href="http://stefanoapostolico.com/tag/django-osx.html">django osx</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "2015/04/20/django_mssql_osx.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+        <p>&copy; 2014 Stefano Apostolico. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>.
+Member of the <a href="http://internetdefenseleague.org">Internet Defense
+                League</a>.</p>
+    </div>
+</main>
+<script type="text/javascript">
+  window._idl = {};
+  _idl.variant = "banner";
+  (function() {
+    var idl = document.createElement('script');
+    idl.type = 'text/javascript';
+    idl.async = true;
+    idl.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'members.internetdefenseleague.org/include/?url=' + (_idl.url || '') + '&campaign=' + (_idl.campaign || '') + '&variant=' + (_idl.variant || 'banner');
+    document.getElementsByTagName('body')[0].appendChild(idl);
+  })();
+</script>
+</body>
+</html>
