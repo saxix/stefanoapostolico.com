@@ -1,5 +1,6 @@
 Title: Django & MSSQL on OSX (Yosemite)
 Status: published
+Date: 2015-04-20
 category: tech
 tags: django osx 
 slug: django_mssql_osx 
