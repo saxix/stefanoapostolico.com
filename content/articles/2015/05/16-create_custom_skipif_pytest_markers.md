@@ -8,7 +8,7 @@ Quick example how to create reusable parametric 'skipif' markers
 
 <!-- PELICAN_END_SUMMARY -->
 
-[Pytest](https://pytest.org/latest/contents.html) is my favourite testing tool, it provides a lot of useful highly configurable features. The idea  is to create custom [skipif](https://pytest.org/latest/skipping.html#skipping) markers the implement a complex logic removing the need to duplicate to much code, or using logic that cannot be read easily in one line.
+[Pytest](https://pytest.org/latest/contents.html) is my favourite testing tool, it provides a lot of useful and highly configurable features. The idea  is to create custom [skipif](https://pytest.org/latest/skipping.html#skipping) markers that implement a complex logic removing the need to duplicate to much code, or using logic that cannot be read easily in one line.
 
 So instead to write these:
 
