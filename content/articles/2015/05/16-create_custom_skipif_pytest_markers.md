@@ -19,7 +19,7 @@ So instead to write these:
 I want to use this syntax:
 
 
-	@skipif_django(1.7)
+	@skipif_django('<1.7')
 	
 	@requires_app('reversion')
 	
@@ -57,7 +57,7 @@ We can use the [request](https://pytest.org/latest/builtin.html#_pytest.python.F
 
 now we can:
 
-	@skipif_django('<1.7')
+	@skipif_django('==1.7')
 	def test_one():
 		...
 
