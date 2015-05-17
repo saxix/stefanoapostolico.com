@@ -8,7 +8,7 @@
 @skipif('django.VERSION &amp;lt; (1.7))
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;I want to use this syntax:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;@skipif_django(1.7)
+&lt;div class="highlight"&gt;&lt;pre&gt;@skipif_django('&amp;lt;1.7')
 
 @requires_app('reversion')
 &lt;/pre&gt;&lt;/div&gt;
@@ -41,7 +41,7 @@
             &lt;span class="n"&gt;pytest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;skip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'skipped as django {}'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;now we can:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;@skipif_django('&amp;lt;1.7')
+&lt;div class="highlight"&gt;&lt;pre&gt;@skipif_django('==1.7')
 def test_one():
     ...
 

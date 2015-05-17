@@ -51,7 +51,7 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-4"><a href="/tag/performance.html">performance</a></li>-->
+            <!--<li class="tag-4"><a href="/tag/locust.html">locust</a></li>-->
             <!---->
         <!--</ul>-->
     </div>
@@ -82,7 +82,7 @@
 @skipif('django.VERSION &lt; (1.7))
 </pre></div>
 <p>I want to use this syntax:</p>
-<div class="highlight"><pre>@skipif_django(1.7)
+<div class="highlight"><pre>@skipif_django('&lt;1.7')
 
 @requires_app('reversion')
 </pre></div>
@@ -115,7 +115,7 @@
             <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s">'skipped as django {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span>
 </pre></div>
 <p>now we can:</p>
-<div class="highlight"><pre>@skipif_django('&lt;1.7')
+<div class="highlight"><pre>@skipif_django('==1.7')
 def test_one():
     ...
 
