@@ -2,14 +2,23 @@
 {% block title %}&ndash; Archives{% endblock %}
 
 {% block content %}
-<article>
-  <div class="article_text">
+<ul>
+    {% for year, year_articles in dates|groupby('date.year')|reverse %}
+    <li><h2>{{ year }}</h2></li>
+    {% for month, month_articles in year_articles|groupby('date.month')|reverse %}
     <ul>
-      {% for article in dates %}
-      <li><span>{{ article.locale_date }}</span> -
-      <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></li>
-      {% endfor %}
+        <li><h4>{{ month_articles[0].date.strftime('%B') }}</h4></li>
+            {% for article in month_articles %}
+            <div class="entry-archive">
+                <!--<div class="date">-->
+                    <!--<i>{{ article.date.strftime('%A %d') }}</i>-->
+                <!--</div>-->
+                <div class="detail">
+                    &nbsp;&nbsp;&nbsp;- <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
+                </div>
+            </div>
+            {% endfor %}
     </ul>
-  </div>
-</article>
-{% endblock %}
+    {% endfor %}
+    {% endfor %}
+</ul>{% endblock %}
