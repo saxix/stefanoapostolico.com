@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/pygments.css">
+
+
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/style.css">
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Stefano Apostolico">
+    <meta name="description" content="Posts and writings by Stefano Apostolico">
+
+    <link href="http://stefanoapostolico.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+          title="Stefano Apostolico's Blog Atom"/>
+
+<meta name="keywords" content="django postgis postgresql">
+
+    <title>
+        Stefano Apostolico's Blog
+&ndash; PostGIS, PostgreSQL, and Django on OS X    </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11207015-9']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+<aside>
+    <div id="user_meta">
+        <a href="http://stefanoapostolico.com">
+            <img src="/images/me.jpg" alt="logo" class="picture">
+        </a>
+        <!--<h2><a href="http://stefanoapostolico.com">Stefano Apostolico</a></h2>-->
+        <p></p>
+        <ul>
+            <li><a href="http://stefanoapostolico.com/pages/about-me.html">About me</a></li>
+            <li><a href="https://twitter.com/s_apostolico" target="_blank">twitter</a></li>
+            <li><a href="https://www.linkedin.com/pub/stefano-apostolico/1/683/814" target="_blank">linkedin</a></li>
+            <li><a href="https://github.com/saxix" target="_blank">github</a></li>
+        </ul>
+        <!--<ul class="tag-cloud">-->
+            <!---->
+            <!--<li class="tag-4"><a href="/tag/django postgis postgresql.html">django postgis postgresql</a></li>-->
+            <!---->
+        <!--</ul>-->
+    </div>
+</aside>
+
+<main>
+    <header>
+        <p>
+            <a href="http://stefanoapostolico.com">Index</a> &brvbar; <a href="http://stefanoapostolico.com/archives.html">Archives</a>
+            &brvbar; <a href="http://stefanoapostolico.com/feeds/all.atom.xml">Atom</a>
+        </p>
+    </header>
+
+<article>
+  <div class="article_title">
+    <h1><a href="http://stefanoapostolico.com/2015/06/06/osx_postgis_and_django.html">PostGIS, PostgreSQL, and Django on OS X</a></h1>
+  </div>
+  <div class="article_meta">
+        <p>Sat 06 June 2015</p>
+    </div>
+  <div class="article_text">
+    <p>Here's how I got through the installation and configuration of PostGIS on OS X (10.10 Yosemite).</p>
+
+<p>This post is mainly for my reference. I spent too much time to find a clear reproducible way to achieve the result.</p>
+<p>Here's what finally worked for me.</p>
+<h3>The stack</h3>
+<ul>
+<li>Postgresql 9.4.3</li>
+<li>PostGIS  2.1.7</li>
+<li>Python 2.7</li>
+<li>Django 1.7</li>
+</ul>
+<h2>Install PostGIS</h2>
+<p>I'm not sure I could have actually accomplished this without Homebrew. It really is a great package management tool for OS X. It handles dependencies with no pain at all.</p>
+<h4>get package info</h4>
+<div class="highlight"><pre>brew info postgis
+</pre></div>
+<p>this produce something like (partial):  </p>
+<div class="highlight"><pre><span class="n">postgis</span><span class="o">:</span> <span class="n">stable</span> <span class="mf">2.1</span><span class="o">.</span><span class="mi">7</span><span class="o">,</span> <span class="n">HEAD</span>
+<span class="n">Adds</span> <span class="n">support</span> <span class="k">for</span> <span class="n">geographic</span> <span class="n">objects</span> <span class="n">to</span> <span class="n">PostgreSQL</span>
+<span class="n">http</span><span class="o">://</span><span class="n">postgis</span><span class="o">.</span><span class="na">net</span>
+<span class="n">Not</span> <span class="n">installed</span>
+</pre></div>
+<h4>Install PostGIS</h4>
+<p>If the version you got does not match this post, try with:</p>
+<div class="highlight"><pre>brew tap postgis
+brew search postgis
+brew install homebrew/versions/postgis20
+</pre></div>
+<p>otherwise:</p>
+<div class="highlight"><pre>brew install postgis
+</pre></div>
+<p>Homebrew will install both PostGIS and PostgreSQL, check it with</p>
+<div class="highlight"><pre>brew info postgres
+brew info postgis
+</pre></div>
+<p>the default data dir <code>/usr/local/var/postgres</code> is owned by <code>root</code> and I prefre to run my database as non privileged user, first I need to chown the directory</p>
+<div class="highlight"><pre>sudo chown sax /usr/local/var/postgres
+</pre></div>
+<h4>Initialize</h4>
+<div class="highlight"><pre>initdb /usr/local/var/postgres  -E utf8
+</pre></div>
+<h4>Launch postgres</h4>
+<div class="highlight"><pre>pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+</pre></div>
+<p>To do not receive annoying messages during my daily activities I also create the standard <code>postgres</code> superuser</p>
+<div class="highlight"><pre>createuser -s -r postgres
+</pre></div>
+<h2>PostGIS Functions and Template</h2>
+<p>PostGIS essentially is a table a couple of databse views and a many functions. You need to create a "template" database to store all of them.</p>
+<p>Create the database that we use as template for any </p>
+<div class="highlight"><pre>createdb template_postgis
+psql -f /usr/local/share/postgis/postgis.sql template_postgis
+psql -f /usr/local/share/postgis/spatial_ref_sys.sql template_postgis
+</pre></div>
+<h2>Create Django database</h2>
+<div class="highlight"><pre>psql -c 'CREATE DATABASE wfp_commonapi_gis;' -U postgres;
+psql -d gis_example -c 'CREATE EXTENSION postgis;' -U postgres;
+</pre></div>
+<p>or</p>
+<div class="highlight"><pre>createdb -E UTF8 PIPPO -T template_postgis
+</pre></div>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> Do not run django test before you create the "real" PostGIS database (at least with pytest) or you get a <code>OperationalError: FATAL:  database "DBNAME" does not exist</code>. Seems that Django is not able to create a PostGIS test database if the original one does not exists.</p>
+</blockquote>
+<h2>Make PostGIS start automatically</h2>
+<p>This is done following the hint on bottom of <code>brew info postgres</code> output</p>
+<div class="highlight"><pre>ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents 
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+</pre></div>
+<h1>Put everything togheter</h1>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/usr/bin/env bash</span>
+
+<span class="nv">PGDATA</span><span class="o">=</span><span class="s2">"/usr/local/var/postgres"</span>
+<span class="nv">LOG</span><span class="o">=</span><span class="s2">"/usr/local/var/postgres/server.log"</span>
+
+brew install postgis <span class="o">||</span> <span class="nb">exit </span>1
+sudo chown sax <span class="si">${</span><span class="nv">PGDATA</span><span class="si">}</span>  <span class="o">||</span> <span class="nb">exit </span>1
+initdb <span class="si">${</span><span class="nv">PGDATA</span><span class="si">}</span> -E utf8  <span class="o">||</span> <span class="nb">exit </span>1
+
+pg_ctl -D <span class="si">${</span><span class="nv">PGDATA</span><span class="si">}</span> -l <span class="si">${</span><span class="nv">LOG</span><span class="si">}</span> start -w <span class="o">||</span> <span class="nb">exit </span>1
+
+createuser -s -r postgres  <span class="o">||</span> <span class="nb">exit </span>1
+
+createdb template_postgis <span class="o">||</span> <span class="nb">exit </span>1
+
+psql -f /usr/local/share/postgis/postgis.sql template_postgis  <span class="o">||</span> <span class="nb">exit </span>1
+psql -f /usr/local/share/postgis/spatial_ref_sys.sql template_postgis  <span class="o">||</span> <span class="nb">exit </span>1
+
+pg_ctl status
+</pre></div>
+</td></tr></table>
+  </div>
+  <div class="article_meta">
+    <!--<p>Posted on: Sat 06 June 2015</p>-->
+    <p>Category: <a href="http://stefanoapostolico.com/category/tech.html">tech</a>
+ &ndash; Tags:
+      <a href="http://stefanoapostolico.com/tag/django-postgis-postgresql.html">django postgis postgresql</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "2015/06/06/osx_postgis_and_django.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+        <p>&copy; 2014 Stefano Apostolico. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>.
+Member of the <a href="http://internetdefenseleague.org">Internet Defense
+                League</a>.</p>
+    </div>
+</main>
+<script type="text/javascript">
+  window._idl = {};
+  _idl.variant = "banner";
+  (function() {
+    var idl = document.createElement('script');
+    idl.type = 'text/javascript';
+    idl.async = true;
+    idl.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'members.internetdefenseleague.org/include/?url=' + (_idl.url || '') + '&campaign=' + (_idl.campaign || '') + '&variant=' + (_idl.variant || 'banner');
+    document.getElementsByTagName('body')[0].appendChild(idl);
+  })();
+</script>
+</body>
+</html>
