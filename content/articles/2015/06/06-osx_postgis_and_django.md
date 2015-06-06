@@ -101,9 +101,7 @@ or
 
 
 
-## Final steps
-
-#### Make PostGIS start automatically
+## Make PostGIS start automatically
 
 This is done following the hint on bottom of `brew info postgres` output
 
@@ -111,7 +109,7 @@ This is done following the hint on bottom of `brew info postgres` output
 	launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
 
 
-#### Put everything togheter
+# Put everything togheter
 
 
 ```
