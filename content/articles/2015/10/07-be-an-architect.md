@@ -1,5 +1,5 @@
 Title: About rules, best practices and experience
-Status: draft
+Status: published
 category: tech
 tags: it
 slug: rules-best-practices-and-experience
@@ -22,7 +22,7 @@ the important one is different.
 But if you show a badly written code, good programmer will find the issue and will
 be able to explain you why, sometimes simply annotating them as "code smell"
 
-A good architect is not who he apply all the patterns and best practices 
+A good architect is not who apply all the patterns and best practices 
 (virtually impossible), a good architect chooses which pattern can ignore and 
 which "best practices" can be violated
 
