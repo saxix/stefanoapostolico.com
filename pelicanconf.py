@@ -10,7 +10,9 @@ PLUGIN_PATHS = ['pelican-plugins', 'pelican-plugins/pelican_youtube']
 PLUGINS = ['interlinks',
            'pelican_fontawesome',
            'related_posts',
+           'html_rst_directive',
            'summary',
+           'code_include',
            'pelican_youtube',
            # 'sitemap',
            'simple_footnotes']
@@ -71,7 +73,11 @@ DELETE_OUTPUT_DIRECTORY = True
 TAG_CLOUD_STEPS = 4
 TAG_CLOUD_MAX_ITEMS = 1
 
-STATIC_PATHS = ['images', 'extras/README.rst', 'extras/CNAME', 'extras/robots.txt']
+STATIC_PATHS = ['images',
+                'files',
+                'extras/README.rst',
+                'extras/CNAME',
+                'extras/robots.txt']
 
 EXTRA_PATH_METADATA = {
     'extras/README.rst': {'path': 'README.rst'},
