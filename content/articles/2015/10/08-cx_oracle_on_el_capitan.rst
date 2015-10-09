@@ -1,19 +1,17 @@
 :Title: cx_Oracle and System Integrity Protection (El Capitan)
 :Status: published
-:category: tech python oracle
-:tags: it
+:category: tech python 
+:tags: cx_Oracle SIP 
 :slug: install_cx_oracle_with_sip_enabled
 
 
-With the relase of El Capitan, Apple has enabled a new default security 
-oriented featured called System Integrity Protection, often called rootless, 
-in OS X 10.11 onward. 
-Rootless may cause some apps, utilities, and scripts to not function at all, 
+With the relase of El Capitan, Apple has enabled a new default security
+feature named System Integrity Protection, also called rootless.
+This may cause some apps, utilities, and scripts to not function at all, 
 even with sudo privelege, root user enabled, or admin access. 
 Oracle drivers seems one the these.
 
-
-Not interest in the long story? Here the `Solution <#solution>`_ !!!
+Not interest in the long story? Here the `trick <#solution>`_ !!!
 
 
 System Integrity Protection 
@@ -25,11 +23,7 @@ whether intentionally or accidentally, and essentially what SIP does is lock dow
 specific system level locations in the file system while simultaneously 
 preventing certain processes from attaching to system-level processes.
 
-While this security feature is effective and 
-the vast majority of Mac users should leave rootless enabled, 
-some advanced Mac users may find rootless to be overly protective. 
-
-For those wondering, System Integrity Protection locks down the following system level directories in OS X:
+For System Integrity Protection locks down the following system level directories:
 
     - /System
     - /sbin
@@ -71,7 +65,7 @@ Now, I have no idea where this path come from, anyway I have `libclntsh.dylib.11
         /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1 (compatibility version 0.0.0, current version 0.0.0)
         /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1225.1.1)
 
-we need to relync binaries to do not try to access avoided location; 
+we need to relync binaries they do not try to access avoided location; 
 to achieve this we use to command line tools `otool`_ and `install_name_tool`_
  
 
@@ -94,6 +88,7 @@ try again
 
     $ ./manage.py inspectdb --database=pasport
     ...
+    ...
     raise ImproperlyConfigured("Error loading cx_Oracle module: %s" % e)
     django.core.exceptions.ImproperlyConfigured: Error loading cx_Oracle module: dlopen(/data/VENV/capi/lib/python2.7/site-packages/cx_Oracle.so, 2): Library not loaded: /ade/dosulliv_ldapmac/oracle/ldap/lib/libnnz11.dylib
     Referenced from: /data/oracle/instantclient_11_2/libclntsh.dylib.11.1
@@ -104,12 +99,12 @@ mmmm, same problem with oracle binaries, we need to apply the same patch.
 .. html::
     <a name="solution">
 
-Solution
-========
+The trick
+=========
 
-A very simple script allow you to easily patch the files. 
+A very simple script that allow you to easily patch the files. 
 It accept two arguments, ``-o`` and ``-e`` respectively to patch oracle binaries 
-and ``cx_Oracle.so`` in the active virtualenv
+and/or ``cx_Oracle.so`` in the active virtualenv
 
 You only need to patch oracle binaries once, cx_Oracle need 
 to be patched for each virtualenv (if many)
@@ -129,8 +124,8 @@ The script
 
 
 
-Links
------
+References
+----------
 
  - `How to copy (and relink) binaries on OSX using otool and install_name_tool <http://thecourtsofchaos.com/2013/09/16/how-to-copy-and-relink-binaries-on-osx/>`_
 
@@ -138,7 +133,7 @@ Links
 
  - `Creating working dylibs <http://qin.laya.com/tech_coding_help/dylib_linking.html>`_
 
-
+ - `How to Disable System Integrity Protection (rootless) in OS X El Capitan <http://osxdaily.com/2015/10/05/disable-rootless-system-integrity-protection-mac-os-x/>`_
 
 .. _otool: http://www.unix.com/man-page/osx/1/otool/
 .. _install_name_tool: http://www.unix.com/man-page/osx/1/install_name_tool/
