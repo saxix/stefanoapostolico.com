@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/pygments.css">
+
+
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/style.css">
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Stefano Apostolico">
+    <meta name="description" content="Posts and writings by Stefano Apostolico">
+
+    <link href="http://stefanoapostolico.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+          title="Stefano Apostolico's Blog Atom"/>
+
+<meta name="keywords" content="cx_Oracle SIP">
+
+    <title>
+        Stefano Apostolico's Blog
+&ndash; cx_Oracle and System Integrity Protection (El Capitan)    </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11207015-9']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+<aside>
+    <div id="user_meta">
+        <a href="http://stefanoapostolico.com">
+            <img src="/images/me.jpg" alt="logo" class="picture">
+        </a>
+        <!--<h2><a href="http://stefanoapostolico.com">Stefano Apostolico</a></h2>-->
+        <p></p>
+        <ul>
+            <li><a href="http://stefanoapostolico.com/pages/about-me.html">About me</a></li>
+            <li><a href="https://twitter.com/s_apostolico" target="_blank">twitter</a></li>
+            <li><a href="https://www.linkedin.com/pub/stefano-apostolico/1/683/814" target="_blank">linkedin</a></li>
+            <li><a href="https://github.com/saxix" target="_blank">github</a></li>
+        </ul>
+        <!--<ul class="tag-cloud">-->
+            <!---->
+            <!--<li class="tag-4"><a href="/tag/performance.html">performance</a></li>-->
+            <!---->
+        <!--</ul>-->
+    </div>
+</aside>
+
+<main>
+    <header>
+        <p>
+            <a href="http://stefanoapostolico.com">Index</a> &brvbar; <a href="http://stefanoapostolico.com/archives.html">Archives</a>
+            &brvbar; <a href="http://stefanoapostolico.com/feeds/all.atom.xml">Atom</a>
+        </p>
+    </header>
+
+<article>
+  <div class="article_title">
+    <h1><a href="http://stefanoapostolico.com/2015/10/10/install_cx_oracle_with_sip_enabled.html">cx_Oracle and System Integrity Protection (El Capitan)</a></h1>
+  </div>
+  <div class="article_meta">
+        <p>Sat 10 October 2015</p>
+    </div>
+  <div class="article_text">
+    <p>With the relase of El Capitan, Apple has enabled a new default security
+feature named System Integrity Protection, often called rootless.
+Rootless may cause some apps, utilities, and scripts to not function at all,
+even with sudo privelege, root user enabled, or admin access.
+Oracle drivers seems one the these.</p>
+<p><em>This is not how disable SIP</em></p>
+<p>Not interest in the long story? Here the <a class="reference external" href="#solution">trick</a> !!!</p>
+<div class="section" id="system-integrity-protection">
+<h2>System Integrity Protection</h2>
+<p><a class="reference external" href="https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html">System Integrity Protection</a>
+is aimed at preventing Mac OS X compromise by malicious code,
+whether intentionally or accidentally, and essentially what SIP does is lock down
+specific system level locations in the file system while simultaneously
+preventing certain processes from attaching to system-level processes.</p>
+<p>While this security feature is effective and
+the vast majority of Mac users should leave rootless enabled,
+some advanced Mac users may find rootless to be overly protective.</p>
+<p>For those wondering, System Integrity Protection locks down the following system level directories in OS X:</p>
+<blockquote>
+<ul class="simple">
+<li>/System</li>
+<li>/sbin</li>
+<li>/usr (with the exception of /usr/local)</li>
+</ul>
+</blockquote>
+<p>There are a lot of infos how to disable rootless,
+what we want to achieve is to let cx_Oracle works without disable SIP.</p>
+<p>Let try to see what happen when we try to use cx_Oracle.</p>
+<div class="highlight"><pre><span class="nv">$ </span>./manage.py inspectdb --database<span class="o">=</span>pasport
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">"./manage.py"</span>, line 12, in &lt;module&gt;
+    execute_from_command_line<span class="o">(</span>sys.argv<span class="o">)</span>
+  ...
+  ...
+  File <span class="s2">"TEST_VIRTUALENV/lib/python2.7/site-packages/django/db/backends/oracle/base.py"</span>, line 47, in &lt;module&gt;
+    raise ImproperlyConfigured<span class="o">(</span><span class="s2">"Error loading cx_Oracle module: %s"</span> % e<span class="o">)</span>
+django.core.exceptions.ImproperlyConfigured: Error loading cx_Oracle module: dlopen<span class="o">(</span>TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so, 2<span class="o">)</span>: Library not loaded: /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1
+  Referenced from: TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
+  Reason: image not found
+</pre></div>
+</div>
+<div class="section" id="uh-oh">
+<h2>uh oh!!</h2>
+<p>cx_Oracle seems not able to find <cite>/ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1</cite>.
+Now, I have no idea where this path come from, anyway I have <cite>libclntsh.dylib.11.1</cite> in my
+<tt class="docutils literal">$ORACLE_HOME</tt> so I have to tell cx_Oracle to see there. Checking with otool confirm that</p>
+<div class="highlight"><pre><span class="nv">$ </span>otool -L TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
+TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so:
+    /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1 <span class="o">(</span>compatibility version 0.0.0, current version 0.0.0<span class="o">)</span>
+    /usr/lib/libSystem.B.dylib <span class="o">(</span>compatibility version 1.0.0, current version 1225.1.1<span class="o">)</span>
+</pre></div>
+<p>we need to relync binaries they do not try to access avoided location;
+to achieve this we use to command line tools <a class="reference external" href="http://www.unix.com/man-page/osx/1/otool/">otool</a> and <a class="reference external" href="http://www.unix.com/man-page/osx/1/install_name_tool/">install_name_tool</a></p>
+<div class="highlight"><pre>install_name_tool -change /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1 <span class="nv">$ORACLE_HOME</span>/<span class="nv">$baselib</span> TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
+</pre></div>
+<p>check the result</p>
+<div class="highlight"><pre><span class="nv">$ </span>otool -L TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
+TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so:
+    /data/oracle/instantclient_11_2/libclntsh.dylib.11.1 <span class="o">(</span>compatibility version 0.0.0, current version 0.0.0<span class="o">)</span>
+    /usr/lib/libSystem.B.dylib <span class="o">(</span>compatibility version 1.0.0, current version 1225.1.1<span class="o">)</span>
+</pre></div>
+<p>try again</p>
+<div class="highlight"><pre><span class="nv">$ </span>./manage.py inspectdb --database<span class="o">=</span>pasport
+...
+...
+raise ImproperlyConfigured<span class="o">(</span><span class="s2">"Error loading cx_Oracle module: %s"</span> % e<span class="o">)</span>
+django.core.exceptions.ImproperlyConfigured: Error loading cx_Oracle module: dlopen<span class="o">(</span>/data/VENV/capi/lib/python2.7/site-packages/cx_Oracle.so, 2<span class="o">)</span>: Library not loaded: /ade/dosulliv_ldapmac/oracle/ldap/lib/libnnz11.dylib
+Referenced from: /data/oracle/instantclient_11_2/libclntsh.dylib.11.1
+Reason: image not found
+</pre></div>
+<p>mmmm, same problem with oracle binaries, we need to apply the same patch.</p>
+<a name="solution"></a></div>
+<div class="section" id="the-trick">
+<h2>The trick</h2>
+<p>A very simple script that allow you to easily patch the files.
+It accept two arguments, <tt class="docutils literal"><span class="pre">-o</span></tt> and <tt class="docutils literal"><span class="pre">-e</span></tt> respectively to patch oracle binaries
+and/or <tt class="docutils literal">cx_Oracle.so</tt> in the active virtualenv</p>
+<p>You only need to patch oracle binaries once, cx_Oracle need
+to be patched for each virtualenv (if many)</p>
+<div class="highlight"><pre><span class="nv">$ </span>./cxOracleSIP.sh -o -e
+</pre></div>
+<p>Download <a class="reference external" href="../../../files/cxOracleSIP.sh">cxOracleSIP.sh</a></p>
+</div>
+<div class="section" id="the-script">
+<h2>The script</h2>
+<div class="highlight"><pre>#!/bin/sh
+# cxOracleSIP.sh
+# Copyright (c) 2015 Stefano Apostolico
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation
+# files (the "Software"), to deal in the Software without
+# restriction, including without limitation the rights to use,
+# copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following
+# conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+help () {
+    echo `basename $0` "[-o] [-e]"
+    echo " -o apply patch to oracle binaries ($ORACLE_HOME)"
+    [[ -z "$VIRTUAL_ENV" ]] &amp;&amp; V="need active virtualenv" || V=$VIRTUAL_ENV
+    echo " -e apply patch to cx_Oracle ($V)"
+    exit 1
+}
+
+echo $# $@
+
+[[ $# -eq 0 ]]  &amp;&amp; help
+
+while [[ $# &gt; 0 ]]
+    do
+    key="$1"
+    case $key in
+        -o)
+            ORA=1
+            ;;
+        -e) if [ -z $VIRTUAL_ENV ]; then
+                echo "ERROR: no active virtualenv"
+                exit 1
+            fi
+            ENV=1
+            ;;
+        *) help
+           exit 1
+        ;;
+    esac
+    shift # past argument or value
+done
+
+patch (){
+    echo "patching $1"
+    basetarget=`basename $1`
+    otool -L $1 | awk '/oracle/ {print $1}' | awk '/[^:]$/ ' | while read lib
+    do
+        echo "    - $lib"
+        baselib=`basename $lib`
+        if [ "$basetarget" = "$baselib" ]
+        then
+            echo "    - changing id to $baselib for $1"
+            sudo install_name_tool -id $baselib $1
+        else
+            echo "    - changing path id for $lib in $1"
+            sudo install_name_tool -change $lib $ORACLE_HOME/$baselib $1
+        fi
+    done
+}
+
+if [[ $ORA -eq 1 ]];then
+    find $ORACLE_HOME -maxdepth 1 -type f \( -perm -1 -o \( -perm -10 -o -perm -100 \) \) -print | while read target
+    do
+        patch $target
+    done
+fi
+
+if [[ $ENV -eq 1 ]];then
+    patch $VIRTUAL_ENV/lib/python2.7/site-packages/cx_Oracle.so
+fi
+</pre></div>
+<div class="section" id="references">
+<h3>References</h3>
+<blockquote>
+<ul class="simple">
+<li><a class="reference external" href="http://thecourtsofchaos.com/2013/09/16/how-to-copy-and-relink-binaries-on-osx/">How to copy (and relink) binaries on OSX using otool and install_name_tool</a></li>
+<li><a class="reference external" href="http://blog.caseylucas.com/2013/03/03/oracle-sqlplus-and-instant-client-on-mac-osx-without-dyld_library_path/">Oracle sqlplus and instant client on Mac OS/X without DYLD_LIBRARY_PATH</a></li>
+<li><a class="reference external" href="http://qin.laya.com/tech_coding_help/dylib_linking.html">Creating working dylibs</a></li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+  </div>
+  <div class="article_meta">
+    <!--<p>Posted on: Sat 10 October 2015</p>-->
+    <p>Category: <a href="http://stefanoapostolico.com/category/tech-python.html">tech python</a>
+ &ndash; Tags:
+      <a href="http://stefanoapostolico.com/tag/cx_oracle-sip.html">cx_Oracle SIP</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "2015/10/10/install_cx_oracle_with_sip_enabled.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+        <p>&copy; 2014 Stefano Apostolico. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>.
+Member of the <a href="http://internetdefenseleague.org">Internet Defense
+                League</a>.</p>
+    </div>
+</main>
+<script type="text/javascript">
+  window._idl = {};
+  _idl.variant = "banner";
+  (function() {
+    var idl = document.createElement('script');
+    idl.type = 'text/javascript';
+    idl.async = true;
+    idl.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'members.internetdefenseleague.org/include/?url=' + (_idl.url || '') + '&campaign=' + (_idl.campaign || '') + '&variant=' + (_idl.variant || 'banner');
+    document.getElementsByTagName('body')[0].appendChild(idl);
+  })();
+</script>
+</body>
+</html>
