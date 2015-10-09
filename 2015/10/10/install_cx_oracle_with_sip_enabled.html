@@ -51,7 +51,7 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-4"><a href="/tag/performance.html">performance</a></li>-->
+            <!--<li class="tag-4"><a href="/tag/python.html">python</a></li>-->
             <!---->
         <!--</ul>-->
     </div>
@@ -74,11 +74,10 @@
     </div>
   <div class="article_text">
     <p>With the relase of El Capitan, Apple has enabled a new default security
-feature named System Integrity Protection, often called rootless.
-Rootless may cause some apps, utilities, and scripts to not function at all,
+feature named System Integrity Protection, also called rootless.
+This may cause some apps, utilities, and scripts to not function at all,
 even with sudo privelege, root user enabled, or admin access.
 Oracle drivers seems one the these.</p>
-<p><em>This is not how disable SIP</em></p>
 <p>Not interest in the long story? Here the <a class="reference external" href="#solution">trick</a> !!!</p>
 <div class="section" id="system-integrity-protection">
 <h2>System Integrity Protection</h2>
@@ -87,10 +86,7 @@ is aimed at preventing Mac OS X compromise by malicious code,
 whether intentionally or accidentally, and essentially what SIP does is lock down
 specific system level locations in the file system while simultaneously
 preventing certain processes from attaching to system-level processes.</p>
-<p>While this security feature is effective and
-the vast majority of Mac users should leave rootless enabled,
-some advanced Mac users may find rootless to be overly protective.</p>
-<p>For those wondering, System Integrity Protection locks down the following system level directories in OS X:</p>
+<p>For System Integrity Protection locks down the following system level directories:</p>
 <blockquote>
 <ul class="simple">
 <li>/System</li>
@@ -253,6 +249,7 @@ fi
 <li><a class="reference external" href="http://thecourtsofchaos.com/2013/09/16/how-to-copy-and-relink-binaries-on-osx/">How to copy (and relink) binaries on OSX using otool and install_name_tool</a></li>
 <li><a class="reference external" href="http://blog.caseylucas.com/2013/03/03/oracle-sqlplus-and-instant-client-on-mac-osx-without-dyld_library_path/">Oracle sqlplus and instant client on Mac OS/X without DYLD_LIBRARY_PATH</a></li>
 <li><a class="reference external" href="http://qin.laya.com/tech_coding_help/dylib_linking.html">Creating working dylibs</a></li>
+<li><a class="reference external" href="http://osxdaily.com/2015/10/05/disable-rootless-system-integrity-protection-mac-os-x/">How to Disable System Integrity Protection (rootless) in OS X El Capitan</a></li>
 </ul>
 </blockquote>
 </div>
