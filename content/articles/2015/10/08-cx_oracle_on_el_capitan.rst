@@ -1,26 +1,28 @@
 :Title: cx_Oracle and System Integrity Protection (El Capitan)
 :Status: published
-:category: tech python 
-:tags: cx_Oracle SIP 
+:category: tech python
+:tags: cx_Oracle SIP
 :slug: install_cx_oracle_with_sip_enabled
 
 
 With the relase of El Capitan, Apple has enabled a new default security
 feature named System Integrity Protection, also called rootless.
-This may cause some apps, utilities, and scripts to not function at all, 
-even with sudo privelege, root user enabled, or admin access. 
+This may cause some apps, utilities, and scripts to not function at all,
+even with sudo privelege, root user enabled, or admin access.
 Oracle drivers seems one the these.
+
+.. PELICAN_END_SUMMARY
 
 Not interest in the long story? Here the `trick <#solution>`_ !!!
 
 
-System Integrity Protection 
+System Integrity Protection
 ===========================
 
-`System Integrity Protection <https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html>`_ 
-is aimed at preventing Mac OS X compromise by malicious code, 
-whether intentionally or accidentally, and essentially what SIP does is lock down 
-specific system level locations in the file system while simultaneously 
+`System Integrity Protection <https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html>`_
+is aimed at preventing Mac OS X compromise by malicious code,
+whether intentionally or accidentally, and essentially what SIP does is lock down
+specific system level locations in the file system while simultaneously
 preventing certain processes from attaching to system-level processes.
 
 For System Integrity Protection locks down the following system level directories:
@@ -29,7 +31,7 @@ For System Integrity Protection locks down the following system level directorie
     - /sbin
     - /usr (with the exception of /usr/local)
 
-There are a lot of infos how to disable rootless, 
+There are a lot of infos how to disable rootless,
 what we want to achieve is to let cx_Oracle works without disable SIP.
 
 
@@ -48,12 +50,12 @@ Let try to see what happen when we try to use cx_Oracle.
     django.core.exceptions.ImproperlyConfigured: Error loading cx_Oracle module: dlopen(TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so, 2): Library not loaded: /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1
       Referenced from: TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
       Reason: image not found
- 
-      
+
+
 uh oh!!
 =======
- 
- 
+
+
 cx_Oracle seems not able to find `/ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1`.
 Now, I have no idea where this path come from, anyway I have `libclntsh.dylib.11.1` in my
 ``$ORACLE_HOME`` so I have to tell cx_Oracle to see there. Checking with otool confirm that
@@ -65,12 +67,12 @@ Now, I have no idea where this path come from, anyway I have `libclntsh.dylib.11
         /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1 (compatibility version 0.0.0, current version 0.0.0)
         /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1225.1.1)
 
-we need to relync binaries they do not try to access avoided location; 
+we need to relync binaries they do not try to access avoided location;
 to achieve this we use to command line tools `otool`_ and `install_name_tool`_
- 
+
 
 .. code-block:: bash
-    
+
     install_name_tool -change /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1 $ORACLE_HOME/$baselib TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
 
 check the result
@@ -102,14 +104,14 @@ mmmm, same problem with oracle binaries, we need to apply the same patch.
 The trick
 =========
 
-A very simple script that allow you to easily patch the files. 
-It accept two arguments, ``-o`` and ``-e`` respectively to patch oracle binaries 
+A very simple script that allow you to easily patch the files.
+It accept two arguments, ``-o`` and ``-e`` respectively to patch oracle binaries
 and/or ``cx_Oracle.so`` in the active virtualenv
 
-You only need to patch oracle binaries once, cx_Oracle need 
+You only need to patch oracle binaries once, cx_Oracle need
 to be patched for each virtualenv (if many)
 
- 
+
 .. code-block:: bash
 
     $ ./cxOracleSIP.sh -o -e
