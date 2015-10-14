@@ -16,10 +16,11 @@
     <link href="http://stefanoapostolico.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
           title="Stefano Apostolico's Blog Atom"/>
 
+<meta name="keywords" content="cx_Oracle SIP">
 
     <title>
         Stefano Apostolico's Blog
-&ndash; Tag: django osx    </title>
+&ndash; cx-Oracle 5.2 on OSX (El Capitan)    </title>
 
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -61,30 +62,66 @@
         <p>
             <a href="http://stefanoapostolico.com">Index</a> &brvbar; <a href="http://stefanoapostolico.com/archives.html">Archives</a>
             &brvbar; <a href="http://stefanoapostolico.com/feeds/all.atom.xml">Atom</a>
-&gt; Tag: django osx
         </p>
     </header>
 
 <article>
   <div class="article_title">
-    <h1><a href="http://stefanoapostolico.com/2015/04/20/django_mssql_osx.html">Django & MSSQL on OSX (Yosemite)</a></h1>
+    <h1><a href="http://stefanoapostolico.com/2015/10/14/install_cxoracle_52_on_osx.html">cx-Oracle 5.2 on OSX (El Capitan)</a></h1>
   </div>
-    <div class="article_meta">
-        <p>Mon 20 April 2015</p>
+  <div class="article_meta">
+        <p>Wed 14 October 2015</p>
     </div>
-
   <div class="article_text">
-    <p>How to connect to MSSQL from Python/Django using pyodbc; The idea is to use a stack that can be easiy replicable on a Linux box (my production target).</p>
+    <p>Install cx-Oracle 5.2 on OSX (El Capitan), mostly for my reference</p>
+
+<div class="section" id="what-we-install">
+<h2>What we install</h2>
+<ul class="simple">
+<li>Oracle Instant Client 64bit 11.2.0.4.0</li>
+<li>cx-Oracle 5.2</li>
+</ul>
+<div class="highlight"><pre><span class="nb">export</span> <span class="nv">$ORACLE_HOME</span><span class="o">=</span>/data/oracle/instantclient_11_2
+mkdir -p <span class="nv">$ORACLE_HONE</span>
+
+<span class="nb">export </span><span class="nv">DYLD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ORACLE_HOME</span>
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ORACLE_HOME</span>
+
+unzip <span class="s1">'instantclient*.zip'</span> -d <span class="nv">$ORACLE_HOME</span>/..
+
+ln -s <span class="nv">$ORACLE_HOME</span>/libclntsh.dylib.11.1 <span class="nv">$ORACLE_HOME</span>/libclntsh.dylib
+pip install cx-Oracle
+</pre></div>
+</div>
+<div class="section" id="links">
+<h2>Links</h2>
+<ul class="simple">
+<li><a class="reference external" href="http://www.oracle.com/technetwork/topics/intel-macsoft-096467.html">Oracle Instant Client Downloads</a></li>
+</ul>
+</div>
 
   </div>
+  <div class="article_meta">
+    <!--<p>Posted on: Wed 14 October 2015</p>-->
+    <p>Category: <a href="http://stefanoapostolico.com/category/tech-python.html">tech python</a>
+ &ndash; Tags:
+      <a href="http://stefanoapostolico.com/tag/cx_oracle-sip.html">cx_Oracle SIP</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "2015/10/14/install_cxoracle_52_on_osx.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
 </article>
 
-
-<footer>
-<div id="paginator">
-
-</div>
-</footer>
 
     <div id="ending_message">
         <p>&copy; 2014 Stefano Apostolico. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>.
