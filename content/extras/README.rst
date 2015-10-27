@@ -1,2 +1,2 @@
 
-Personal blog at http://saxix.github.io/stefanoapostolico.com/
+Personal blog at http://stefanoapostolico.com/

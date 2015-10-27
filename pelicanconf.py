@@ -37,6 +37,19 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
+
+
+# FEED_RSS = 'feeds/%s.rss.xml'
+# FEED_ALL_RSS = 'feeds/all.rss.xml'
+# AUTHOR_FEED_RSS = 'feeds/%s.sax.rss.xml'
+# TAG_FEED_RSS = 'feeds/tags/%s.rss.xml'
+# CATEGORY_FEED_RSS= 'feeds/category/%s.rss.xml'
+FEED_MAX_ITEMS=5
+
+# AUTHOR_FEED_RSS = 'feeds/%s.rss.xml'
+# TAG_FEED_RSS = 'feeds/tags/%s.rss.xml'
+# CATEGORY_FEED_RSS= 'feeds/category/%s.rss.xml'
+
 INTERNET_DEFENSE_LEAGUE = True
 # GOOGLE_ANALYTICS = 'UA-11207015-9'
 # DISQUS_SITENAME = 'stefanoapostolico.disqus.com'

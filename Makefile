@@ -34,6 +34,7 @@ help:
 	@echo '                                                                       '
 
 html:
+	node-sass themes/sa/static/css/style.scss themes/sa/static/css/style.css
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
 
 clean:

@@ -1,7 +1,7 @@
 Title: PostGIS, PostgreSQL, and Django on OS X
 Status: published
 category: tech
-tags: django postgis postgresql
+tags: django, postgis, postgresql
 slug: osx_postgis_and_django
 
 Here's how I got through the installation and configuration of PostGIS on OS X (10.10 Yosemite).

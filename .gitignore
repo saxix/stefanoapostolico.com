@@ -10,3 +10,4 @@ atlassian-ide-plugin.xml
 .DS_Store
 md.md
 output
+node_modules

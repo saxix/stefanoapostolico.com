@@ -1,7 +1,7 @@
 :Title: cx_Oracle and System Integrity Protection (El Capitan)
 :Status: published
 :category: tech python
-:tags: cx_Oracle SIP
+:tags: cx_Oracle, SIP
 :slug: install_cx_oracle_with_sip_enabled
 
 

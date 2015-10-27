@@ -272,3 +272,14 @@ main div#ending_message {
         }
     }
 }
+
+.tags{
+    ul{
+        li{
+a{
+                @include heading(14px);
+
+}
+        }
+    }
+}

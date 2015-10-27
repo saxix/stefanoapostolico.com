@@ -2,7 +2,7 @@ Title: Django & MSSQL on OSX (Yosemite)
 Status: published
 Date: 2015-04-20
 category: tech
-tags: django osx 
+tags: django, osx 
 slug: django_mssql_osx 
 
 How to connect to MSSQL from Python/Django using pyodbc; The idea is to use a stack that can be easiy replicable on a Linux box (my production target).

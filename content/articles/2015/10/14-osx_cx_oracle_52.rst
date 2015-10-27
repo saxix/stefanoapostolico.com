@@ -1,7 +1,7 @@
 :Title: cx-Oracle 5.2 on OSX (El Capitan)
 :Status: published
 :category: tech python
-:tags: cx_Oracle SIP
+:tags: cx_Oracle, SIP
 :slug: install_cxoracle_52_on_osx
 
 
@@ -20,12 +20,12 @@ What we install
 
     export $ORACLE_HOME=/data/oracle/instantclient_11_2
     mkdir -p $ORACLE_HONE
-    
+
     export DYLD_LIBRARY_PATH=$ORACLE_HOME
     export LD_LIBRARY_PATH=$ORACLE_HOME
 
     unzip 'instantclient*.zip' -d $ORACLE_HOME/..
-    
+
     ln -s $ORACLE_HOME/libclntsh.dylib.11.1 $ORACLE_HOME/libclntsh.dylib
     pip install cx-Oracle
 
