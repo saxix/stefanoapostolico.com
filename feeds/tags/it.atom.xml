@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/tags/it.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2015-10-07T00:00:00+02:00</updated><entry><title>About rules, best practices and experience</title><link href="http://stefanoapostolico.com/2015/10/07/rules-best-practices-and-experience.html" rel="alternate"></link><updated>2015-10-07T00:00:00+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2015-10-07:2015/10/07/rules-best-practices-and-experience.html</id><summary type="html">&lt;p&gt;What does distinguishes an architect by a good architect, 
+a developer from a good developer ?&lt;/p&gt;
+
+&lt;p&gt;Sometimes customers ask me a list of rules or best practices and guidelines 
+to adopt in &lt;strong&gt;any&lt;/strong&gt; architecture and/or application.&lt;/p&gt;
+&lt;p&gt;Every time, I try to explain that this list does not exist, 
+is like create a list of ingredients valid for all the recipes&lt;/p&gt;
+&lt;p&gt;If you ask any developer 5 rules to follow to have the perfect code he will 
+look at you astonished and reply that there are many "rules" but each time 
+the important one is different.&lt;/p&gt;
+&lt;p&gt;But if you show a badly written code, good programmer will find the issue and will
+be able to explain you why, sometimes simply annotating them as "code smell"&lt;/p&gt;
+&lt;p&gt;A good architect is not who apply all the patterns and best practices 
+(virtually impossible), a good architect chooses which pattern can ignore and 
+which "best practices" can be violated&lt;/p&gt;
+&lt;p&gt;Design has nothing related to rules and laws, is judgement, skill, 
+knowledge, experience and high capacity for abstraction&lt;/p&gt;</summary><category term="it"></category></entry></feed>

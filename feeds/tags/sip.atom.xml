@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/tags/sip.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2015-10-14T00:00:00+02:00</updated><entry><title>cx-Oracle 5.2 on OSX (El Capitan)</title><link href="http://stefanoapostolico.com/2015/10/14/install_cxoracle_52_on_osx.html" rel="alternate"></link><updated>2015-10-14T00:00:00+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2015-10-14:2015/10/14/install_cxoracle_52_on_osx.html</id><summary type="html">&lt;p&gt;Install cx-Oracle 5.2 on OSX (El Capitan), mostly for my reference&lt;/p&gt;
+
+&lt;div class="section" id="what-we-install"&gt;
+&lt;h2&gt;What we install&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Oracle Instant Client 64bit 11.2.0.4.0&lt;/li&gt;
+&lt;li&gt;cx-Oracle 5.2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;$ORACLE_HOME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/oracle/instantclient_11_2
+mkdir -p &lt;span class="nv"&gt;$ORACLE_HONE&lt;/span&gt;
+
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;DYLD_LIBRARY_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$ORACLE_HOME&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$ORACLE_HOME&lt;/span&gt;
+
+unzip &lt;span class="s1"&gt;'instantclient*.zip'&lt;/span&gt; -d &lt;span class="nv"&gt;$ORACLE_HOME&lt;/span&gt;/..
+
+ln -s &lt;span class="nv"&gt;$ORACLE_HOME&lt;/span&gt;/libclntsh.dylib.11.1 &lt;span class="nv"&gt;$ORACLE_HOME&lt;/span&gt;/libclntsh.dylib
+pip install cx-Oracle
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="links"&gt;
+&lt;h2&gt;Links&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.oracle.com/technetwork/topics/intel-macsoft-096467.html"&gt;Oracle Instant Client Downloads&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</summary><category term="cx_Oracle"></category><category term="SIP"></category></entry><entry><title>cx_Oracle and System Integrity Protection (El Capitan)</title><link href="http://stefanoapostolico.com/2015/10/08/install_cx_oracle_with_sip_enabled.html" rel="alternate"></link><updated>2015-10-08T00:00:00+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2015-10-08:2015/10/08/install_cx_oracle_with_sip_enabled.html</id><summary type="html">&lt;p&gt;With the relase of El Capitan, Apple has enabled a new default security
+feature named System Integrity Protection, also called rootless.
+This may cause some apps, utilities, and scripts to not function at all,
+even with sudo privelege, root user enabled, or admin access.
+Oracle drivers seems one the these.&lt;/p&gt;
+
+&lt;p&gt;Not interest in the long story? Here the &lt;a class="reference external" href="#solution"&gt;trick&lt;/a&gt; !!!&lt;/p&gt;
+&lt;div class="section" id="system-integrity-protection"&gt;
+&lt;h2&gt;System Integrity Protection&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html"&gt;System Integrity Protection&lt;/a&gt;
+is aimed at preventing Mac OS X compromise by malicious code,
+whether intentionally or accidentally, and essentially what SIP does is lock down
+specific system level locations in the file system while simultaneously
+preventing certain processes from attaching to system-level processes.&lt;/p&gt;
+&lt;p&gt;For System Integrity Protection locks down the following system level directories:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;/System&lt;/li&gt;
+&lt;li&gt;/sbin&lt;/li&gt;
+&lt;li&gt;/usr (with the exception of /usr/local)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;There are a lot of infos how to disable rootless,
+what we want to achieve is to let cx_Oracle works without disable SIP.&lt;/p&gt;
+&lt;p&gt;Let try to see what happen when we try to use cx_Oracle.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;./manage.py inspectdb --database&lt;span class="o"&gt;=&lt;/span&gt;pasport
+Traceback &lt;span class="o"&gt;(&lt;/span&gt;most recent call last&lt;span class="o"&gt;)&lt;/span&gt;:
+  File &lt;span class="s2"&gt;"./manage.py"&lt;/span&gt;, line 12, in &amp;lt;module&amp;gt;
+    execute_from_command_line&lt;span class="o"&gt;(&lt;/span&gt;sys.argv&lt;span class="o"&gt;)&lt;/span&gt;
+  ...
+  ...
+  File &lt;span class="s2"&gt;"TEST_VIRTUALENV/lib/python2.7/site-packages/django/db/backends/oracle/base.py"&lt;/span&gt;, line 47, in &amp;lt;module&amp;gt;
+    raise ImproperlyConfigured&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Error loading cx_Oracle module: %s"&lt;/span&gt; % e&lt;span class="o"&gt;)&lt;/span&gt;
+django.core.exceptions.ImproperlyConfigured: Error loading cx_Oracle module: dlopen&lt;span class="o"&gt;(&lt;/span&gt;TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so, 2&lt;span class="o"&gt;)&lt;/span&gt;: Library not loaded: /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1
+  Referenced from: TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
+  Reason: image not found
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="uh-oh"&gt;
+&lt;h2&gt;uh oh!!&lt;/h2&gt;
+&lt;p&gt;cx_Oracle seems not able to find &lt;cite&gt;/ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1&lt;/cite&gt;.
+Now, I have no idea where this path come from, anyway I have &lt;cite&gt;libclntsh.dylib.11.1&lt;/cite&gt; in my
+&lt;tt class="docutils literal"&gt;$ORACLE_HOME&lt;/tt&gt; so I have to tell cx_Oracle to see there. Checking with otool confirm that&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;otool -L TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
+TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so:
+    /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1 &lt;span class="o"&gt;(&lt;/span&gt;compatibility version 0.0.0, current version 0.0.0&lt;span class="o"&gt;)&lt;/span&gt;
+    /usr/lib/libSystem.B.dylib &lt;span class="o"&gt;(&lt;/span&gt;compatibility version 1.0.0, current version 1225.1.1&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;we need to relync binaries they do not try to access avoided location;
+to achieve this we use to command line tools &lt;a class="reference external" href="http://www.unix.com/man-page/osx/1/otool/"&gt;otool&lt;/a&gt; and &lt;a class="reference external" href="http://www.unix.com/man-page/osx/1/install_name_tool/"&gt;install_name_tool&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;install_name_tool -change /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1 &lt;span class="nv"&gt;$ORACLE_HOME&lt;/span&gt;/&lt;span class="nv"&gt;$baselib&lt;/span&gt; TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;check the result&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;otool -L TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
+TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so:
+    /data/oracle/instantclient_11_2/libclntsh.dylib.11.1 &lt;span class="o"&gt;(&lt;/span&gt;compatibility version 0.0.0, current version 0.0.0&lt;span class="o"&gt;)&lt;/span&gt;
+    /usr/lib/libSystem.B.dylib &lt;span class="o"&gt;(&lt;/span&gt;compatibility version 1.0.0, current version 1225.1.1&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;try again&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;./manage.py inspectdb --database&lt;span class="o"&gt;=&lt;/span&gt;pasport
+...
+...
+raise ImproperlyConfigured&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Error loading cx_Oracle module: %s"&lt;/span&gt; % e&lt;span class="o"&gt;)&lt;/span&gt;
+django.core.exceptions.ImproperlyConfigured: Error loading cx_Oracle module: dlopen&lt;span class="o"&gt;(&lt;/span&gt;/data/VENV/capi/lib/python2.7/site-packages/cx_Oracle.so, 2&lt;span class="o"&gt;)&lt;/span&gt;: Library not loaded: /ade/dosulliv_ldapmac/oracle/ldap/lib/libnnz11.dylib
+Referenced from: /data/oracle/instantclient_11_2/libclntsh.dylib.11.1
+Reason: image not found
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;mmmm, same problem with oracle binaries, we need to apply the same patch.&lt;/p&gt;
+&lt;a name="solution"&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;div class="section" id="the-trick"&gt;
+&lt;h2&gt;The trick&lt;/h2&gt;
+&lt;p&gt;A very simple script that allow you to easily patch the files.
+It accept two arguments, &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-o&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-e&lt;/span&gt;&lt;/tt&gt; respectively to patch oracle binaries
+and/or &lt;tt class="docutils literal"&gt;cx_Oracle.so&lt;/tt&gt; in the active virtualenv&lt;/p&gt;
+&lt;p&gt;You only need to patch oracle binaries once, cx_Oracle need
+to be patched for each virtualenv (if many)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;./cxOracleSIP.sh -o -e
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Download &lt;a class="reference external" href="../../../files/cxOracleSIP.sh"&gt;cxOracleSIP.sh&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-script"&gt;
+&lt;h2&gt;The script&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#!/bin/sh
+# cxOracleSIP.sh
+# Copyright (c) 2015 Stefano Apostolico
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation
+# files (the "Software"), to deal in the Software without
+# restriction, including without limitation the rights to use,
+# copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following
+# conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+help () {
+    echo `basename $0` "[-o] [-e]"
+    echo " -o apply patch to oracle binaries ($ORACLE_HOME)"
+    [[ -z "$VIRTUAL_ENV" ]] &amp;amp;&amp;amp; V="need active virtualenv" || V=$VIRTUAL_ENV
+    echo " -e apply patch to cx_Oracle ($V)"
+    exit 1
+}
+
+echo $# $@
+
+[[ $# -eq 0 ]]  &amp;amp;&amp;amp; help
+
+while [[ $# &amp;gt; 0 ]]
+    do
+    key="$1"
+    case $key in
+        -o)
+            ORA=1
+            ;;
+        -e) if [ -z $VIRTUAL_ENV ]; then
+                echo "ERROR: no active virtualenv"
+                exit 1
+            fi
+            ENV=1
+            ;;
+        *) help
+           exit 1
+        ;;
+    esac
+    shift # past argument or value
+done
+
+patch (){
+    echo "patching $1"
+    basetarget=`basename $1`
+    otool -L $1 | awk '/oracle/ {print $1}' | awk '/[^:]$/ ' | while read lib
+    do
+        echo "    - $lib"
+        baselib=`basename $lib`
+        if [ "$basetarget" = "$baselib" ]
+        then
+            echo "    - changing id to $baselib for $1"
+            sudo install_name_tool -id $baselib $1
+        else
+            echo "    - changing path id for $lib in $1"
+            sudo install_name_tool -change $lib $ORACLE_HOME/$baselib $1
+        fi
+    done
+}
+
+if [[ $ORA -eq 1 ]];then
+    find $ORACLE_HOME -maxdepth 1 -type f \( -perm -1 -o \( -perm -10 -o -perm -100 \) \) -print | while read target
+    do
+        patch $target
+    done
+fi
+
+if [[ $ENV -eq 1 ]];then
+    patch $VIRTUAL_ENV/lib/python2.7/site-packages/cx_Oracle.so
+fi
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="references"&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://thecourtsofchaos.com/2013/09/16/how-to-copy-and-relink-binaries-on-osx/"&gt;How to copy (and relink) binaries on OSX using otool and install_name_tool&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://blog.caseylucas.com/2013/03/03/oracle-sqlplus-and-instant-client-on-mac-osx-without-dyld_library_path/"&gt;Oracle sqlplus and instant client on Mac OS/X without DYLD_LIBRARY_PATH&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://qin.laya.com/tech_coding_help/dylib_linking.html"&gt;Creating working dylibs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://osxdaily.com/2015/10/05/disable-rootless-system-integrity-protection-mac-os-x/"&gt;How to Disable System Integrity Protection (rootless) in OS X El Capitan&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</summary><category term="cx_Oracle"></category><category term="SIP"></category></entry></feed>
