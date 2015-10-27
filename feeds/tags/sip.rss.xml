@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/tech-python.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2015-10-14T00:00:00+02:00</updated><entry><title>cx-Oracle 5.2 on OSX (El Capitan)</title><link href="http://stefanoapostolico.com/2015/10/14/install_cxoracle_52_on_osx.html" rel="alternate"></link><updated>2015-10-14T00:00:00+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2015-10-14:2015/10/14/install_cxoracle_52_on_osx.html</id><summary type="html">&lt;p&gt;Install cx-Oracle 5.2 on OSX (El Capitan), mostly for my reference&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Stefano Apostolico's Blog</title><link>http://stefanoapostolico.com/</link><description></description><atom:link href="http://stefanoapostolico.com/feeds/tags/sip.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 14 Oct 2015 00:00:00 +0200</lastBuildDate><item><title>cx-Oracle 5.2 on OSX (El Capitan)</title><link>http://stefanoapostolico.com/2015/10/14/install_cxoracle_52_on_osx.html</link><description>&lt;p&gt;Install cx-Oracle 5.2 on OSX (El Capitan), mostly for my reference&lt;/p&gt;
 
 &lt;div class="section" id="what-we-install"&gt;
 &lt;h2&gt;What we install&lt;/h2&gt;
@@ -25,7 +25,7 @@ pip install cx-Oracle
 &lt;li&gt;&lt;a class="reference external" href="http://www.oracle.com/technetwork/topics/intel-macsoft-096467.html"&gt;Oracle Instant Client Downloads&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="cx_Oracle"></category><category term="SIP"></category></entry><entry><title>cx_Oracle and System Integrity Protection (El Capitan)</title><link href="http://stefanoapostolico.com/2015/10/08/install_cx_oracle_with_sip_enabled.html" rel="alternate"></link><updated>2015-10-08T00:00:00+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2015-10-08:2015/10/08/install_cx_oracle_with_sip_enabled.html</id><summary type="html">&lt;p&gt;With the relase of El Capitan, Apple has enabled a new default security
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Stefano Apostolico</dc:creator><pubDate>Wed, 14 Oct 2015 00:00:00 +0200</pubDate><guid>tag:stefanoapostolico.com,2015-10-14:2015/10/14/install_cxoracle_52_on_osx.html</guid><category>cx_Oracle</category><category>SIP</category></item><item><title>cx_Oracle and System Integrity Protection (El Capitan)</title><link>http://stefanoapostolico.com/2015/10/08/install_cx_oracle_with_sip_enabled.html</link><description>&lt;p&gt;With the relase of El Capitan, Apple has enabled a new default security
 feature named System Integrity Protection, also called rootless.
 This may cause some apps, utilities, and scripts to not function at all,
 even with sudo privelege, root user enabled, or admin access.
@@ -207,4 +207,4 @@ fi
 &lt;/blockquote&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="cx_Oracle"></category><category term="SIP"></category></entry></feed>
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Stefano Apostolico</dc:creator><pubDate>Thu, 08 Oct 2015 00:00:00 +0200</pubDate><guid>tag:stefanoapostolico.com,2015-10-08:2015/10/08/install_cx_oracle_with_sip_enabled.html</guid><category>cx_Oracle</category><category>SIP</category></item></channel></rss>

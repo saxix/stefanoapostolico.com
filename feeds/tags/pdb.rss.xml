@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/django.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2015-10-26T00:00:00+01:00</updated><entry><title>django and pdbpp</title><link href="http://stefanoapostolico.com/2015/10/26/django_pdbpp.html" rel="alternate"></link><updated>2015-10-26T00:00:00+01:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2015-10-26:2015/10/26/django_pdbpp.html</id><summary type="html">&lt;p&gt;Quick tips how to enable pdb with django&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Stefano Apostolico's Blog</title><link>http://stefanoapostolico.com/</link><description></description><atom:link href="http://stefanoapostolico.com/feeds/tags/pdb.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 26 Oct 2015 00:00:00 +0100</lastBuildDate><item><title>django and pdbpp</title><link>http://stefanoapostolico.com/2015/10/26/django_pdbpp.html</link><description>&lt;p&gt;Quick tips how to enable pdb with django&lt;/p&gt;
 
 &lt;p&gt;&lt;a class="reference external" href="https://bitbucket.org/antocuni/pdb/src"&gt;pdbpp&lt;/a&gt; is my favourite debugger, I use integrated IDE for my development, but I still
 prefer use the command line for most of my daily work.
@@ -34,4 +34,4 @@ and I loose autocompletion feature (I know, I'm lazy).&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;./&lt;/span&gt;&lt;span class="n"&gt;manage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;migrate&lt;/span&gt; &lt;span class="n"&gt;app1&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;pdb&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;and we'll enter in the pdb screen if an error occurs&lt;/p&gt;
-</summary><category term="django"></category><category term="pdb"></category></entry></feed>
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Stefano Apostolico</dc:creator><pubDate>Mon, 26 Oct 2015 00:00:00 +0100</pubDate><guid>tag:stefanoapostolico.com,2015-10-26:2015/10/26/django_pdbpp.html</guid><category>django</category><category>pdb</category></item></channel></rss>
