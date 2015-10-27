@@ -38,11 +38,13 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 
+# FEED_ALL_ATOM = 'feeds/all.atom.xml'
+# CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
 
 # FEED_RSS = 'feeds/%s.rss.xml'
 # FEED_ALL_RSS = 'feeds/all.rss.xml'
 # AUTHOR_FEED_RSS = 'feeds/%s.sax.rss.xml'
-# TAG_FEED_RSS = 'feeds/tags/%s.rss.xml'
+TAG_FEED_RSS = 'feeds/tags/%s.rss.xml'
 # CATEGORY_FEED_RSS= 'feeds/category/%s.rss.xml'
 FEED_MAX_ITEMS=5
 
