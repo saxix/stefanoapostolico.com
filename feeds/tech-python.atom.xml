@@ -25,7 +25,7 @@ pip install cx-Oracle
 &lt;li&gt;&lt;a class="reference external" href="http://www.oracle.com/technetwork/topics/intel-macsoft-096467.html"&gt;Oracle Instant Client Downloads&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</summary><category term="cx_Oracle SIP"></category></entry><entry><title>cx_Oracle and System Integrity Protection (El Capitan)</title><link href="http://stefanoapostolico.com/2015/10/08/install_cx_oracle_with_sip_enabled.html" rel="alternate"></link><updated>2015-10-08T00:00:00+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2015-10-08:2015/10/08/install_cx_oracle_with_sip_enabled.html</id><summary type="html">&lt;p&gt;With the relase of El Capitan, Apple has enabled a new default security
+</summary><category term="cx_Oracle"></category><category term="SIP"></category></entry><entry><title>cx_Oracle and System Integrity Protection (El Capitan)</title><link href="http://stefanoapostolico.com/2015/10/08/install_cx_oracle_with_sip_enabled.html" rel="alternate"></link><updated>2015-10-08T00:00:00+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2015-10-08:2015/10/08/install_cx_oracle_with_sip_enabled.html</id><summary type="html">&lt;p&gt;With the relase of El Capitan, Apple has enabled a new default security
 feature named System Integrity Protection, also called rootless.
 This may cause some apps, utilities, and scripts to not function at all,
 even with sudo privelege, root user enabled, or admin access.
@@ -207,4 +207,4 @@ fi
 &lt;/blockquote&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="cx_Oracle SIP"></category></entry></feed>
+</summary><category term="cx_Oracle"></category><category term="SIP"></category></entry></feed>

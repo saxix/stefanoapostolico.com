@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/pygments.css">
+
+
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/style.css">
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Stefano Apostolico">
+    <meta name="description" content="Posts and writings by Stefano Apostolico">
+
+    <link href="http://stefanoapostolico.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+          title="Stefano Apostolico's Blog Atom"/>
+
+<meta name="keywords" content="django, pdb">
+
+    <title>
+        Stefano Apostolico's Blog
+&ndash; django and pdbpp    </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11207015-9']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+<aside>
+    <div id="user_meta">
+        <a href="http://stefanoapostolico.com">
+            <img src="/images/me.jpg" alt="logo" class="picture">
+        </a>
+        <!--<h2><a href="http://stefanoapostolico.com">Stefano Apostolico</a></h2>-->
+        <p></p>
+        <ul>
+            <li><a href="http://stefanoapostolico.com/pages/about-me.html">About me</a></li>
+            <li><a href="https://twitter.com/s_apostolico" target="_blank">twitter</a></li>
+            <li><a href="https://www.linkedin.com/pub/stefano-apostolico/1/683/814" target="_blank">linkedin</a></li>
+            <li><a href="https://github.com/saxix" target="_blank">github</a></li>
+        </ul>
+        <!--<ul class="tag-cloud">-->
+            <!---->
+            <!--<li class="tag-1"><a href="/tag/django.html">django</a></li>-->
+            <!---->
+        <!--</ul>-->
+    </div>
+</aside>
+
+<main>
+    <header>
+        <p>
+            <a href="http://stefanoapostolico.com">Index</a> &brvbar; <a href="http://stefanoapostolico.com/archives.html">Archives</a>
+            &brvbar; <a href="http://stefanoapostolico.com/feeds/all.atom.xml">Atom</a>
+        </p>
+    </header>
+
+<article>
+  <div class="article_title">
+    <h1><a href="http://stefanoapostolico.com/2015/10/26/django_pdbpp.html">django and pdbpp</a></h1>
+  </div>
+  <div class="article_meta">
+        <p>Mon 26 October 2015</p>
+    </div>
+  <div class="article_text">
+    <p>Quick tips how to enable pdb with django</p>
+
+<p><a class="reference external" href="https://bitbucket.org/antocuni/pdb/src">pdbpp</a> is my favourite debugger, I use integrated IDE for my development, but I still
+prefer use the command line for most of my daily work.
+I find Django sometimes cryptic when some error occurs, (ie. data migrations) this
+simple hack, enables pdb when I need, without install third party packages.</p>
+<p>It is possible run <cite>python -m pdb manage.py &lt;command&gt;</cite> but this has, sometimes,
+some strange side effects, like continue prompting for restarting,
+and I loose autocompletion feature (I know, I'm lazy).</p>
+<p>In the end I rolled out this custom <cite>manage.py</cite>.</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">'DJANGO_SETTINGS_MODULE'</span><span class="p">,</span> <span class="s">'wfp_commonapi.settings._</span><span class="si">%s</span><span class="s">'</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">'USER'</span><span class="p">])</span>
+    <span class="kn">from</span> <span class="nn">django.core.management</span> <span class="kn">import</span> <span class="n">execute_from_command_line</span>
+
+    <span class="n">debug_on_error</span> <span class="o">=</span> <span class="s">'--pdb'</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="k">if</span> <span class="n">a</span> <span class="o">!=</span> <span class="s">'--pdb'</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">execute_from_command_line</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">debug_on_error</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">pdb</span><span class="o">,</span> <span class="nn">traceback</span>
+            <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">tb</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+            <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+            <span class="n">pdb</span><span class="o">.</span><span class="n">post_mortem</span><span class="p">(</span><span class="n">tb</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span>
+</pre></div>
+<p>now I can</p>
+<div class="highlight"><pre><span class="o">./</span><span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">migrate</span> <span class="n">app1</span> <span class="o">--</span><span class="n">pdb</span>
+</pre></div>
+<p>and we'll enter in the pdb screen if an error occurs</p>
+
+  </div>
+  <div class="article_meta">
+    <!--<p>Posted on: Mon 26 October 2015</p>-->
+    <p>Category: <a href="http://stefanoapostolico.com/category/django.html">django</a>
+ &ndash; Tags:
+      <a href="http://stefanoapostolico.com/tag/django.html">django</a>,      <a href="http://stefanoapostolico.com/tag/pdb.html">pdb</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "2015/10/26/django_pdbpp.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+        <p>&copy; 2014 Stefano Apostolico. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>.
+Member of the <a href="http://internetdefenseleague.org">Internet Defense
+                League</a>.</p>
+    </div>
+</main>
+<script type="text/javascript">
+  window._idl = {};
+  _idl.variant = "banner";
+  (function() {
+    var idl = document.createElement('script');
+    idl.type = 'text/javascript';
+    idl.async = true;
+    idl.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'members.internetdefenseleague.org/include/?url=' + (_idl.url || '') + '&campaign=' + (_idl.campaign || '') + '&variant=' + (_idl.variant || 'banner');
+    document.getElementsByTagName('body')[0].appendChild(idl);
+  })();
+</script>
+</body>
+</html>
