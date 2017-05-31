@@ -18,11 +18,12 @@
     <link href="http://stefanoapostolico.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
           title="Stefano Apostolico's Blog RSS"/>
 
-<meta name="keywords" content="locust, performance, django">
+<meta name="keywords" content="python, devpi">
+<meta name="robots" content="noindex" />
 
     <title>
         Stefano Apostolico's Blog
-&ndash; Handle CSRF token in Locust test    </title>
+&ndash; Test your python package with devpi    </title>
 
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -70,46 +71,59 @@
 
 <article>
   <div class="article_title">
-    <h1><a href="http://stefanoapostolico.com/2014/12/07/hande-csrf-token-in-locust-test.html">Handle CSRF token in Locust test</a></h1>
+    <h1><a href="http://stefanoapostolico.com/drafts/working_with_devpi.html">Test your python package with devpi</a></h1>
   </div>
   <div class="article_meta">
-        <p>Sun 07 December 2014</p>
+        <p>Sat 28 November 2015</p>
     </div>
   <div class="article_text">
-    <p>Locust and Django CSRF</p>
+    <p><a href="http://doc.devpi.net/latest/quickstart">devpi</a> ia a PyPI-compatible server, it can save a lot of time developing python packages. </p>
 
-<p>Simple solution to handle Django 
-<a href="https://docs.djangoproject.com/en/dev/ref/csrf/">Cross Site Request Forgery protection</a>
-into <a href="http://locust.io/">Locust</a> load tests</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">UserBehavior</span><span class="p">(</span><span class="n">TaskSet</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+<h3>Scenario</h3>
+<p>You have ProjectA that depends on PackageB, and you need to patch/upgrade PackageB. So you start coding, run tests and when you are ready to release PackageB, you want to test it as dependency in ProjectA. Now you can:</p>
+<ul>
+<li>
+<p>import PackageB with <code>pip install PackageB.tar.gz</code> in ProjectB virtualenv</p>
+</li>
+<li>
+<p>make a develop install <code>pip install -e &lt;PackageB source directory&gt;</code></p>
+</li>
+</ul>
+<p>This works pretty well if you need to run the tests of ProjectA into the development virtualenv, but what if you want to test ProjectA using tox? </p>
+<p>Tox will create a new virtualenv for each configuration and will look for dependencies in <code>pypi.wfp.org</code> or any other configured index server, it does not know anything about your local <code>PackageB.tar.gz</code>. Of course</p>
+<p>Or you want t   </p>
+<p>Quick tips how to enable pdb with django</p>
+<p><img alt="main" src="/images/devpi/main.png"/></p>
+<div class="highlight"><pre>mkvirtualenv sax
 
-    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/auth/login/"</span><span class="p">)</span>
-        <span class="n">csrftoken</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">cookies</span><span class="p">[</span><span class="s">'csrftoken'</span><span class="p">]</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"/auth/login/"</span><span class="p">,</span> 
-                                    <span class="p">{</span><span class="s">"username"</span><span class="p">:</span> <span class="s">"admin"</span><span class="p">,</span>
-                                     <span class="s">"password"</span><span class="p">:</span> <span class="s">"password"</span><span class="p">},</span>
-                                    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">"X-CSRFToken"</span><span class="p">:</span> <span class="n">csrftoken</span><span class="p">})</span>
+pip install devpi-server==2.3.1 \
+            devpi-web==2.4.1 \
+            devpi-client==2.3.1 \
+            devpi-findlinks==1.0.1
 
 
-<span class="k">class</span> <span class="nc">WebsiteUser</span><span class="p">(</span><span class="n">HttpLocust</span><span class="p">):</span>
-    <span class="n">host</span> <span class="o">=</span> <span class="s">'http://localhost:8000'</span>
-    <span class="n">task_set</span> <span class="o">=</span> <span class="n">UserBehavior</span>
+devpi-server --start
+
+
+devpi user -c sax
+devpi login sax
+devpi index -c dev
+devpi use dev
+
+devpi upload
 </pre></div>
   </div>
   <div class="article_meta">
-    <!--<p>Posted on: Sun 07 December 2014</p>-->
+    <!--<p>Posted on: Sat 28 November 2015</p>-->
     <p>Category: <a href="http://stefanoapostolico.com/category/tech.html">tech</a>
  &ndash; Tags:
-      <a href="http://stefanoapostolico.com/tag/locust.html">locust</a>,      <a href="http://stefanoapostolico.com/tag/performance.html">performance</a>,      <a href="http://stefanoapostolico.com/tag/django.html">django</a>    </p>
+      <a href="http://stefanoapostolico.com/tag/python.html">python</a>,      <a href="http://stefanoapostolico.com/tag/devpi.html">devpi</a>    </p>
   </div>
 
   <div id="article_comments">
     <div id="disqus_thread"></div>
     <script type="text/javascript">
-        var disqus_identifier = "2014/12/07/hande-csrf-token-in-locust-test.html";
+        var disqus_identifier = "drafts/working_with_devpi.html";
         (function() {
              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
              dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';

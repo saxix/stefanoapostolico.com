@@ -389,7 +389,7 @@ ld: warning: ignoring file /usr/local/lib/libodbc.dylib, file was built for x86_
     'OPTIONS': {
         'host_is_server': True,
     },
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Stefano Apostolico</dc:creator><pubDate>Mon, 20 Apr 2015 00:00:00 +0200</pubDate><guid>tag:stefanoapostolico.com,2015-04-20:2015/04/20/django_mssql_osx.html</guid><category>django</category><category>osx</category></item><item><title>Handle CSRF token in Locust test</title><link>http://stefanoapostolico.com/2014/12/07/hande-csrf-token-in-locust-test.html</link><description>&lt;p&gt;Locust and Django CSRF&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Stefano Apostolico</dc:creator><pubDate>Mon, 20 Apr 2015 00:00:00 +0200</pubDate><guid>tag:stefanoapostolico.com,2015-04-20:2015/04/20/django_mssql_osx.html</guid><category>django</category><category>osx</category></item><item><title>Handle CSRF token in Locust test</title><link>http://stefanoapostolico.com/2014/12/07/hande-CSRF-token-in-locust-test.html</link><description>&lt;p&gt;Locust and Django CSRF&lt;/p&gt;
 
 &lt;p&gt;Simple solution to handle Django 
 &lt;a href="https://docs.djangoproject.com/en/dev/ref/csrf/"&gt;Cross Site Request Forgery protection&lt;/a&gt;
@@ -410,4 +410,4 @@ into &lt;a href="http://locust.io/"&gt;Locust&lt;/a&gt; load tests&lt;/p&gt;
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WebsiteUser&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HttpLocust&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'http://localhost:8000'&lt;/span&gt;
     &lt;span class="n"&gt;task_set&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;UserBehavior&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Stefano Apostolico</dc:creator><pubDate>Sun, 07 Dec 2014 00:00:00 +0100</pubDate><guid>tag:stefanoapostolico.com,2014-12-07:2014/12/07/hande-csrf-token-in-locust-test.html</guid><category>locust</category><category>performance</category><category>django</category></item></channel></rss>
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Stefano Apostolico</dc:creator><pubDate>Sun, 07 Dec 2014 00:00:00 +0100</pubDate><guid>tag:stefanoapostolico.com,2014-12-07:2014/12/07/hande-CSRF-token-in-locust-test.html</guid><category>locust</category><category>performance</category><category>django</category></item></channel></rss>

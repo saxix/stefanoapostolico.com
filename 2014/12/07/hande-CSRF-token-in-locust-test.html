@@ -18,12 +18,11 @@
     <link href="http://stefanoapostolico.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
           title="Stefano Apostolico's Blog RSS"/>
 
-<link href="http://stefanoapostolico.com/feeds/tech.atom.xml" type="application/atom+xml" rel="alternate" title="Stefano Apostolico's Blog tech Category Atom" />
-<link href="http://stefanoapostolico.com/feeds/category/tech.rss.xml" type="application/rss+xml" rel="alternate" title="Stefano Apostolico's Blog tech Category RSS" />
+<meta name="keywords" content="locust, performance, django">
 
     <title>
         Stefano Apostolico's Blog
-&ndash; Category: tech    </title>
+&ndash; Handle CSRF token in Locust test    </title>
 
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -66,107 +65,61 @@
             <a href="http://stefanoapostolico.com">Index</a> &brvbar; <a href="http://stefanoapostolico.com/archives.html">Archives</a>
             &brvbar; <a href="http://stefanoapostolico.com/feeds/all.atom.xml">Atom</a>
             &brvbar; <a href="http://stefanoapostolico.com/feeds/all.rss.xml">RSS</a>
-&gt; Category: tech
-&brvbar; <a href="http://stefanoapostolico.com/feeds/tech.atom.xml">Atom</a>
-&brvbar; <a href="http://stefanoapostolico.com/feeds/category/tech.rss.xml">RSS</a>
         </p>
     </header>
 
 <article>
   <div class="article_title">
-    <h1><a href="http://stefanoapostolico.com/2015/10/07/rules-best-practices-and-experience.html">About rules, best practices and experience</a></h1>
-  </div>
-    <div class="article_meta">
-        <p>Wed 07 October 2015</p>
-    </div>
-
-  <div class="article_text">
-    <p>What does distinguishes an architect by a good architect, 
-a developer from a good developer ?</p>
-
-  </div>
-</article>
-
-<hr />
-<article>
-  <div class="article_title">
-    <h1><a href="http://stefanoapostolico.com/2015/06/06/osx_postgis_and_django.html">PostGIS, PostgreSQL, and Django on OS X</a></h1>
-  </div>
-    <div class="article_meta">
-        <p>Sat 06 June 2015</p>
-    </div>
-
-  <div class="article_text">
-    <p>Here's how I got through the installation and configuration of PostGIS on OS X (10.10 Yosemite).</p>
-
-  </div>
-</article>
-
-<hr />
-<article>
-  <div class="article_title">
-    <h1><a href="http://stefanoapostolico.com/2015/05/16/custom_pytest_skipif_markers.html">Create custom pytest skipif markers</a></h1>
-  </div>
-    <div class="article_meta">
-        <p>Sat 16 May 2015</p>
-    </div>
-
-  <div class="article_text">
-    <p>Quick example how to create reusable parametric 'skipif' markers</p>
-
-  </div>
-</article>
-
-<hr />
-<article>
-  <div class="article_title">
-    <h1><a href="http://stefanoapostolico.com/2015/04/20/django_mssql_osx.html">Django & MSSQL on OSX (Yosemite)</a></h1>
-  </div>
-    <div class="article_meta">
-        <p>Mon 20 April 2015</p>
-    </div>
-
-  <div class="article_text">
-    <p>How to connect to MSSQL from Python/Django using pyodbc; The idea is to use a stack that can be easiy replicable on a Linux box (my production target).</p>
-
-  </div>
-</article>
-
-<hr />
-<article>
-  <div class="article_title">
     <h1><a href="http://stefanoapostolico.com/2014/12/07/hande-CSRF-token-in-locust-test.html">Handle CSRF token in Locust test</a></h1>
   </div>
-    <div class="article_meta">
+  <div class="article_meta">
         <p>Sun 07 December 2014</p>
     </div>
-
   <div class="article_text">
     <p>Locust and Django CSRF</p>
 
+<p>Simple solution to handle Django 
+<a href="https://docs.djangoproject.com/en/dev/ref/csrf/">Cross Site Request Forgery protection</a>
+into <a href="http://locust.io/">Locust</a> load tests</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">UserBehavior</span><span class="p">(</span><span class="n">TaskSet</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/auth/login/"</span><span class="p">)</span>
+        <span class="n">csrftoken</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">cookies</span><span class="p">[</span><span class="s">'csrftoken'</span><span class="p">]</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"/auth/login/"</span><span class="p">,</span> 
+                                    <span class="p">{</span><span class="s">"username"</span><span class="p">:</span> <span class="s">"admin"</span><span class="p">,</span>
+                                     <span class="s">"password"</span><span class="p">:</span> <span class="s">"password"</span><span class="p">},</span>
+                                    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">"X-CSRFToken"</span><span class="p">:</span> <span class="n">csrftoken</span><span class="p">})</span>
+
+
+<span class="k">class</span> <span class="nc">WebsiteUser</span><span class="p">(</span><span class="n">HttpLocust</span><span class="p">):</span>
+    <span class="n">host</span> <span class="o">=</span> <span class="s">'http://localhost:8000'</span>
+    <span class="n">task_set</span> <span class="o">=</span> <span class="n">UserBehavior</span>
+</pre></div>
   </div>
+  <div class="article_meta">
+    <!--<p>Posted on: Sun 07 December 2014</p>-->
+    <p>Category: <a href="http://stefanoapostolico.com/category/tech.html">tech</a>
+ &ndash; Tags:
+      <a href="http://stefanoapostolico.com/tag/locust.html">locust</a>,      <a href="http://stefanoapostolico.com/tag/performance.html">performance</a>,      <a href="http://stefanoapostolico.com/tag/django.html">django</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "2014/12/07/hande-CSRF-token-in-locust-test.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
 </article>
 
-<hr />
-<article>
-  <div class="article_title">
-    <h1><a href="http://stefanoapostolico.com/2014/11/27/playing-with-pelican.html">Playing with Pelican</a></h1>
-  </div>
-    <div class="article_meta">
-        <p>Thu 27 November 2014</p>
-    </div>
-
-  <div class="article_text">
-    <p>Pelican and Github pages. Fast and easy blog solution</p>
-  </div>
-</article>
-
-
-<footer>
-<div id="paginator">
-
-</div>
-</footer>
 
     <div id="ending_message">
         <p>&copy; 2014 Stefano Apostolico. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>.
