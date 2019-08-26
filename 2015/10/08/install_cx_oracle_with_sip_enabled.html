@@ -53,8 +53,6 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-1"><a href="/tag/django.html">django</a></li>-->
-            <!---->
         <!--</ul>-->
     </div>
 </aside>
@@ -101,15 +99,15 @@ preventing certain processes from attaching to system-level processes.</p>
 <p>There are a lot of infos how to disable rootless,
 what we want to achieve is to let cx_Oracle works without disable SIP.</p>
 <p>Let try to see what happen when we try to use cx_Oracle.</p>
-<div class="highlight"><pre><span class="nv">$ </span>./manage.py inspectdb --database<span class="o">=</span>pasport
+<div class="highlight"><pre><span></span>$ ./manage.py inspectdb --database<span class="o">=</span>pasport
 Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
-  File <span class="s2">"./manage.py"</span>, line 12, in &lt;module&gt;
+  File <span class="s2">"./manage.py"</span>, line <span class="m">12</span>, in &lt;module&gt;
     execute_from_command_line<span class="o">(</span>sys.argv<span class="o">)</span>
   ...
   ...
-  File <span class="s2">"TEST_VIRTUALENV/lib/python2.7/site-packages/django/db/backends/oracle/base.py"</span>, line 47, in &lt;module&gt;
+  File <span class="s2">"TEST_VIRTUALENV/lib/python2.7/site-packages/django/db/backends/oracle/base.py"</span>, line <span class="m">47</span>, in &lt;module&gt;
     raise ImproperlyConfigured<span class="o">(</span><span class="s2">"Error loading cx_Oracle module: %s"</span> % e<span class="o">)</span>
-django.core.exceptions.ImproperlyConfigured: Error loading cx_Oracle module: dlopen<span class="o">(</span>TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so, 2<span class="o">)</span>: Library not loaded: /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1
+django.core.exceptions.ImproperlyConfigured: Error loading cx_Oracle module: dlopen<span class="o">(</span>TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so, <span class="m">2</span><span class="o">)</span>: Library not loaded: /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1
   Referenced from: TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
   Reason: image not found
 </pre></div>
@@ -119,27 +117,27 @@ django.core.exceptions.ImproperlyConfigured: Error loading cx_Oracle module: dlo
 <p>cx_Oracle seems not able to find <cite>/ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1</cite>.
 Now, I have no idea where this path come from, anyway I have <cite>libclntsh.dylib.11.1</cite> in my
 <tt class="docutils literal">$ORACLE_HOME</tt> so I have to tell cx_Oracle to see there. Checking with otool confirm that</p>
-<div class="highlight"><pre><span class="nv">$ </span>otool -L TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
+<div class="highlight"><pre><span></span>$ otool -L TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
 TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so:
-    /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1 <span class="o">(</span>compatibility version 0.0.0, current version 0.0.0<span class="o">)</span>
-    /usr/lib/libSystem.B.dylib <span class="o">(</span>compatibility version 1.0.0, current version 1225.1.1<span class="o">)</span>
+    /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1 <span class="o">(</span>compatibility version <span class="m">0</span>.0.0, current version <span class="m">0</span>.0.0<span class="o">)</span>
+    /usr/lib/libSystem.B.dylib <span class="o">(</span>compatibility version <span class="m">1</span>.0.0, current version <span class="m">1225</span>.1.1<span class="o">)</span>
 </pre></div>
 <p>we need to relync binaries they do not try to access avoided location;
 to achieve this we use to command line tools <a class="reference external" href="http://www.unix.com/man-page/osx/1/otool/">otool</a> and <a class="reference external" href="http://www.unix.com/man-page/osx/1/install_name_tool/">install_name_tool</a></p>
-<div class="highlight"><pre>install_name_tool -change /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1 <span class="nv">$ORACLE_HOME</span>/<span class="nv">$baselib</span> TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
+<div class="highlight"><pre><span></span>install_name_tool -change /ade/b/3071542110/oracle/rdbms/lib/libclntsh.dylib.11.1 <span class="nv">$ORACLE_HOME</span>/<span class="nv">$baselib</span> TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
 </pre></div>
 <p>check the result</p>
-<div class="highlight"><pre><span class="nv">$ </span>otool -L TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
+<div class="highlight"><pre><span></span>$ otool -L TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so
 TEST_VIRTUALENV/lib/python2.7/site-packages/cx_Oracle.so:
-    /data/oracle/instantclient_11_2/libclntsh.dylib.11.1 <span class="o">(</span>compatibility version 0.0.0, current version 0.0.0<span class="o">)</span>
-    /usr/lib/libSystem.B.dylib <span class="o">(</span>compatibility version 1.0.0, current version 1225.1.1<span class="o">)</span>
+    /data/oracle/instantclient_11_2/libclntsh.dylib.11.1 <span class="o">(</span>compatibility version <span class="m">0</span>.0.0, current version <span class="m">0</span>.0.0<span class="o">)</span>
+    /usr/lib/libSystem.B.dylib <span class="o">(</span>compatibility version <span class="m">1</span>.0.0, current version <span class="m">1225</span>.1.1<span class="o">)</span>
 </pre></div>
 <p>try again</p>
-<div class="highlight"><pre><span class="nv">$ </span>./manage.py inspectdb --database<span class="o">=</span>pasport
+<div class="highlight"><pre><span></span>$ ./manage.py inspectdb --database<span class="o">=</span>pasport
 ...
 ...
 raise ImproperlyConfigured<span class="o">(</span><span class="s2">"Error loading cx_Oracle module: %s"</span> % e<span class="o">)</span>
-django.core.exceptions.ImproperlyConfigured: Error loading cx_Oracle module: dlopen<span class="o">(</span>/data/VENV/capi/lib/python2.7/site-packages/cx_Oracle.so, 2<span class="o">)</span>: Library not loaded: /ade/dosulliv_ldapmac/oracle/ldap/lib/libnnz11.dylib
+django.core.exceptions.ImproperlyConfigured: Error loading cx_Oracle module: dlopen<span class="o">(</span>/data/VENV/capi/lib/python2.7/site-packages/cx_Oracle.so, <span class="m">2</span><span class="o">)</span>: Library not loaded: /ade/dosulliv_ldapmac/oracle/ldap/lib/libnnz11.dylib
 Referenced from: /data/oracle/instantclient_11_2/libclntsh.dylib.11.1
 Reason: image not found
 </pre></div>
@@ -152,13 +150,13 @@ It accept two arguments, <tt class="docutils literal"><span class="pre">-o</span
 and/or <tt class="docutils literal">cx_Oracle.so</tt> in the active virtualenv</p>
 <p>You only need to patch oracle binaries once, cx_Oracle need
 to be patched for each virtualenv (if many)</p>
-<div class="highlight"><pre><span class="nv">$ </span>./cxOracleSIP.sh -o -e
+<div class="highlight"><pre><span></span>$ ./cxOracleSIP.sh -o -e
 </pre></div>
 <p>Download <a class="reference external" href="../../../files/cxOracleSIP.sh">cxOracleSIP.sh</a></p>
 </div>
 <div class="section" id="the-script">
 <h2>The script</h2>
-<div class="highlight"><pre>#!/bin/sh
+<div class="highlight"><pre><span></span>#!/bin/sh
 # cxOracleSIP.sh
 # Copyright (c) 2015 Stefano Apostolico
 #

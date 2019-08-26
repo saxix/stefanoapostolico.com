@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Stefano Apostolico's Blog</title><link>http://stefanoapostolico.com/</link><description></description><atom:link href="http://stefanoapostolico.com/feeds/category/articles.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 22 Nov 2014 00:00:00 +0100</lastBuildDate><item><title>Start blogging</title><link>http://stefanoapostolico.com/2014/11/22/start-blogging.html</link><description>&lt;p&gt;After years spent to coding and getting benefits from someone else blog,
+<rss version="2.0"><channel><title>Stefano Apostolico's Blog - articles</title><link>http://stefanoapostolico.com/</link><description></description><lastBuildDate>Sat, 22 Nov 2014 00:00:00 +0100</lastBuildDate><item><title>Start blogging</title><link>http://stefanoapostolico.com/2014/11/22/start-blogging.html</link><description>&lt;p&gt;After years spent to coding and getting benefits from someone else blog,
 I decided to have my own one.&lt;/p&gt;
-
-&lt;p&gt;Probably because I'm not comfortable to write in english, 
-or only laziness I spent most of my time sharing my experience by voice with friends, 
-colleagues and coders around the world.&lt;/p&gt;
-&lt;p&gt;Anyway as I have been able to work in four continents, 
-probably people take care more what I can say and less in my ability to 
-manage English language.&lt;/p&gt;
-&lt;p&gt;Today I have more free time and desire to share, so I started my personal blog.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Stefano Apostolico</dc:creator><pubDate>Sat, 22 Nov 2014 00:00:00 +0100</pubDate><guid>tag:stefanoapostolico.com,2014-11-22:2014/11/22/start-blogging.html</guid></item></channel></rss>
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Stefano Apostolico</dc:creator><pubDate>Sat, 22 Nov 2014 00:00:00 +0100</pubDate><guid isPermaLink="false">tag:stefanoapostolico.com,2014-11-22:/2014/11/22/start-blogging.html</guid></item></channel></rss>

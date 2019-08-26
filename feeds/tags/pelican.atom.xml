@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/tags/pelican.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2014-11-27T00:00:00+01:00</updated><entry><title>Playing with Pelican</title><link href="http://stefanoapostolico.com/2014/11/27/playing-with-pelican.html" rel="alternate"></link><updated>2014-11-27T00:00:00+01:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2014-11-27:2014/11/27/playing-with-pelican.html</id><summary type="html">&lt;p&gt;I spent one day trying to put this blog on Heroku.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog - pelican</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/tags/pelican.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2014-11-27T00:00:00+01:00</updated><entry><title>Playing with Pelican</title><link href="http://stefanoapostolico.com/2014/11/27/playing-with-pelican.html" rel="alternate"></link><published>2014-11-27T00:00:00+01:00</published><updated>2014-11-27T00:00:00+01:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2014-11-27:/2014/11/27/playing-with-pelican.html</id><summary type="html">&lt;p&gt;Pelican and Github pages. Fast and easy blog solution&lt;/p&gt;</summary><content type="html">&lt;p&gt;I spent one day trying to put this blog on Heroku.
 Googling on the web many authors explain how to create a static site on Heroku,
 and Pelican web site offer a ready to use
 &lt;a href="http://blog.getpelican.com/using-pelican-with-heroku.html"&gt;buildpack&lt;/a&gt;.&lt;/p&gt;
@@ -11,7 +11,7 @@ seem recompile and install the full stack (nginx, pelican, python....)&lt;/p&gt;
 &lt;p&gt;To install Pelican and other Python package dependencies in a virtual environment, 
 I followed the instructions in the official 
 &lt;a href="http://pelican.readthedocs.org/en/3.5.0/quickstart.html"&gt;Pelican documentation&lt;/a&gt;.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;pip install pelican Markdown typogrify
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pip install pelican Markdown typogrify
 pelican-quickstart
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;I enabled article pagination so that I didn't end up with all the posts on a single 
@@ -22,17 +22,17 @@ It allows you to compile the website with &lt;code&gt;make html&lt;/code&gt; and
 in the &lt;code&gt;Makefile&lt;/code&gt; so I removed it manually.&lt;/p&gt;
 &lt;h3&gt;Configure plugins&lt;/h3&gt;
 &lt;p&gt;To configure plugins simply clone pelican-plugins as git submodule with&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;git add submodule https://github.com/getpelican/pelican-plugins
-git submodule update  --init --recursive
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="k"&gt;add&lt;/span&gt; &lt;span class="n"&gt;submodule&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;getpelican&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;plugins&lt;/span&gt;
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;submodule&lt;/span&gt; &lt;span class="k"&gt;update&lt;/span&gt;  &lt;span class="c1"&gt;--init --recursive&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;and enable what you like in &lt;code&gt;pelicanconf.py&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;PLUGIN_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'pelican-plugins'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-    &lt;span class="n"&gt;PLUGINS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'interlinks'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-               &lt;span class="s"&gt;'pelican_fontawesome'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-               &lt;span class="s"&gt;'related_posts'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-               &lt;span class="s"&gt;'summary'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-               &lt;span class="s"&gt;'sitemap'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-               &lt;span class="s"&gt;'simple_footnotes'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="n"&gt;PLUGIN_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'pelican-plugins'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;PLUGINS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'interlinks'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+               &lt;span class="s1"&gt;'pelican_fontawesome'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+               &lt;span class="s1"&gt;'related_posts'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+               &lt;span class="s1"&gt;'summary'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+               &lt;span class="s1"&gt;'sitemap'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+               &lt;span class="s1"&gt;'simple_footnotes'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h3&gt;Configure Github&lt;/h3&gt;
 &lt;p&gt;For Github you need to put the domain of your site inside a CNAME (must be uppercase)
@@ -43,29 +43,29 @@ file at the root of your site. &lt;/p&gt;
 and &lt;a href="https://help.github.com/articles/my-custom-domain-isn-t-working/"&gt;here&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;For my configuration I used &lt;/p&gt;
 &lt;p&gt;&lt;code&gt;content/extras/CNAME&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;stefanoapostolico.com
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;stefanoapostolico&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;pelicanconf.py&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;STATIC_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'images'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'extras/README.rst'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'extras/CNAME'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
-    &lt;span class="s"&gt;'extras/robots.txt'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="n"&gt;STATIC_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'images'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'extras/README.rst'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'extras/CNAME'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+    &lt;span class="s1"&gt;'extras/robots.txt'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 
     &lt;span class="n"&gt;EXTRA_PATH_METADATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="s"&gt;'extras/README.rst'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'path'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'README.rst'&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="s"&gt;'extras/CNAME'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'path'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'CNAME'&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
-        &lt;span class="s"&gt;'extras/robots.txt'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'path'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'robots.txt'&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+        &lt;span class="s1"&gt;'extras/README.rst'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'path'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'README.rst'&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+        &lt;span class="s1"&gt;'extras/CNAME'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'path'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'CNAME'&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+        &lt;span class="s1"&gt;'extras/robots.txt'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'path'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'robots.txt'&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h3&gt;Minor improvements&lt;/h3&gt;
 &lt;h4&gt;Get metadata from path&lt;/h4&gt;
 &lt;p&gt;To store articles in a structure like 
 &lt;code&gt;category/YEAR/MONTH/DAY-slug&lt;/code&gt; so I updated my &lt;code&gt;pelicanconf.py&lt;/code&gt; as &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;   &lt;span class="n"&gt;PATH_METADATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'\A(?P&amp;lt;category&amp;gt;[^/]+)/(?P&amp;lt;date&amp;gt;\d{4}/\d{2}/\d{2})-(?P&amp;lt;slug&amp;gt;.*)(.md|.rst)'&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;   &lt;span class="n"&gt;PATH_METADATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'\A(?P&amp;lt;category&amp;gt;[^/]+)/(?P&amp;lt;date&amp;gt;\d{4}/\d{2}/\d{2})-(?P&amp;lt;slug&amp;gt;.*)(.md|.rst)'&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;You can always override date, slug and category in your post.&lt;/p&gt;
 &lt;h4&gt;Serve file with different path&lt;/h4&gt;
 &lt;p&gt;To serve your articles with url like &lt;code&gt;/YEAR/MONTH/DAY/slug.html&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;ARTICLE_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt;}/{slug}.html'&lt;/span&gt;
-    &lt;span class="n"&gt;ARTICLE_SAVE_AS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt;}/{slug}.html'&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="n"&gt;ARTICLE_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s1"&gt;}/{slug}.html'&lt;/span&gt;
+    &lt;span class="n"&gt;ARTICLE_SAVE_AS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s1"&gt;}/{slug}.html'&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;You must set both the setting.&lt;/p&gt;
-&lt;p&gt;you can see the result &lt;a href="https://github.com/saxix/stefanoapostolico.com"&gt;here&lt;/a&gt;&lt;/p&gt;</summary><category term="pelican"></category><category term="python"></category><category term="github pages"></category></entry></feed>
+&lt;p&gt;you can see the result &lt;a href="https://github.com/saxix/stefanoapostolico.com"&gt;here&lt;/a&gt;&lt;/p&gt;</content><category term="pelican"></category><category term="python"></category><category term="github pages"></category></entry></feed>

@@ -53,8 +53,6 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-1"><a href="/tag/django.html">django</a></li>-->
-            <!---->
         <!--</ul>-->
     </div>
 </aside>
@@ -84,23 +82,23 @@
 <li>Oracle Instant Client 64bit 11.2.0.4.0</li>
 <li>cx-Oracle 5.2</li>
 </ul>
-<div class="highlight"><pre><span class="nb">export</span> <span class="nv">$ORACLE_HOME</span><span class="o">=</span>/data/oracle/instantclient_11_2
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">$ORACLE_HOME</span><span class="o">=</span>/data/oracle/instantclient_11_2
 mkdir -p <span class="nv">$ORACLE_HONE</span>
 
-<span class="nb">export </span><span class="nv">DYLD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ORACLE_HOME</span>
-<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ORACLE_HOME</span>
+<span class="nb">export</span> <span class="nv">DYLD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ORACLE_HOME</span>
+<span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ORACLE_HOME</span>
 
 unzip <span class="s1">'instantclient*.zip'</span> -d <span class="nv">$ORACLE_HOME</span>/..
 
 ln -s <span class="nv">$ORACLE_HOME</span>/libclntsh.dylib.11.1 <span class="nv">$ORACLE_HOME</span>/libclntsh.dylib
 pip install cx-Oracle
 </pre></div>
-</div>
 <div class="section" id="links">
-<h2>Links</h2>
+<h3>Links</h3>
 <ul class="simple">
 <li><a class="reference external" href="http://www.oracle.com/technetwork/topics/intel-macsoft-096467.html">Oracle Instant Client Downloads</a></li>
 </ul>
+</div>
 </div>
 
   </div>

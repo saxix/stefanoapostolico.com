@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Stefano Apostolico's Blog</title><link>http://stefanoapostolico.com/</link><description></description><atom:link href="http://stefanoapostolico.com/feeds/tags/it.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 07 Oct 2015 00:00:00 +0200</lastBuildDate><item><title>About rules, best practices and experience</title><link>http://stefanoapostolico.com/2015/10/07/rules-best-practices-and-experience.html</link><description>&lt;p&gt;What does distinguishes an architect by a good architect, 
+<rss version="2.0"><channel><title>Stefano Apostolico's Blog - it</title><link>http://stefanoapostolico.com/</link><description></description><lastBuildDate>Wed, 07 Oct 2015 00:00:00 +0200</lastBuildDate><item><title>About rules, best practices and experience</title><link>http://stefanoapostolico.com/2015/10/07/rules-best-practices-and-experience.html</link><description>&lt;p&gt;What does distinguishes an architect by a good architect, 
 a developer from a good developer ?&lt;/p&gt;
-
-&lt;p&gt;Sometimes customers ask me a list of rules or best practices and guidelines 
-to adopt in &lt;strong&gt;any&lt;/strong&gt; architecture and/or application.&lt;/p&gt;
-&lt;p&gt;Every time, I try to explain that this list does not exist, 
-is like create a list of ingredients valid for all the recipes&lt;/p&gt;
-&lt;p&gt;If you ask any developer 5 rules to follow to have the perfect code he will 
-look at you astonished and reply that there are many "rules" but each time 
-the important one is different.&lt;/p&gt;
-&lt;p&gt;But if you show a badly written code, good programmer will find the issue and will
-be able to explain you why, sometimes simply annotating them as "code smell"&lt;/p&gt;
-&lt;p&gt;A good architect is not who apply all the patterns and best practices 
-(virtually impossible), a good architect chooses which pattern can ignore and 
-which "best practices" can be violated&lt;/p&gt;
-&lt;p&gt;Design has nothing related to rules and laws, is judgement, skill, 
-knowledge, experience and high capacity for abstraction&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Stefano Apostolico</dc:creator><pubDate>Wed, 07 Oct 2015 00:00:00 +0200</pubDate><guid>tag:stefanoapostolico.com,2015-10-07:2015/10/07/rules-best-practices-and-experience.html</guid><category>it</category></item></channel></rss>
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Stefano Apostolico</dc:creator><pubDate>Wed, 07 Oct 2015 00:00:00 +0200</pubDate><guid isPermaLink="false">tag:stefanoapostolico.com,2015-10-07:/2015/10/07/rules-best-practices-and-experience.html</guid><category>it</category></item></channel></rss>

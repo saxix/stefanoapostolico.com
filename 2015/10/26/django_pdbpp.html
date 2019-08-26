@@ -53,8 +53,6 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-1"><a href="/tag/django.html">django</a></li>-->
-            <!---->
         <!--</ul>-->
     </div>
 </aside>
@@ -86,16 +84,16 @@ simple hack, enables pdb when I need, without install third party packages.</p>
 some strange side effects, like continue prompting for restarting,
 and I loose autocompletion feature (I know, I'm lazy).</p>
 <p>In the end I rolled out this custom <cite>manage.py</cite>.</p>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">'DJANGO_SETTINGS_MODULE'</span><span class="p">,</span> <span class="s">'wfp_commonapi.settings._</span><span class="si">%s</span><span class="s">'</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">'USER'</span><span class="p">])</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">'DJANGO_SETTINGS_MODULE'</span><span class="p">,</span> <span class="s1">'wfp_commonapi.settings._</span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">'USER'</span><span class="p">])</span>
     <span class="kn">from</span> <span class="nn">django.core.management</span> <span class="kn">import</span> <span class="n">execute_from_command_line</span>
 
-    <span class="n">debug_on_error</span> <span class="o">=</span> <span class="s">'--pdb'</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="k">if</span> <span class="n">a</span> <span class="o">!=</span> <span class="s">'--pdb'</span><span class="p">]</span>
+    <span class="n">debug_on_error</span> <span class="o">=</span> <span class="s1">'--pdb'</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="k">if</span> <span class="n">a</span> <span class="o">!=</span> <span class="s1">'--pdb'</span><span class="p">]</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">execute_from_command_line</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
@@ -108,7 +106,7 @@ and I loose autocompletion feature (I know, I'm lazy).</p>
             <span class="k">raise</span>
 </pre></div>
 <p>now I can</p>
-<div class="highlight"><pre><span class="o">./</span><span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">migrate</span> <span class="n">app1</span> <span class="o">--</span><span class="n">pdb</span>
+<div class="highlight"><pre><span></span><span class="o">./</span><span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">migrate</span> <span class="n">app1</span> <span class="o">--</span><span class="n">pdb</span>
 </pre></div>
 <p>and we'll enter in the pdb screen if an error occurs</p>
 

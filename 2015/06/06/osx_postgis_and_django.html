@@ -53,8 +53,6 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-1"><a href="/tag/django.html">django</a></li>-->
-            <!---->
         <!--</ul>-->
     </div>
 </aside>
@@ -90,60 +88,60 @@
 <h2>Install PostGIS</h2>
 <p>I'm not sure I could have actually accomplished this without Homebrew. It really is a great package management tool for OS X. It handles dependencies with no pain at all.</p>
 <h4>get package info</h4>
-<div class="highlight"><pre>brew info postgis
+<div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">info</span> <span class="n">postgis</span>
 </pre></div>
 <p>this produce something like (partial):  </p>
-<div class="highlight"><pre><span class="n">postgis</span><span class="o">:</span> <span class="n">stable</span> <span class="mf">2.1</span><span class="o">.</span><span class="mi">7</span><span class="o">,</span> <span class="n">HEAD</span>
-<span class="n">Adds</span> <span class="n">support</span> <span class="k">for</span> <span class="n">geographic</span> <span class="n">objects</span> <span class="n">to</span> <span class="n">PostgreSQL</span>
-<span class="n">http</span><span class="o">://</span><span class="n">postgis</span><span class="o">.</span><span class="na">net</span>
-<span class="n">Not</span> <span class="n">installed</span>
+<div class="highlight"><pre><span></span><span class="nv">postgis</span>: <span class="nv">stable</span> <span class="mi">2</span>.<span class="mi">1</span>.<span class="mi">7</span>, <span class="nv">HEAD</span>
+<span class="nv">Adds</span> <span class="nv">support</span> <span class="k">for</span> <span class="nv">geographic</span> <span class="nv">objects</span> <span class="nv">to</span> <span class="nv">PostgreSQL</span>
+<span class="nv">http</span>:<span class="o">//</span><span class="nv">postgis</span>.<span class="nv">net</span>
+<span class="nv">Not</span> <span class="nv">installed</span>
 </pre></div>
 <h4>Install PostGIS</h4>
 <p>If the version you got does not match this post, try with:</p>
-<div class="highlight"><pre>brew tap postgis
-brew search postgis
-brew install homebrew/versions/postgis20
+<div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">tap</span> <span class="n">postgis</span>
+<span class="n">brew</span> <span class="k">search</span> <span class="n">postgis</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="n">homebrew</span><span class="o">/</span><span class="n">versions</span><span class="o">/</span><span class="n">postgis20</span>
 </pre></div>
 <p>otherwise:</p>
-<div class="highlight"><pre>brew install postgis
+<div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">postgis</span>
 </pre></div>
 <p>Homebrew will install both PostGIS and PostgreSQL, check it with</p>
-<div class="highlight"><pre>brew info postgres
-brew info postgis
+<div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">info</span> <span class="n">postgres</span>
+<span class="n">brew</span> <span class="n">info</span> <span class="n">postgis</span>
 </pre></div>
 <p>the default data dir <code>/usr/local/var/postgres</code> is owned by <code>root</code> and I prefre to run my database as non privileged user, first I need to chown the directory</p>
-<div class="highlight"><pre>sudo chown sax /usr/local/var/postgres
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chown</span> <span class="n">sax</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">postgres</span>
 </pre></div>
 <h4>Initialize</h4>
-<div class="highlight"><pre>initdb /usr/local/var/postgres  -E utf8
+<div class="highlight"><pre><span></span><span class="n">initdb</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">postgres</span>  <span class="o">-</span><span class="n">E</span> <span class="n">utf8</span>
 </pre></div>
 <h4>Launch postgres</h4>
-<div class="highlight"><pre>pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+<div class="highlight"><pre><span></span><span class="n">pg_ctl</span> <span class="o">-</span><span class="n">D</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">postgres</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">postgres</span><span class="o">/</span><span class="n">server</span><span class="p">.</span><span class="n">log</span> <span class="k">start</span>
 </pre></div>
 <p>To do not receive annoying messages during my daily activities I also create the standard <code>postgres</code> superuser</p>
-<div class="highlight"><pre>createuser -s -r postgres
+<div class="highlight"><pre><span></span><span class="k">createuser</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">r</span> <span class="n">postgres</span>
 </pre></div>
 <h2>PostGIS Functions and Template</h2>
 <p>PostGIS essentially is a table a couple of databse views and a many functions. You need to create a "template" database to store all of them.</p>
 <p>Create the database that we use as template for any </p>
-<div class="highlight"><pre>createdb template_postgis
-psql -f /usr/local/share/postgis/postgis.sql template_postgis
-psql -f /usr/local/share/postgis/spatial_ref_sys.sql template_postgis
+<div class="highlight"><pre><span></span><span class="k">createdb</span> <span class="n">template_postgis</span>
+<span class="n">psql</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="k">share</span><span class="o">/</span><span class="n">postgis</span><span class="o">/</span><span class="n">postgis</span><span class="p">.</span><span class="k">sql</span> <span class="n">template_postgis</span>
+<span class="n">psql</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="k">share</span><span class="o">/</span><span class="n">postgis</span><span class="o">/</span><span class="n">spatial_ref_sys</span><span class="p">.</span><span class="k">sql</span> <span class="n">template_postgis</span>
 </pre></div>
 <h2>Create Django database</h2>
-<div class="highlight"><pre>psql -c 'CREATE DATABASE wfp_commonapi_gis;' -U postgres;
-psql -d gis_example -c 'CREATE EXTENSION postgis;' -U postgres;
+<div class="highlight"><pre><span></span><span class="n">psql</span> <span class="o">-</span><span class="k">c</span> <span class="s1">'CREATE DATABASE wfp_commonapi_gis;'</span> <span class="o">-</span><span class="n">U</span> <span class="n">postgres</span><span class="p">;</span>
+<span class="n">psql</span> <span class="o">-</span><span class="n">d</span> <span class="n">gis_example</span> <span class="o">-</span><span class="k">c</span> <span class="s1">'CREATE EXTENSION postgis;'</span> <span class="o">-</span><span class="n">U</span> <span class="n">postgres</span><span class="p">;</span>
 </pre></div>
 <p>or</p>
-<div class="highlight"><pre>createdb -E UTF8 PIPPO -T template_postgis
+<div class="highlight"><pre><span></span><span class="k">createdb</span> <span class="o">-</span><span class="n">E</span> <span class="n">UTF8</span> <span class="n">PIPPO</span> <span class="o">-</span><span class="n">T</span> <span class="n">template_postgis</span>
 </pre></div>
 <blockquote>
 <p><strong><em>NOTE:</em></strong> Do not run django test before you create the "real" PostGIS database (at least with pytest) or you get a <code>OperationalError: FATAL:  database "DBNAME" does not exist</code>. Seems that Django is not able to create a PostGIS test database if the original one does not exists.</p>
 </blockquote>
 <h2>Make PostGIS start automatically</h2>
 <p>This is done following the hint on bottom of <code>brew info postgres</code> output</p>
-<div class="highlight"><pre>ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents 
-launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+<div class="highlight"><pre><span></span><span class="n">ln</span> <span class="o">-</span><span class="n">sfv</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">postgresql</span><span class="cm">/*.plist ~/Library/LaunchAgents </span>
+<span class="cm">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist</span>
 </pre></div>
 <h1>Put everything togheter</h1>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -164,23 +162,23 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
 16
 17
 18
-19</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/usr/bin/env bash</span>
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
 
 <span class="nv">PGDATA</span><span class="o">=</span><span class="s2">"/usr/local/var/postgres"</span>
 <span class="nv">LOG</span><span class="o">=</span><span class="s2">"/usr/local/var/postgres/server.log"</span>
 
-brew install postgis <span class="o">||</span> <span class="nb">exit </span>1
-sudo chown sax <span class="si">${</span><span class="nv">PGDATA</span><span class="si">}</span>  <span class="o">||</span> <span class="nb">exit </span>1
-initdb <span class="si">${</span><span class="nv">PGDATA</span><span class="si">}</span> -E utf8  <span class="o">||</span> <span class="nb">exit </span>1
+brew install postgis <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
+sudo chown sax <span class="si">${</span><span class="nv">PGDATA</span><span class="si">}</span>  <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
+initdb <span class="si">${</span><span class="nv">PGDATA</span><span class="si">}</span> -E utf8  <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
 
-pg_ctl -D <span class="si">${</span><span class="nv">PGDATA</span><span class="si">}</span> -l <span class="si">${</span><span class="nv">LOG</span><span class="si">}</span> start -w <span class="o">||</span> <span class="nb">exit </span>1
+pg_ctl -D <span class="si">${</span><span class="nv">PGDATA</span><span class="si">}</span> -l <span class="si">${</span><span class="nv">LOG</span><span class="si">}</span> start -w <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
 
-createuser -s -r postgres  <span class="o">||</span> <span class="nb">exit </span>1
+createuser -s -r postgres  <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
 
-createdb template_postgis <span class="o">||</span> <span class="nb">exit </span>1
+createdb template_postgis <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
 
-psql -f /usr/local/share/postgis/postgis.sql template_postgis  <span class="o">||</span> <span class="nb">exit </span>1
-psql -f /usr/local/share/postgis/spatial_ref_sys.sql template_postgis  <span class="o">||</span> <span class="nb">exit </span>1
+psql -f /usr/local/share/postgis/postgis.sql template_postgis  <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
+psql -f /usr/local/share/postgis/spatial_ref_sys.sql template_postgis  <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
 
 pg_ctl status
 </pre></div>

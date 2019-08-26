@@ -53,8 +53,6 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-1"><a href="/tag/django.html">django</a></li>-->
-            <!---->
         <!--</ul>-->
     </div>
 </aside>
@@ -80,31 +78,31 @@
 
 <p><a href="https://pytest.org/latest/contents.html">Pytest</a> is my favourite testing tool, it provides a lot of useful and highly configurable features. The idea  is to create custom <a href="https://pytest.org/latest/skipping.html#skipping">skipif</a> markers that implement a complex logic removing the need to duplicate to much code, or using logic that cannot be read easily in one line.</p>
 <p>So instead to write these:</p>
-<div class="highlight"><pre>@skipif('path.to.my.app' not in settings.INSTALLED_APPS)
+<div class="highlight"><pre><span></span><span class="nv">@skipif</span><span class="p">(</span><span class="s1">'path.to.my.app'</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">settings</span><span class="p">.</span><span class="n">INSTALLED_APPS</span><span class="p">)</span><span class="w"></span>
 
-@skipif('django.VERSION &lt; (1.7))
+<span class="nv">@skipif</span><span class="p">(</span><span class="err">'</span><span class="n">django</span><span class="p">.</span><span class="n">VERSION</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="mf">1.7</span><span class="p">))</span><span class="w"></span>
 </pre></div>
 <p>I want to use this syntax:</p>
-<div class="highlight"><pre>@skipif_django('&lt;1.7')
+<div class="highlight"><pre><span></span><span class="nv">@skipif_django</span><span class="p">(</span><span class="s1">'&lt;1.7'</span><span class="p">)</span><span class="w"></span>
 
-@requires_app('reversion')
+<span class="nv">@requires_app</span><span class="p">(</span><span class="s1">'reversion'</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 <h2>The magic: autoused fixture and request object</h2>
 <p>We can use the <a href="https://pytest.org/latest/builtin.html#_pytest.python.FixtureRequest">request</a> object to retrieve infos about the running test and the <a href="https://pytest.org/latest/fixture.html#autouse-fixtures-xunit-setup-on-steroids">autouse</a> option to automatically execute our code.</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.apps</span> <span class="kn">import</span> <span class="n">apps</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.apps</span> <span class="kn">import</span> <span class="n">apps</span>
 
 <span class="nd">@pytest.fixture</span><span class="p">(</span><span class="n">autouse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">skip_if_markers_logic</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">get_marker</span><span class="p">(</span><span class="s">'requires_app'</span><span class="p">):</span>
-        <span class="n">app</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">get_marker</span><span class="p">(</span><span class="s">'requires_app'</span><span class="p">)</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">get_marker</span><span class="p">(</span><span class="s1">'requires_app'</span><span class="p">):</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">get_marker</span><span class="p">(</span><span class="s1">'requires_app'</span><span class="p">)</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">apps</span><span class="o">.</span><span class="n">is_installed</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
-            <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s">'skipped as {} is not installed'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">app</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">get_marker</span><span class="p">(</span><span class="s">'skipif_django'</span><span class="p">):</span>
-        <span class="n">arg</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">get_marker</span><span class="p">(</span><span class="s">'skipif_django'</span><span class="p">)</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s1">'skipped as {} is not installed'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">app</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">get_marker</span><span class="p">(</span><span class="s1">'skipif_django'</span><span class="p">):</span>
+        <span class="n">arg</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">get_marker</span><span class="p">(</span><span class="s1">'skipif_django'</span><span class="p">)</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">offset</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">compare</span> <span class="o">=</span> <span class="p">{</span><span class="s">'=='</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span>
-               <span class="s">'&lt;'</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">lt</span><span class="p">,</span>
-               <span class="s">'&gt;'</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">gt</span><span class="p">}</span>
+        <span class="n">compare</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'=='</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span>
+               <span class="s1">'&lt;'</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">lt</span><span class="p">,</span>
+               <span class="s1">'&gt;'</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">gt</span><span class="p">}</span>
         <span class="n">op</span> <span class="o">=</span> <span class="n">compare</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">op</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">op</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">eq</span>
@@ -114,18 +112,18 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
 
-        <span class="k">if</span> <span class="n">op</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'.'</span><span class="p">),</span> <span class="n">pytest</span><span class="o">.</span><span class="n">__version__</span><span class="p">):</span>
-            <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s">'skipped as django {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">op</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">),</span> <span class="n">pytest</span><span class="o">.</span><span class="n">__version__</span><span class="p">):</span>
+            <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s1">'skipped as django {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span>
 </pre></div>
 <p>now we can:</p>
-<div class="highlight"><pre>@skipif_django('==1.7')
-def test_one():
-    ...
+<div class="highlight"><pre><span></span><span class="nv">@skipif_django</span><span class="p">(</span><span class="s1">'==1.7'</span><span class="p">)</span><span class="w"></span>
+<span class="n">def</span><span class="w"> </span><span class="n">test_one</span><span class="p">()</span><span class="err">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
 
 
-@requires_app('reversion')
-def test_two():
-    ...
+<span class="nv">@requires_app</span><span class="p">(</span><span class="s1">'reversion'</span><span class="p">)</span><span class="w"></span>
+<span class="n">def</span><span class="w"> </span><span class="n">test_two</span><span class="p">()</span><span class="err">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
 </pre></div>
 <p>These examples are based on very simple logic, but it is evident how we can use any complex logic and create easy to read custom decorators.</p>
   </div>

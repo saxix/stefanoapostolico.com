@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog - django-rest-framework</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/tags/django-rest-framework.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2017-10-10T00:00:00+02:00</updated><entry><title>Using multiple serializers with DjangoRestFramework</title><link href="http://stefanoapostolico.com/2017/10/10/drf-multiple-serializers.html" rel="alternate"></link><published>2017-10-10T00:00:00+02:00</published><updated>2017-10-10T00:00:00+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2017-10-10:/2017/10/10/drf-multiple-serializers.html</id><summary type="html">&lt;p&gt;How to use different serializers with DjangoRestFramework&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;How to use different serializers with DjangoRestFramework&lt;/p&gt;
+
+&lt;p&gt;Imagine to have a viewset and you want to parametrize the output,
+using different serializers.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;class&lt;/span&gt; &lt;span class="nv"&gt;Person&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;models&lt;/span&gt;.&lt;span class="nv"&gt;Model&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;:
+    &lt;span class="nv"&gt;title&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;models&lt;/span&gt;.&lt;span class="nv"&gt;CharField&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;...&lt;span class="ss"&gt;)&lt;/span&gt;
+    &lt;span class="nv"&gt;last_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;models&lt;/span&gt;.&lt;span class="nv"&gt;CharField&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;...&lt;span class="ss"&gt;)&lt;/span&gt;
+    &lt;span class="nv"&gt;first_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;models&lt;/span&gt;.&lt;span class="nv"&gt;CharField&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;...&lt;span class="ss"&gt;)&lt;/span&gt;
+    &lt;span class="nv"&gt;mail&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;models&lt;/span&gt;.&lt;span class="nv"&gt;EmailField&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;...&lt;span class="ss"&gt;)&lt;/span&gt;
+    &lt;span class="nv"&gt;address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;models&lt;/span&gt;.&lt;span class="nv"&gt;CharField&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;...&lt;span class="ss"&gt;)&lt;/span&gt;
+    &lt;span class="nv"&gt;birthday&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;models&lt;/span&gt;.&lt;span class="nv"&gt;DateField&lt;/span&gt;&lt;span class="ss"&gt;()&lt;/span&gt;
+
+&lt;span class="nv"&gt;class&lt;/span&gt; &lt;span class="nv"&gt;PersonSerializer&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;HouseSerializer&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;:    
+    &lt;span class="nv"&gt;full_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;serializers&lt;/span&gt;.&lt;span class="nv"&gt;SerializerMethodField&lt;/span&gt;&lt;span class="ss"&gt;()&lt;/span&gt;
+
+    &lt;span class="nv"&gt;class&lt;/span&gt; &lt;span class="nv"&gt;Meta&lt;/span&gt;:
+        &lt;span class="nv"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;House&lt;/span&gt;
+        &lt;span class="nv"&gt;fields&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;title&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;, &lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;last_name&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;, &lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;first_name&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;, &lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;mail&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;, &lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;full_name&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+
+    &lt;span class="nv"&gt;def&lt;/span&gt; &lt;span class="nv"&gt;get_full_name&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;self&lt;/span&gt;, &lt;span class="nv"&gt;obj&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;:
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="s"&gt;{0.last_name}, {1.first_name}&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;.&lt;span class="nv"&gt;format&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;obj&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+
+&lt;span class="nv"&gt;class&lt;/span&gt; &lt;span class="nv"&gt;PersonView&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;DynamicSerializerMixin&lt;/span&gt;, &lt;span class="nv"&gt;generics&lt;/span&gt;.&lt;span class="nv"&gt;ListAPIView&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;:
+    &lt;span class="nv"&gt;queryset&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;House&lt;/span&gt;.&lt;span class="nv"&gt;objects&lt;/span&gt;.&lt;span class="nv"&gt;all&lt;/span&gt;&lt;span class="ss"&gt;()&lt;/span&gt;
+    &lt;span class="nv"&gt;serializer_class&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;HouseSerializer&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;it is easy to build a "serializer factory" to build on the fly &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;cache&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; {}
+
+&lt;span class="nv"&gt;def&lt;/span&gt; &lt;span class="nv"&gt;serializer_factory&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;model&lt;/span&gt;, &lt;span class="nv"&gt;base&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;ModelSerializer&lt;/span&gt;, &lt;span class="nv"&gt;fields&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;None&lt;/span&gt;, &lt;span class="nv"&gt;exclude&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;None&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;:
+    &lt;span class="nv"&gt;attrs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; {&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;model&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;: &lt;span class="nv"&gt;model&lt;/span&gt;}
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;fields&lt;/span&gt; &lt;span class="nv"&gt;is&lt;/span&gt; &lt;span class="nv"&gt;not&lt;/span&gt; &lt;span class="nv"&gt;None&lt;/span&gt;:
+        &lt;span class="nv"&gt;attrs&lt;/span&gt;[&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;fields&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;] &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;fields&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;exclude&lt;/span&gt; &lt;span class="nv"&gt;is&lt;/span&gt; &lt;span class="nv"&gt;not&lt;/span&gt; &lt;span class="nv"&gt;None&lt;/span&gt;:
+        &lt;span class="nv"&gt;attrs&lt;/span&gt;[&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;exclude&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;] &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;exclude&lt;/span&gt;
+
+    &lt;span class="nv"&gt;parent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;,&lt;span class="ss"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;hasattr&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;base&lt;/span&gt;, &lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;Meta&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;:
+        &lt;span class="nv"&gt;parent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;base&lt;/span&gt;.&lt;span class="nv"&gt;Meta&lt;/span&gt;, &lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+    &lt;span class="nv"&gt;Meta&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;type&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;str&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;Meta&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;, &lt;span class="nv"&gt;parent&lt;/span&gt;, &lt;span class="nv"&gt;attrs&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;model&lt;/span&gt;:
+        &lt;span class="nv"&gt;class_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;model&lt;/span&gt;.&lt;span class="nv"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;Serializer&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;:
+        &lt;span class="nv"&gt;class_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;Serializer&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;type&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;base&lt;/span&gt;&lt;span class="ss"&gt;)(&lt;/span&gt;&lt;span class="nv"&gt;class_name&lt;/span&gt;, &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;base&lt;/span&gt;,&lt;span class="ss"&gt;)&lt;/span&gt;, {&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;Meta&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;: &lt;span class="nv"&gt;Meta&lt;/span&gt;, }&lt;span class="ss"&gt;)&lt;/span&gt;
+
+
+&lt;span class="nv"&gt;class&lt;/span&gt; &lt;span class="nv"&gt;DynamicSerializerMixin&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;:
+    &lt;span class="nv"&gt;serializers_fieldsets&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; {&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;std&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;: &lt;span class="nv"&gt;None&lt;/span&gt;}
+    &lt;span class="nv"&gt;serializer_class&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;ModelSerializer&lt;/span&gt;
+
+    &lt;span class="nv"&gt;def&lt;/span&gt; &lt;span class="nv"&gt;get_serializer_class&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;self&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;:
+        &lt;span class="nv"&gt;ser&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;self&lt;/span&gt;.&lt;span class="nv"&gt;request&lt;/span&gt;.&lt;span class="nv"&gt;QUERY_PARAMS&lt;/span&gt;.&lt;span class="nv"&gt;get&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;serializer&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;, &lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;std&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;ser&lt;/span&gt; &lt;span class="nv"&gt;not&lt;/span&gt; &lt;span class="nv"&gt;in&lt;/span&gt; &lt;span class="nv"&gt;cache&lt;/span&gt;:                
+            &lt;span class="nv"&gt;fields&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;self&lt;/span&gt;.&lt;span class="nv"&gt;serializers_fieldsets&lt;/span&gt;.&lt;span class="nv"&gt;get&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ser&lt;/span&gt;, &lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="s"&gt;std&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+            &lt;span class="nv"&gt;cache&lt;/span&gt;[&lt;span class="nv"&gt;ser&lt;/span&gt;] &lt;span class="o"&gt;=&lt;/span&gt;  &lt;span class="nv"&gt;serializer_factory&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;self&lt;/span&gt;.&lt;span class="nv"&gt;model&lt;/span&gt;,
+                                  &lt;span class="nv"&gt;self&lt;/span&gt;.&lt;span class="nv"&gt;serializer_class&lt;/span&gt;,
+                                  &lt;span class="nv"&gt;fields&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;fields&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;cache&lt;/span&gt;[&lt;span class="nv"&gt;ser&lt;/span&gt;]
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;adopt it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="n"&gt;PersonView&lt;/span&gt;(&lt;span class="n"&gt;DynamicSerializerMixin&lt;/span&gt;, &lt;span class="n"&gt;generics&lt;/span&gt;.&lt;span class="n"&gt;ListAPIView&lt;/span&gt;):
+    &lt;span class="n"&gt;queryset&lt;/span&gt; = &lt;span class="n"&gt;Person&lt;/span&gt;.&lt;span class="n"&gt;objects&lt;/span&gt;.&lt;span class="nb"&gt;all&lt;/span&gt;()
+    &lt;span class="n"&gt;serializer_class&lt;/span&gt; = &lt;span class="n"&gt;PersonSerializer&lt;/span&gt;
+    &lt;span class="n"&gt;serializers_fieldsets&lt;/span&gt; = {&lt;span class="s"&gt;'std'&lt;/span&gt;: &lt;span class="n"&gt;PersonSerializer&lt;/span&gt;,
+                             &lt;span class="s"&gt;'simple'&lt;/span&gt;: (&lt;span class="s"&gt;'first_name'&lt;/span&gt;, &lt;span class="s"&gt;'last_name'&lt;/span&gt;)
+                             }
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;invoke it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;serializer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;
+&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;serializer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;simpleA&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="django"></category><category term="drf"></category><category term="django-rest-framework"></category></entry></feed>

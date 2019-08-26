@@ -53,8 +53,6 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-1"><a href="/tag/django.html">django</a></li>-->
-            <!---->
         <!--</ul>-->
     </div>
 </aside>
@@ -117,54 +115,54 @@
 </li>
 </ul>
 <h5>Step 1: install homebrew</h5>
-<div class="highlight"><pre>ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+<div class="highlight"><pre><span></span><span class="n">ruby</span> <span class="o">-</span><span class="n">e</span> <span class="ss">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</span>
 </pre></div>
 <h5>Step 2: install FreeTDS and unixODBC</h5>
-<div class="highlight"><pre>brew install unixodbc  --universal
+<div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">unixodbc</span>  <span class="c1">--universal</span>
 </pre></div>
 <h5>Step 2: install FreeTDS and unixODBC</h5>
-<div class="highlight"><pre>brew install freetds --with-unixodbc
+<div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">freetds</span> <span class="c1">--with-unixodbc</span>
 </pre></div>
 <p>test the libraries:</p>
-<div class="highlight"><pre>tsql -H 192.168.1.1 -U username1 -P password123 -p 1433
-locale is "en_US.UTF-8"
-locale charset is "UTF-8"
-using default charset "UTF-8"
-1&gt;
+<div class="highlight"><pre><span></span><span class="n">tsql</span> <span class="o">-</span><span class="n">H</span> <span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">1</span><span class="p">.</span><span class="mi">1</span> <span class="o">-</span><span class="n">U</span> <span class="n">username1</span> <span class="o">-</span><span class="n">P</span> <span class="n">password123</span> <span class="o">-</span><span class="n">p</span> <span class="mi">1433</span>
+<span class="n">locale</span> <span class="k">is</span> <span class="ss">"en_US.UTF-8"</span>
+<span class="n">locale</span> <span class="n">charset</span> <span class="k">is</span> <span class="ss">"UTF-8"</span>
+<span class="k">using</span> <span class="k">default</span> <span class="n">charset</span> <span class="ss">"UTF-8"</span>
+<span class="mi">1</span><span class="o">&gt;</span>
 </pre></div>
 <p>edit <code>~/.freetds.conf</code></p>
-<div class="highlight"><pre><span class="k">[db1]</span>
+<div class="highlight"><pre><span></span><span class="k">[db1]</span>
 <span class="na">host</span> <span class="o">=</span> <span class="s">192.168.1.1</span>
 <span class="na">port</span> <span class="o">=</span> <span class="s">1433</span>
 <span class="na">tds version</span> <span class="o">=</span> <span class="s">8.0</span>
 </pre></div>
 <p>test the config</p>
-<div class="highlight"><pre>tsql -S db -U username -P password
-locale is "en_US.UTF-8"
-locale charset is "UTF-8"
-using default charset "UTF-8"
-1&gt;
+<div class="highlight"><pre><span></span><span class="n">tsql</span> <span class="o">-</span><span class="n">S</span> <span class="n">db</span> <span class="o">-</span><span class="n">U</span> <span class="n">username</span> <span class="o">-</span><span class="n">P</span> <span class="n">password</span>
+<span class="n">locale</span> <span class="k">is</span> <span class="ss">"en_US.UTF-8"</span>
+<span class="n">locale</span> <span class="n">charset</span> <span class="k">is</span> <span class="ss">"UTF-8"</span>
+<span class="k">using</span> <span class="k">default</span> <span class="n">charset</span> <span class="ss">"UTF-8"</span>
+<span class="mi">1</span><span class="o">&gt;</span>
 </pre></div>
 <p>edit <code>~/.odbc.ini</code></p>
-<div class="highlight"><pre><span class="k">[odbc1]</span>
+<div class="highlight"><pre><span></span><span class="k">[odbc1]</span>
 <span class="na">Driver</span> <span class="o">=</span> <span class="s">/usr/local/lib/libtdsodbc.so</span>
 <span class="na">Server</span> <span class="o">=</span> <span class="s">192.168.1.1</span>
 <span class="na">Port</span>   <span class="o">=</span> <span class="s">1433</span>
 </pre></div>
 <p>and test it</p>
-<div class="highlight"><pre>isql odbc1 username1 password123 -vvvv
-+---------------------------------------+
-| Connected!                            |
-|                                       |
-| sql-statement                         |
-| help [tablename]                      |
-| quit                                  |
-|                                       |
-+---------------------------------------+
-SQL&gt;
+<div class="highlight"><pre><span></span><span class="n">isql</span><span class="w"> </span><span class="n">odbc1</span><span class="w"> </span><span class="n">username1</span><span class="w"> </span><span class="n">password123</span><span class="w"> </span><span class="o">-</span><span class="n">vvvv</span><span class="w"></span>
+<span class="o">+</span><span class="c1">---------------------------------------+</span>
+<span class="o">|</span><span class="w"> </span><span class="n">Connected</span><span class="err">!</span><span class="w">                            </span><span class="o">|</span><span class="w"></span>
+<span class="o">|</span><span class="w">                                       </span><span class="o">|</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="k">sql</span><span class="o">-</span><span class="k">statement</span><span class="w">                         </span><span class="o">|</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">help</span><span class="w"> </span><span class="o">[</span><span class="n">tablename</span><span class="o">]</span><span class="w">                      </span><span class="o">|</span><span class="w"></span>
+<span class="o">|</span><span class="w"> </span><span class="n">quit</span><span class="w">                                  </span><span class="o">|</span><span class="w"></span>
+<span class="o">|</span><span class="w">                                       </span><span class="o">|</span><span class="w"></span>
+<span class="o">+</span><span class="c1">---------------------------------------+</span>
+<span class="k">SQL</span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 <p>edit <code>~/.odbcinst.ini</code></p>
-<div class="highlight"><pre><span class="k">[FreeTDS]</span>
+<div class="highlight"><pre><span></span><span class="k">[FreeTDS]</span>
 <span class="na">Driver</span> <span class="o">=</span> <span class="s">/usr/local/lib/libtdsodbc.so</span>
 <span class="na">Setup</span> <span class="o">=</span> <span class="s">/usr/local/lib/libtdsodbc.so</span>
 <span class="na">FileUsage</span> <span class="o">=</span> <span class="s">1</span>
@@ -172,10 +170,10 @@ SQL&gt;
 <blockquote>
 <p>Now you can edit your <code>odbc.ini</code> and change</p>
 </blockquote>
-<div class="highlight"><pre>Driver = /usr/local/lib/libtdsodbc.so
+<div class="highlight"><pre><span></span><span class="n">Driver</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libtdsodbc</span><span class="p">.</span><span class="n">so</span>
 </pre></div>
 <p>to</p>
-<div class="highlight"><pre>Driver = FreeTDS
+<div class="highlight"><pre><span></span><span class="n">Driver</span> <span class="o">=</span> <span class="n">FreeTDS</span>
 </pre></div>
 <h5>Step 3: download, edit and install pyodbc</h5>
 <p>pyodbc usees with unixodbc on Linux, but iODBC drivers on Mac. We need to configure the pyodbc installation such that it works with unixodbc.</p>
@@ -183,114 +181,114 @@ SQL&gt;
 <blockquote>
 <p>Note: I use <a href="https://virtualenvwrapper.readthedocs.org/en/latest/">virtualenv-wrappper</a> to manage virtualenvs</p>
 </blockquote>
-<div class="highlight"><pre>workon [project_virtualenv] 
-mkdir TEMP
-cd TEMP
-pip install --download . pyodbc
-unzip pyodbc-3.0.7.zip
-cd pyodbc-3.0.7
+<div class="highlight"><pre><span></span><span class="n">workon</span><span class="w"> </span><span class="o">[</span><span class="n">project_virtualenv</span><span class="o">]</span><span class="w"> </span>
+<span class="n">mkdir</span><span class="w"> </span><span class="n">TEMP</span><span class="w"></span>
+<span class="n">cd</span><span class="w"> </span><span class="n">TEMP</span><span class="w"></span>
+<span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="c1">--download . pyodbc</span>
+<span class="n">unzip</span><span class="w"> </span><span class="n">pyodbc</span><span class="o">-</span><span class="mf">3.0.7</span><span class="p">.</span><span class="n">zip</span><span class="w"></span>
+<span class="n">cd</span><span class="w"> </span><span class="n">pyodbc</span><span class="o">-</span><span class="mf">3.0.7</span><span class="w"></span>
 </pre></div>
 <p>edit these lines in <code>setup.py</code>:</p>
-<div class="highlight"><pre>elif sys.platform == 'darwin':
-    # OS/X now ships with iODBC.
-    settings['libraries'].append('iodbc')
+<div class="highlight"><pre><span></span><span class="n">elif</span> <span class="n">sys</span><span class="p">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">'darwin'</span><span class="p">:</span>
+    <span class="o">#</span> <span class="n">OS</span><span class="o">/</span><span class="n">X</span> <span class="n">now</span> <span class="n">ships</span> <span class="k">with</span> <span class="n">iODBC</span><span class="p">.</span>
+    <span class="n">settings</span><span class="p">[</span><span class="s1">'libraries'</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="s1">'iodbc'</span><span class="p">)</span>
 </pre></div>
 <p>to:</p>
-<div class="highlight"><pre>elif sys.platform == 'darwin':
-    # OS/X now ships with iODBC.
-    settings['libraries'].append('odbc')
+<div class="highlight"><pre><span></span><span class="n">elif</span> <span class="n">sys</span><span class="p">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">'darwin'</span><span class="p">:</span>
+    <span class="o">#</span> <span class="n">OS</span><span class="o">/</span><span class="n">X</span> <span class="n">now</span> <span class="n">ships</span> <span class="k">with</span> <span class="n">iODBC</span><span class="p">.</span>
+    <span class="n">settings</span><span class="p">[</span><span class="s1">'libraries'</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="s1">'odbc'</span><span class="p">)</span>
 </pre></div>
 <p>build</p>
-<div class="highlight"><pre>python setup.py build_ext --include-dirs=/usr/local/include/ --library-dirs=/usr/local/lib/
+<div class="highlight"><pre><span></span><span class="nv">python</span> <span class="nv">setup</span>.<span class="nv">py</span> <span class="nv">build_ext</span> <span class="o">--</span><span class="k">include</span><span class="o">-</span><span class="nv">dirs</span><span class="o">=/</span><span class="nv">usr</span><span class="o">/</span><span class="nv">local</span><span class="o">/</span><span class="k">include</span><span class="o">/</span> <span class="o">--</span><span class="nv">library</span><span class="o">-</span><span class="nv">dirs</span><span class="o">=/</span><span class="nv">usr</span><span class="o">/</span><span class="nv">local</span><span class="o">/</span><span class="nv">lib</span><span class="o">/</span>
 </pre></div>
 <p>and install and remove build dir</p>
-<div class="highlight"><pre>pip install .
-cdproject
-rm -fr TEMP
+<div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="p">.</span>
+<span class="n">cdproject</span>
+<span class="n">rm</span> <span class="o">-</span><span class="n">fr</span> <span class="n">TEMP</span>
 </pre></div>
 <h5>Step 4: install django database driver</h5>
-<div class="highlight"><pre>pip install django-pyodbc-azure
+<div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">django</span><span class="o">-</span><span class="n">pyodbc</span><span class="o">-</span><span class="n">azure</span>
 </pre></div>
 <h5>Step 5: Edit your django settings</h5>
 <p>you have multiple options here:</p>
 <ul>
 <li>you can rely on your <code>~/odbc.ini</code> with</li>
 </ul>
-<div class="highlight"><pre>    <span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">'default'</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s">'ENGINE'</span><span class="p">:</span> <span class="s">'sql_server.pyodbc'</span><span class="p">,</span>
-            <span class="s">'NAME'</span><span class="p">:</span> <span class="s">'test1'</span><span class="p">,</span>
-            <span class="s">'USER'</span><span class="p">:</span> <span class="s">'username1'</span><span class="p">,</span>
-            <span class="s">'PASSWORD'</span><span class="p">:</span> <span class="s">'password1'</span>
-            <span class="s">'OPTIONS'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s">'host_is_server'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-                <span class="s">'dsn'</span><span class="p">:</span> <span class="s">'odbc1'</span>  <span class="c"># as in odbc.ini</span>
+<div class="highlight"><pre><span></span>    <span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'default'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">'ENGINE'</span><span class="p">:</span> <span class="s1">'sql_server.pyodbc'</span><span class="p">,</span>
+            <span class="s1">'NAME'</span><span class="p">:</span> <span class="s1">'test1'</span><span class="p">,</span>
+            <span class="s1">'USER'</span><span class="p">:</span> <span class="s1">'username1'</span><span class="p">,</span>
+            <span class="s1">'PASSWORD'</span><span class="p">:</span> <span class="s1">'password1'</span>
+            <span class="s1">'OPTIONS'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">'host_is_server'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s1">'dsn'</span><span class="p">:</span> <span class="s1">'odbc1'</span>  <span class="c1"># as in odbc.ini</span>
             <span class="p">},</span>
         <span class="p">}</span>
 </pre></div>
 <p>or</p>
-<div class="highlight"><pre>DATABASES = {
-    'default': {
-        'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'test1',
-        'USER': 'username1',
-        'PASSWORD': 'password123',
-        'HOST': '192.168.1.1',
-        'PORT': '1433',
-        'OPTIONS': {
-            'host_is_server': True,
-        },
-},
+<div class="highlight"><pre><span></span><span class="n">DATABASES</span> <span class="o">=</span> <span class="err">{</span>
+    <span class="s1">'default'</span><span class="p">:</span> <span class="err">{</span>
+        <span class="s1">'ENGINE'</span><span class="p">:</span> <span class="s1">'sql_server.pyodbc'</span><span class="p">,</span>
+        <span class="s1">'NAME'</span><span class="p">:</span> <span class="s1">'test1'</span><span class="p">,</span>
+        <span class="s1">'USER'</span><span class="p">:</span> <span class="s1">'username1'</span><span class="p">,</span>
+        <span class="s1">'PASSWORD'</span><span class="p">:</span> <span class="s1">'password123'</span><span class="p">,</span>
+        <span class="s1">'HOST'</span><span class="p">:</span> <span class="s1">'192.168.1.1'</span><span class="p">,</span>
+        <span class="s1">'PORT'</span><span class="p">:</span> <span class="s1">'1433'</span><span class="p">,</span>
+        <span class="s1">'OPTIONS'</span><span class="p">:</span> <span class="err">{</span>
+            <span class="s1">'host_is_server'</span><span class="p">:</span> <span class="k">True</span><span class="p">,</span>
+        <span class="err">}</span><span class="p">,</span>
+<span class="err">}</span><span class="p">,</span>
 </pre></div>
 <p>Note anyway that FreeTDS driver does not read user credentials from odbc.ini, you have to put them in your <code>settings.py</code></p>
 <h1>Some of the errors during the way.....</h1>
 <p>Not sure why I got these errors <strong>only on one of my laptop</strong>. If anyone have the answer please let me know.</p>
 <ul>
-<li>ld: library not found for -lodbc<div class="highlight"><pre>... build/temp.macosx-10.10-intel-2.7/data/PROGETTI/ONU_WorldFoodProgramme/wfp-commonapi/TEMP/pyodbc-3.0.7/src/sqlwchar.o -L/usr/local/lib/ -lodbc -o build/lib.macosx-10.10-intel-2.7/pyodbc.so
-ld: library not found for -lodbc
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-error: command 'c++' failed with exit status 1
+<li>ld: library not found for -lodbc<div class="highlight"><pre><span></span>... <span class="nv">build</span><span class="o">/</span><span class="nv">temp</span>.<span class="nv">macosx</span><span class="o">-</span><span class="mi">10</span>.<span class="mi">10</span><span class="o">-</span><span class="nv">intel</span><span class="o">-</span><span class="mi">2</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">data</span><span class="o">/</span><span class="nv">PROGETTI</span><span class="o">/</span><span class="nv">ONU_WorldFoodProgramme</span><span class="o">/</span><span class="nv">wfp</span><span class="o">-</span><span class="nv">commonapi</span><span class="o">/</span><span class="nv">TEMP</span><span class="o">/</span><span class="nv">pyodbc</span><span class="o">-</span><span class="mi">3</span>.<span class="mi">0</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">src</span><span class="o">/</span><span class="nv">sqlwchar</span>.<span class="nv">o</span> <span class="o">-</span><span class="nv">L</span><span class="o">/</span><span class="nv">usr</span><span class="o">/</span><span class="nv">local</span><span class="o">/</span><span class="nv">lib</span><span class="o">/</span> <span class="o">-</span><span class="nv">lodbc</span> <span class="o">-</span><span class="nv">o</span> <span class="nv">build</span><span class="o">/</span><span class="nv">lib</span>.<span class="nv">macosx</span><span class="o">-</span><span class="mi">10</span>.<span class="mi">10</span><span class="o">-</span><span class="nv">intel</span><span class="o">-</span><span class="mi">2</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">pyodbc</span>.<span class="nv">so</span>
+<span class="nv">ld</span>: <span class="nv">library</span> <span class="nv">not</span> <span class="nv">found</span> <span class="k">for</span> <span class="o">-</span><span class="nv">lodbc</span>
+<span class="nv">clang</span>: <span class="nv">error</span>: <span class="nv">linker</span> <span class="nv">command</span> <span class="nv">failed</span> <span class="nv">with</span> <span class="k">exit</span> <span class="nv">code</span> <span class="mi">1</span> <span class="ss">(</span><span class="nv">use</span> <span class="o">-</span><span class="nv">v</span> <span class="nv">to</span> <span class="nv">see</span> <span class="nv">invocation</span><span class="ss">)</span>
+<span class="nv">error</span>: <span class="nv">command</span> <span class="s1">'</span><span class="s">c++</span><span class="s1">'</span> <span class="nv">failed</span> <span class="nv">with</span> <span class="k">exit</span> <span class="nv">status</span> <span class="mi">1</span>
 </pre></div>
 </li>
 </ul>
 <p>Solved with <code>--library-dirs=/usr/local/lib/</code></p>
 <ul>
-<li>fatal error: 'sql.h' file not found<div class="highlight"><pre><span class="p">...</span> <span class="n">TEMP</span><span class="o">/</span><span class="n">pyodbc</span><span class="o">-</span><span class="mf">3.0.7</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">buffer</span><span class="p">.</span><span class="n">o</span> <span class="o">-</span><span class="n">Wno</span><span class="o">-</span><span class="n">write</span><span class="o">-</span><span class="n">strings</span> <span class="o">-</span><span class="n">Wno</span><span class="o">-</span><span class="n">deprecated</span><span class="o">-</span><span class="n">declarations</span>
-<span class="n">In</span> <span class="n">file</span> <span class="n">included</span> <span class="n">from</span> <span class="n">TEMP</span><span class="o">/</span><span class="n">pyodbc</span><span class="o">-</span><span class="mf">3.0.7</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">buffer</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">12</span><span class="o">:</span>
-<span class="n">TEMP</span><span class="o">/</span><span class="n">pyodbc</span><span class="o">-</span><span class="mf">3.0.7</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">pyodbc</span><span class="p">.</span><span class="nl">h</span><span class="p">:</span><span class="mi">52</span><span class="o">:</span><span class="mi">10</span><span class="o">:</span> <span class="n">fatal</span> <span class="nl">error</span><span class="p">:</span> <span class="err">'</span><span class="n">sql</span><span class="p">.</span><span class="n">h</span><span class="err">'</span> <span class="n">file</span> <span class="n">not</span> <span class="n">found</span>
-<span class="cp">#include &lt;sql.h&gt;</span>
+<li>fatal error: 'sql.h' file not found<div class="highlight"><pre><span></span>... <span class="nv">TEMP</span><span class="o">/</span><span class="nv">pyodbc</span><span class="o">-</span><span class="mi">3</span>.<span class="mi">0</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">src</span><span class="o">/</span><span class="nv">buffer</span>.<span class="nv">o</span> <span class="o">-</span><span class="nv">Wno</span><span class="o">-</span><span class="nv">write</span><span class="o">-</span><span class="nv">strings</span> <span class="o">-</span><span class="nv">Wno</span><span class="o">-</span><span class="nv">deprecated</span><span class="o">-</span><span class="nv">declarations</span>
+<span class="nv">In</span> <span class="nv">file</span> <span class="nv">included</span> <span class="nv">from</span> <span class="nv">TEMP</span><span class="o">/</span><span class="nv">pyodbc</span><span class="o">-</span><span class="mi">3</span>.<span class="mi">0</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">src</span><span class="o">/</span><span class="nv">buffer</span>.<span class="nv">cpp</span>:<span class="mi">12</span>:
+<span class="nv">TEMP</span><span class="o">/</span><span class="nv">pyodbc</span><span class="o">-</span><span class="mi">3</span>.<span class="mi">0</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">src</span><span class="o">/</span><span class="nv">pyodbc</span>.<span class="nv">h</span>:<span class="mi">52</span>:<span class="mi">10</span>: <span class="nv">fatal</span> <span class="nv">error</span>: <span class="s1">'</span><span class="s">sql.h</span><span class="s1">'</span> <span class="nv">file</span> <span class="nv">not</span> <span class="nv">found</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">sql</span>.<span class="nv">h</span><span class="o">&gt;</span>
  <span class="o">^</span>
-<span class="mi">1</span> <span class="n">error</span> <span class="n">generated</span><span class="p">.</span>
-<span class="nl">error</span><span class="p">:</span> <span class="n">command</span> <span class="err">'</span><span class="n">cc</span><span class="err">'</span> <span class="n">failed</span> <span class="n">with</span> <span class="n">exit</span> <span class="n">status</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="nv">error</span> <span class="nv">generated</span>.
+<span class="nv">error</span>: <span class="nv">command</span> <span class="s1">'</span><span class="s">cc</span><span class="s1">'</span> <span class="nv">failed</span> <span class="nv">with</span> <span class="k">exit</span> <span class="nv">status</span> <span class="mi">1</span>
 </pre></div>
 </li>
 </ul>
 <p>Solved with <code>--include-dirs=/usr/local/include/</code></p>
 <ul>
-<li>file was built for x86_64 which is not the architecture being linked<div class="highlight"><pre>... emp.macosx-10.10-intel-2.7/TEMP/pyodbc-3.0.7/src/pyodbcmodule.o build/temp.macosx-10.10-intel-2.7/TEMP/pyodbc-3.0.7/src/row.o build/temp.macosx-10.10-intel-2.7/TEMP/pyodbc-3.0.7/src/sqlwchar.o -L/usr/local/lib/ -lodbc -o build/lib.macosx-10.10-intel-2.7/pyodbc.so     
-ld: warning: ignoring file /usr/local/lib/libodbc.dylib, file was built for x86_64 which is not the architecture being linked (i386): /usr/local/lib/libodbc.dylib
+<li>file was built for x86_64 which is not the architecture being linked<div class="highlight"><pre><span></span>... <span class="nv">emp</span>.<span class="nv">macosx</span><span class="o">-</span><span class="mi">10</span>.<span class="mi">10</span><span class="o">-</span><span class="nv">intel</span><span class="o">-</span><span class="mi">2</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">TEMP</span><span class="o">/</span><span class="nv">pyodbc</span><span class="o">-</span><span class="mi">3</span>.<span class="mi">0</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">src</span><span class="o">/</span><span class="nv">pyodbcmodule</span>.<span class="nv">o</span> <span class="nv">build</span><span class="o">/</span><span class="nv">temp</span>.<span class="nv">macosx</span><span class="o">-</span><span class="mi">10</span>.<span class="mi">10</span><span class="o">-</span><span class="nv">intel</span><span class="o">-</span><span class="mi">2</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">TEMP</span><span class="o">/</span><span class="nv">pyodbc</span><span class="o">-</span><span class="mi">3</span>.<span class="mi">0</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">src</span><span class="o">/</span><span class="nv">row</span>.<span class="nv">o</span> <span class="nv">build</span><span class="o">/</span><span class="nv">temp</span>.<span class="nv">macosx</span><span class="o">-</span><span class="mi">10</span>.<span class="mi">10</span><span class="o">-</span><span class="nv">intel</span><span class="o">-</span><span class="mi">2</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">TEMP</span><span class="o">/</span><span class="nv">pyodbc</span><span class="o">-</span><span class="mi">3</span>.<span class="mi">0</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">src</span><span class="o">/</span><span class="nv">sqlwchar</span>.<span class="nv">o</span> <span class="o">-</span><span class="nv">L</span><span class="o">/</span><span class="nv">usr</span><span class="o">/</span><span class="nv">local</span><span class="o">/</span><span class="nv">lib</span><span class="o">/</span> <span class="o">-</span><span class="nv">lodbc</span> <span class="o">-</span><span class="nv">o</span> <span class="nv">build</span><span class="o">/</span><span class="nv">lib</span>.<span class="nv">macosx</span><span class="o">-</span><span class="mi">10</span>.<span class="mi">10</span><span class="o">-</span><span class="nv">intel</span><span class="o">-</span><span class="mi">2</span>.<span class="mi">7</span><span class="o">/</span><span class="nv">pyodbc</span>.<span class="nv">so</span>     
+<span class="nv">ld</span>: <span class="nv">warning</span>: <span class="nv">ignoring</span> <span class="nv">file</span> <span class="o">/</span><span class="nv">usr</span><span class="o">/</span><span class="nv">local</span><span class="o">/</span><span class="nv">lib</span><span class="o">/</span><span class="nv">libodbc</span>.<span class="nv">dylib</span>, <span class="nv">file</span> <span class="nv">was</span> <span class="nv">built</span> <span class="k">for</span> <span class="nv">x86_64</span> <span class="nv">which</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">the</span> <span class="nv">architecture</span> <span class="nv">being</span> <span class="nv">linked</span> <span class="ss">(</span><span class="nv">i386</span><span class="ss">)</span>: <span class="o">/</span><span class="nv">usr</span><span class="o">/</span><span class="nv">local</span><span class="o">/</span><span class="nv">lib</span><span class="o">/</span><span class="nv">libodbc</span>.<span class="nv">dylib</span>
 </pre></div>
 </li>
 </ul>
 <p>Solved with: add <code>--universal</code> when <code>brew install unixodbc</code></p>
 <ul>
-<li>'FreeTDS' : file not found <div class="highlight"><pre><span class="n">django</span><span class="p">.</span><span class="n">db</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="nl">Error</span><span class="p">:</span> <span class="p">(</span><span class="err">'</span><span class="mo">01000</span><span class="err">'</span><span class="p">,</span> <span class="s">"[01000] [unixODBC][Driver Manager]Can't open lib 'FreeTDS' : file not found (0) (SQLDriverConnect)"</span><span class="p">)</span>
+<li>'FreeTDS' : file not found <div class="highlight"><pre><span></span><span class="n">django</span><span class="p">.</span><span class="n">db</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="nl">Error</span><span class="p">:</span> <span class="p">(</span><span class="err">'</span><span class="mo">01000</span><span class="err">'</span><span class="p">,</span> <span class="s">"[01000] [unixODBC][Driver Manager]Can't open lib 'FreeTDS' : file not found (0) (SQLDriverConnect)"</span><span class="p">)</span>
 </pre></div>
 </li>
 </ul>
 <p>Solved adding <code>[FreeTDS]</code> entry in <code>odbcinst.ini</code></p>
 <ul>
-<li>Unable to connect to data source<div class="highlight"><pre><span class="n">django</span><span class="p">.</span><span class="n">db</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="nl">Error</span><span class="p">:</span> <span class="p">(</span><span class="err">'</span><span class="mi">08001</span><span class="err">'</span><span class="p">,</span> <span class="err">'</span><span class="p">[</span><span class="mi">08001</span><span class="p">]</span> <span class="p">[</span><span class="n">unixODBC</span><span class="p">][</span><span class="n">FreeTDS</span><span class="p">][</span><span class="n">SQL</span> <span class="n">Server</span><span class="p">]</span><span class="n">Unable</span> <span class="n">to</span> <span class="n">connect</span> <span class="n">to</span> <span class="n">data</span> <span class="n">source</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">SQLDriverConnect</span><span class="p">)</span><span class="err">'</span><span class="p">)</span>
+<li>Unable to connect to data source<div class="highlight"><pre><span></span><span class="n">django</span><span class="p">.</span><span class="n">db</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="nl">Error</span><span class="p">:</span> <span class="p">(</span><span class="err">'</span><span class="mi">08001</span><span class="err">'</span><span class="p">,</span> <span class="err">'</span><span class="p">[</span><span class="mi">08001</span><span class="p">]</span> <span class="p">[</span><span class="n">unixODBC</span><span class="p">][</span><span class="n">FreeTDS</span><span class="p">][</span><span class="n">SQL</span> <span class="n">Server</span><span class="p">]</span><span class="n">Unable</span> <span class="n">to</span> <span class="n">connect</span> <span class="n">to</span> <span class="n">data</span> <span class="n">source</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="n">SQLDriverConnect</span><span class="p">)</span><span class="err">'</span><span class="p">)</span>
 </pre></div>
 </li>
 </ul>
 <p>Got these error for many reasons, usually related to the <code>settings.py</code></p>
 <p>Solved with: </p>
-<div class="highlight"><pre>    'USERNAME': ...
-    'PASSWORD':...
-    'OPTIONS': {
-        'host_is_server': True,
-    },
+<div class="highlight"><pre><span></span>    <span class="s1">'USERNAME'</span><span class="p">:</span> <span class="p">...</span>
+    <span class="s1">'PASSWORD'</span><span class="p">:...</span>
+    <span class="s1">'OPTIONS'</span><span class="p">:</span> <span class="err">{</span>
+        <span class="s1">'host_is_server'</span><span class="p">:</span> <span class="k">True</span><span class="p">,</span>
+    <span class="err">}</span><span class="p">,</span>
 </pre></div>
   </div>
   <div class="article_meta">

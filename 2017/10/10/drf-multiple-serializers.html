@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/pygments.css">
+
+
+    <link rel="stylesheet" type="text/css" href="http://stefanoapostolico.com/theme/css/style.css">
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Stefano Apostolico">
+    <meta name="description" content="Posts and writings by Stefano Apostolico">
+
+    <link href="http://stefanoapostolico.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+          title="Stefano Apostolico's Blog Atom"/>
+    <link href="http://stefanoapostolico.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
+          title="Stefano Apostolico's Blog RSS"/>
+
+<meta name="keywords" content="django, drf, django-rest-framework">
+
+    <title>
+        Stefano Apostolico's Blog
+&ndash; Using multiple serializers with DjangoRestFramework    </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11207015-9']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+<aside>
+    <div id="user_meta">
+        <a href="http://stefanoapostolico.com">
+            <img src="/images/me.jpg" alt="logo" class="picture">
+        </a>
+        <!--<h2><a href="http://stefanoapostolico.com">Stefano Apostolico</a></h2>-->
+        <p></p>
+        <ul>
+            <li><a href="http://stefanoapostolico.com/pages/about-me.html">About me</a></li>
+            <li><a href="https://twitter.com/s_apostolico" target="_blank">twitter</a></li>
+            <li><a href="https://www.linkedin.com/pub/stefano-apostolico/1/683/814" target="_blank">linkedin</a></li>
+            <li><a href="https://github.com/saxix" target="_blank">github</a></li>
+        </ul>
+        <!--<ul class="tag-cloud">-->
+            <!---->
+        <!--</ul>-->
+    </div>
+</aside>
+
+<main>
+    <header>
+        <p>
+            <a href="http://stefanoapostolico.com">Index</a> &brvbar; <a href="http://stefanoapostolico.com/archives.html">Archives</a>
+            &brvbar; <a href="http://stefanoapostolico.com/feeds/all.atom.xml">Atom</a>
+            &brvbar; <a href="http://stefanoapostolico.com/feeds/all.rss.xml">RSS</a>
+        </p>
+    </header>
+
+<article>
+  <div class="article_title">
+    <h1><a href="http://stefanoapostolico.com/2017/10/10/drf-multiple-serializers.html">Using multiple serializers with DjangoRestFramework</a></h1>
+  </div>
+  <div class="article_meta">
+        <p>Tue 10 October 2017</p>
+    </div>
+  <div class="article_text">
+    <p>How to use different serializers with DjangoRestFramework</p>
+
+<p>Imagine to have a viewset and you want to parametrize the output,
+using different serializers.</p>
+<div class="highlight"><pre><span></span><span class="nv">class</span> <span class="nv">Person</span><span class="ss">(</span><span class="nv">models</span>.<span class="nv">Model</span><span class="ss">)</span>:
+    <span class="nv">title</span> <span class="o">=</span> <span class="nv">models</span>.<span class="nv">CharField</span><span class="ss">(</span>...<span class="ss">)</span>
+    <span class="nv">last_name</span> <span class="o">=</span> <span class="nv">models</span>.<span class="nv">CharField</span><span class="ss">(</span>...<span class="ss">)</span>
+    <span class="nv">first_name</span> <span class="o">=</span> <span class="nv">models</span>.<span class="nv">CharField</span><span class="ss">(</span>...<span class="ss">)</span>
+    <span class="nv">mail</span> <span class="o">=</span> <span class="nv">models</span>.<span class="nv">EmailField</span><span class="ss">(</span>...<span class="ss">)</span>
+    <span class="nv">address</span> <span class="o">=</span> <span class="nv">models</span>.<span class="nv">CharField</span><span class="ss">(</span>...<span class="ss">)</span>
+    <span class="nv">birthday</span> <span class="o">=</span> <span class="nv">models</span>.<span class="nv">DateField</span><span class="ss">()</span>
+
+<span class="nv">class</span> <span class="nv">PersonSerializer</span><span class="ss">(</span><span class="nv">HouseSerializer</span><span class="ss">)</span>:    
+    <span class="nv">full_name</span> <span class="o">=</span> <span class="nv">serializers</span>.<span class="nv">SerializerMethodField</span><span class="ss">()</span>
+
+    <span class="nv">class</span> <span class="nv">Meta</span>:
+        <span class="nv">model</span> <span class="o">=</span> <span class="nv">House</span>
+        <span class="nv">fields</span> <span class="o">=</span> <span class="ss">(</span><span class="s1">'</span><span class="s">title</span><span class="s1">'</span>, <span class="s1">'</span><span class="s">last_name</span><span class="s1">'</span>, <span class="s1">'</span><span class="s">first_name</span><span class="s1">'</span>, <span class="s1">'</span><span class="s">mail</span><span class="s1">'</span>, <span class="s1">'</span><span class="s">full_name</span><span class="s1">'</span><span class="ss">)</span>
+
+    <span class="nv">def</span> <span class="nv">get_full_name</span><span class="ss">(</span><span class="nv">self</span>, <span class="nv">obj</span><span class="ss">)</span>:
+        <span class="k">return</span> <span class="s2">"</span><span class="s">{0.last_name}, {1.first_name}</span><span class="s2">"</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">obj</span><span class="ss">)</span>
+
+<span class="nv">class</span> <span class="nv">PersonView</span><span class="ss">(</span><span class="nv">DynamicSerializerMixin</span>, <span class="nv">generics</span>.<span class="nv">ListAPIView</span><span class="ss">)</span>:
+    <span class="nv">queryset</span> <span class="o">=</span> <span class="nv">House</span>.<span class="nv">objects</span>.<span class="nv">all</span><span class="ss">()</span>
+    <span class="nv">serializer_class</span> <span class="o">=</span> <span class="nv">HouseSerializer</span>
+</pre></div>
+<p>it is easy to build a "serializer factory" to build on the fly </p>
+<div class="highlight"><pre><span></span><span class="nv">cache</span> <span class="o">=</span> {}
+
+<span class="nv">def</span> <span class="nv">serializer_factory</span><span class="ss">(</span><span class="nv">model</span>, <span class="nv">base</span><span class="o">=</span><span class="nv">ModelSerializer</span>, <span class="nv">fields</span><span class="o">=</span><span class="nv">None</span>, <span class="nv">exclude</span><span class="o">=</span><span class="nv">None</span><span class="ss">)</span>:
+    <span class="nv">attrs</span> <span class="o">=</span> {<span class="s1">'</span><span class="s">model</span><span class="s1">'</span>: <span class="nv">model</span>}
+    <span class="k">if</span> <span class="nv">fields</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">None</span>:
+        <span class="nv">attrs</span>[<span class="s1">'</span><span class="s">fields</span><span class="s1">'</span>] <span class="o">=</span> <span class="nv">fields</span>
+    <span class="k">if</span> <span class="nv">exclude</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">None</span>:
+        <span class="nv">attrs</span>[<span class="s1">'</span><span class="s">exclude</span><span class="s1">'</span>] <span class="o">=</span> <span class="nv">exclude</span>
+
+    <span class="nv">parent</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">object</span>,<span class="ss">)</span>
+    <span class="k">if</span> <span class="nv">hasattr</span><span class="ss">(</span><span class="nv">base</span>, <span class="s1">'</span><span class="s">Meta</span><span class="s1">'</span><span class="ss">)</span>:
+        <span class="nv">parent</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">base</span>.<span class="nv">Meta</span>, <span class="nv">object</span><span class="ss">)</span>
+    <span class="nv">Meta</span> <span class="o">=</span> <span class="nv">type</span><span class="ss">(</span><span class="nv">str</span><span class="ss">(</span><span class="s1">'</span><span class="s">Meta</span><span class="s1">'</span><span class="ss">)</span>, <span class="nv">parent</span>, <span class="nv">attrs</span><span class="ss">)</span>
+    <span class="k">if</span> <span class="nv">model</span>:
+        <span class="nv">class_name</span> <span class="o">=</span> <span class="nv">model</span>.<span class="nv">__name__</span> <span class="o">+</span> <span class="s1">'</span><span class="s">Serializer</span><span class="s1">'</span>
+    <span class="k">else</span>:
+        <span class="nv">class_name</span> <span class="o">=</span> <span class="s1">'</span><span class="s">Serializer</span><span class="s1">'</span>
+    <span class="k">return</span> <span class="nv">type</span><span class="ss">(</span><span class="nv">base</span><span class="ss">)(</span><span class="nv">class_name</span>, <span class="ss">(</span><span class="nv">base</span>,<span class="ss">)</span>, {<span class="s1">'</span><span class="s">Meta</span><span class="s1">'</span>: <span class="nv">Meta</span>, }<span class="ss">)</span>
+
+
+<span class="nv">class</span> <span class="nv">DynamicSerializerMixin</span><span class="ss">(</span><span class="nv">object</span><span class="ss">)</span>:
+    <span class="nv">serializers_fieldsets</span> <span class="o">=</span> {<span class="s1">'</span><span class="s">std</span><span class="s1">'</span>: <span class="nv">None</span>}
+    <span class="nv">serializer_class</span> <span class="o">=</span> <span class="nv">ModelSerializer</span>
+
+    <span class="nv">def</span> <span class="nv">get_serializer_class</span><span class="ss">(</span><span class="nv">self</span><span class="ss">)</span>:
+        <span class="nv">ser</span> <span class="o">=</span> <span class="nv">self</span>.<span class="nv">request</span>.<span class="nv">QUERY_PARAMS</span>.<span class="nv">get</span><span class="ss">(</span><span class="s1">'</span><span class="s">serializer</span><span class="s1">'</span>, <span class="s1">'</span><span class="s">std</span><span class="s1">'</span><span class="ss">)</span>
+        <span class="k">if</span> <span class="nv">ser</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">cache</span>:                
+            <span class="nv">fields</span> <span class="o">=</span> <span class="nv">self</span>.<span class="nv">serializers_fieldsets</span>.<span class="nv">get</span><span class="ss">(</span><span class="nv">ser</span>, <span class="s1">'</span><span class="s">std</span><span class="s1">'</span><span class="ss">)</span>
+            <span class="nv">cache</span>[<span class="nv">ser</span>] <span class="o">=</span>  <span class="nv">serializer_factory</span><span class="ss">(</span><span class="nv">self</span>.<span class="nv">model</span>,
+                                  <span class="nv">self</span>.<span class="nv">serializer_class</span>,
+                                  <span class="nv">fields</span><span class="o">=</span><span class="nv">fields</span><span class="ss">)</span>
+
+        <span class="k">return</span> <span class="nv">cache</span>[<span class="nv">ser</span>]
+</pre></div>
+<p>adopt it:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="n">PersonView</span>(<span class="n">DynamicSerializerMixin</span>, <span class="n">generics</span>.<span class="n">ListAPIView</span>):
+    <span class="n">queryset</span> = <span class="n">Person</span>.<span class="n">objects</span>.<span class="nb">all</span>()
+    <span class="n">serializer_class</span> = <span class="n">PersonSerializer</span>
+    <span class="n">serializers_fieldsets</span> = {<span class="s">'std'</span>: <span class="n">PersonSerializer</span>,
+                             <span class="s">'simple'</span>: (<span class="s">'first_name'</span>, <span class="s">'last_name'</span>)
+                             }
+</pre></div>
+<p>invoke it:</p>
+<div class="highlight"><pre><span></span><span class="o">?</span><span class="n">serializer</span><span class="o">=</span><span class="n">std</span>
+<span class="o">?</span><span class="n">serializer</span><span class="o">=</span><span class="n">simpleA</span>
+</pre></div>
+  </div>
+  <div class="article_meta">
+    <!--<p>Posted on: Tue 10 October 2017</p>-->
+    <p>Category: <a href="http://stefanoapostolico.com/category/tech.html">tech</a>
+ &ndash; Tags:
+      <a href="http://stefanoapostolico.com/tag/django.html">django</a>,      <a href="http://stefanoapostolico.com/tag/drf.html">drf</a>,      <a href="http://stefanoapostolico.com/tag/django-rest-framework.html">django-rest-framework</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "2017/10/10/drf-multiple-serializers.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+        <p>&copy; 2014 Stefano Apostolico. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>.
+Member of the <a href="http://internetdefenseleague.org">Internet Defense
+                League</a>.</p>
+    </div>
+</main>
+<script type="text/javascript">
+  window._idl = {};
+  _idl.variant = "banner";
+  (function() {
+    var idl = document.createElement('script');
+    idl.type = 'text/javascript';
+    idl.async = true;
+    idl.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'members.internetdefenseleague.org/include/?url=' + (_idl.url || '') + '&campaign=' + (_idl.campaign || '') + '&variant=' + (_idl.variant || 'banner');
+    document.getElementsByTagName('body')[0].appendChild(idl);
+  })();
+</script>
+</body>
+</html>

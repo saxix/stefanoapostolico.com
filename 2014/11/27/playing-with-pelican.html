@@ -53,8 +53,6 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-1"><a href="/tag/django.html">django</a></li>-->
-            <!---->
         <!--</ul>-->
     </div>
 </aside>
@@ -88,7 +86,7 @@ seem recompile and install the full stack (nginx, pelican, python....)</p>
 <p>To install Pelican and other Python package dependencies in a virtual environment, 
 I followed the instructions in the official 
 <a href="http://pelican.readthedocs.org/en/3.5.0/quickstart.html">Pelican documentation</a>.</p>
-<div class="highlight"><pre>pip install pelican Markdown typogrify
+<div class="highlight"><pre><span></span>pip install pelican Markdown typogrify
 pelican-quickstart
 </pre></div>
 <p>I enabled article pagination so that I didn't end up with all the posts on a single 
@@ -99,17 +97,17 @@ It allows you to compile the website with <code>make html</code> and check it li
 in the <code>Makefile</code> so I removed it manually.</p>
 <h3>Configure plugins</h3>
 <p>To configure plugins simply clone pelican-plugins as git submodule with</p>
-<div class="highlight"><pre>git add submodule https://github.com/getpelican/pelican-plugins
-git submodule update  --init --recursive
+<div class="highlight"><pre><span></span><span class="n">git</span> <span class="k">add</span> <span class="n">submodule</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">getpelican</span><span class="o">/</span><span class="n">pelican</span><span class="o">-</span><span class="n">plugins</span>
+<span class="n">git</span> <span class="n">submodule</span> <span class="k">update</span>  <span class="c1">--init --recursive</span>
 </pre></div>
 <p>and enable what you like in <code>pelicanconf.py</code></p>
-<div class="highlight"><pre>    <span class="n">PLUGIN_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">'pelican-plugins'</span><span class="p">]</span>
-    <span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s">'interlinks'</span><span class="p">,</span>
-               <span class="s">'pelican_fontawesome'</span><span class="p">,</span>
-               <span class="s">'related_posts'</span><span class="p">,</span>
-               <span class="s">'summary'</span><span class="p">,</span>
-               <span class="s">'sitemap'</span><span class="p">,</span>
-               <span class="s">'simple_footnotes'</span><span class="p">]</span>
+<div class="highlight"><pre><span></span>    <span class="n">PLUGIN_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'pelican-plugins'</span><span class="p">]</span>
+    <span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'interlinks'</span><span class="p">,</span>
+               <span class="s1">'pelican_fontawesome'</span><span class="p">,</span>
+               <span class="s1">'related_posts'</span><span class="p">,</span>
+               <span class="s1">'summary'</span><span class="p">,</span>
+               <span class="s1">'sitemap'</span><span class="p">,</span>
+               <span class="s1">'simple_footnotes'</span><span class="p">]</span>
 </pre></div>
 <h3>Configure Github</h3>
 <p>For Github you need to put the domain of your site inside a CNAME (must be uppercase)
@@ -120,29 +118,29 @@ file at the root of your site. </p>
 and <a href="https://help.github.com/articles/my-custom-domain-isn-t-working/">here</a></p>
 <p>For my configuration I used </p>
 <p><code>content/extras/CNAME</code></p>
-<div class="highlight"><pre>stefanoapostolico.com
+<div class="highlight"><pre><span></span><span class="n">stefanoapostolico</span><span class="p">.</span><span class="n">com</span>
 </pre></div>
 <p><code>pelicanconf.py</code></p>
-<div class="highlight"><pre>    <span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">'images'</span><span class="p">,</span> <span class="s">'extras/README.rst'</span><span class="p">,</span> <span class="s">'extras/CNAME'</span><span class="p">,</span> 
-    <span class="s">'extras/robots.txt'</span><span class="p">]</span>
+<div class="highlight"><pre><span></span>    <span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'images'</span><span class="p">,</span> <span class="s1">'extras/README.rst'</span><span class="p">,</span> <span class="s1">'extras/CNAME'</span><span class="p">,</span> 
+    <span class="s1">'extras/robots.txt'</span><span class="p">]</span>
 
     <span class="n">EXTRA_PATH_METADATA</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">'extras/README.rst'</span><span class="p">:</span> <span class="p">{</span><span class="s">'path'</span><span class="p">:</span> <span class="s">'README.rst'</span><span class="p">},</span>
-        <span class="s">'extras/CNAME'</span><span class="p">:</span> <span class="p">{</span><span class="s">'path'</span><span class="p">:</span> <span class="s">'CNAME'</span><span class="p">},</span>
-        <span class="s">'extras/robots.txt'</span><span class="p">:</span> <span class="p">{</span><span class="s">'path'</span><span class="p">:</span> <span class="s">'robots.txt'</span><span class="p">},</span>
+        <span class="s1">'extras/README.rst'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'path'</span><span class="p">:</span> <span class="s1">'README.rst'</span><span class="p">},</span>
+        <span class="s1">'extras/CNAME'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'path'</span><span class="p">:</span> <span class="s1">'CNAME'</span><span class="p">},</span>
+        <span class="s1">'extras/robots.txt'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'path'</span><span class="p">:</span> <span class="s1">'robots.txt'</span><span class="p">},</span>
     <span class="p">}</span>
 </pre></div>
 <h3>Minor improvements</h3>
 <h4>Get metadata from path</h4>
 <p>To store articles in a structure like 
 <code>category/YEAR/MONTH/DAY-slug</code> so I updated my <code>pelicanconf.py</code> as </p>
-<div class="highlight"><pre>   <span class="n">PATH_METADATA</span> <span class="o">=</span> <span class="s">'\A(?P&lt;category&gt;[^/]+)/(?P&lt;date&gt;\d{4}/\d{2}/\d{2})-(?P&lt;slug&gt;.*)(.md|.rst)'</span>
+<div class="highlight"><pre><span></span>   <span class="n">PATH_METADATA</span> <span class="o">=</span> <span class="s1">'\A(?P&lt;category&gt;[^/]+)/(?P&lt;date&gt;\d{4}/\d{2}/\d{2})-(?P&lt;slug&gt;.*)(.md|.rst)'</span>
 </pre></div>
 <p>You can always override date, slug and category in your post.</p>
 <h4>Serve file with different path</h4>
 <p>To serve your articles with url like <code>/YEAR/MONTH/DAY/slug.html</code></p>
-<div class="highlight"><pre>    <span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s">'{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s">}/{slug}.html'</span>
-    <span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s">'{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s">}/{slug}.html'</span>
+<div class="highlight"><pre><span></span>    <span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s1">'{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}.html'</span>
+    <span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s1">'{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}.html'</span>
 </pre></div>
 <p>You must set both the setting.</p>
 <p>you can see the result <a href="https://github.com/saxix/stefanoapostolico.com">here</a></p>

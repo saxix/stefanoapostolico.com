@@ -18,12 +18,10 @@
     <link href="http://stefanoapostolico.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
           title="Stefano Apostolico's Blog RSS"/>
 
-<meta name="keywords" content="python, devpi">
-<meta name="robots" content="noindex" />
 
     <title>
         Stefano Apostolico's Blog
-&ndash; Test your python package with devpi    </title>
+    </title>
 
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -54,8 +52,6 @@
         </ul>
         <!--<ul class="tag-cloud">-->
             <!---->
-            <!--<li class="tag-1"><a href="/tag/django.html">django</a></li>-->
-            <!---->
         <!--</ul>-->
     </div>
 </aside>
@@ -69,70 +65,12 @@
         </p>
     </header>
 
-<article>
-  <div class="article_title">
-    <h1><a href="http://stefanoapostolico.com/drafts/working_with_devpi.html">Test your python package with devpi</a></h1>
-  </div>
-  <div class="article_meta">
-        <p>Sat 28 November 2015</p>
-    </div>
-  <div class="article_text">
-    <p><a href="http://doc.devpi.net/latest/quickstart">devpi</a> ia a PyPI-compatible server, it can save a lot of time developing python packages. </p>
+<h1>Archives for 2017</h1>
 
-<h3>Scenario</h3>
-<p>You have ProjectA that depends on PackageB, and you need to patch/upgrade PackageB. So you start coding, run tests and when you are ready to release PackageB, you want to test it as dependency in ProjectA. Now you can:</p>
-<ul>
-<li>
-<p>import PackageB with <code>pip install PackageB.tar.gz</code> in ProjectB virtualenv</p>
-</li>
-<li>
-<p>make a develop install <code>pip install -e &lt;PackageB source directory&gt;</code></p>
-</li>
-</ul>
-<p>This works pretty well if you need to run the tests of ProjectA into the development virtualenv, but what if you want to test ProjectA using tox? </p>
-<p>Tox will create a new virtualenv for each configuration and will look for dependencies in <code>pypi.wfp.org</code> or any other configured index server, it does not know anything about your local <code>PackageB.tar.gz</code>. Of course</p>
-<p>Or you want t   </p>
-<p>Quick tips how to enable pdb with django</p>
-<p><img alt="main" src="/images/devpi/main.png"/></p>
-<div class="highlight"><pre>mkvirtualenv sax
-
-pip install devpi-server==2.3.1 \
-            devpi-web==2.4.1 \
-            devpi-client==2.3.1 \
-            devpi-findlinks==1.0.1
-
-
-devpi-server --start
-
-
-devpi user -c sax
-devpi login sax
-devpi index -c dev
-devpi use dev
-
-devpi upload
-</pre></div>
-  </div>
-  <div class="article_meta">
-    <!--<p>Posted on: Sat 28 November 2015</p>-->
-    <p>Category: <a href="http://stefanoapostolico.com/category/tech.html">tech</a>
- &ndash; Tags:
-      <a href="http://stefanoapostolico.com/tag/python.html">python</a>,      <a href="http://stefanoapostolico.com/tag/devpi.html">devpi</a>    </p>
-  </div>
-
-  <div id="article_comments">
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        var disqus_identifier = "drafts/working_with_devpi.html";
-        (function() {
-             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-             dsq.src = 'http://stefanoapostolico.disqus.com.disqus.com/embed.js';
-             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-         })();
-    </script>
-  </div>
-
-</article>
+<dl>
+    <dt>Tue 10 October 2017</dt>
+    <dd><a href="http://stefanoapostolico.com/2017/10/10/drf-multiple-serializers.html">Using multiple serializers with DjangoRestFramework</a></dd>
+</dl>
 
 
     <div id="ending_message">

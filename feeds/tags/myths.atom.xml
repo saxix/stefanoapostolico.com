@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Stefano Apostolico's Blog - myths</title><link href="http://stefanoapostolico.com/" rel="alternate"></link><link href="http://stefanoapostolico.com/feeds/tags/myths.atom.xml" rel="self"></link><id>http://stefanoapostolico.com/</id><updated>2016-10-26T00:00:00+02:00</updated><entry><title>False Myths: Customers does not care about technology they care about money</title><link href="http://stefanoapostolico.com/2016/10/26/technology_vs_money.html" rel="alternate"></link><published>2016-10-26T00:00:00+02:00</published><updated>2016-10-26T00:00:00+02:00</updated><author><name>Stefano Apostolico</name></author><id>tag:stefanoapostolico.com,2016-10-26:/2016/10/26/technology_vs_money.html</id><summary type="html"></summary><content type="html">
+&lt;p&gt;Yesterday a sentence like this was posted in a collaboration platform:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;"At the end of the day your customers don’t care whether you’re agile, 
+lean or practice design thinking."&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;I fully agree with the essence of this idea, but it does sounds misleading in one aspect of presentation: This sentence, when interpreted as "customers only care about money", could be a huge mistake. &lt;/p&gt;
+&lt;p&gt;Just because our customers do not care how we work, it does not mean that we should not care about methodologies and process.
+I don't care what products and tools my dentist uses; it's upto him, but I expect he cares about them a lot!
+Tools, processes and metodologies are in our domain and scope - though they do not need to be endorsed by or exposed to our customers,
+without an internal professional approach, we cannot deliver great products and services that solve meaningful problems for them in effective ways.&lt;/p&gt;
+&lt;p&gt;When the Business/Customer allocates a budget, there's an expectation of return value: a working, reliable product delivered in time and within budget.
+If something goes wrong, the Business/Customer complains about money because it is the only "unit of measure" that he/she knows that is understandable in our domain, and is the only common language he/she can speak with us. &lt;/p&gt;
+&lt;p&gt;As an analogy, When a new-bought car breaks down after a week, we go back to the vendor and complain &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;"Hey, I paid $$$ for this car but it does not work anymore!"&lt;/em&gt;, &lt;/p&gt;
+&lt;p&gt;only because we do not know how to say &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;"Hey, this car has a design error &lt;xyz&gt;, you should not have sold it!"&lt;/xyz&gt;&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Ultimately, businesses care about "good products", but the way to deliver 
+them cannot pass through a wrong approach or ignoring any methodology only because 
+businesses don't care about them "explicitly". &lt;/p&gt;
+&lt;p&gt;Again, as an analogy from our experience on flights, I don't think we would expect our planes to be driven overlooking the current best practices, procedures and commonsense, or, even worst, piloted by the first available person.&lt;/p&gt;
+&lt;p&gt;Skills, knowledge  and mastering the domain is the only way to give to the 
+Business what it expects, any another approach is only a workaroud that 
+undermines our reputation and credibility day after day.&lt;/p&gt;</content><category term="methodology"></category><category term="myths"></category></entry></feed>
